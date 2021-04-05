@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <item name="nav_host" type="id" />
+  <item name="item_binding" type="id" />
+  <item name="item_holder" type="id" />
+  <item name="toolbar" type="id" />
+</resources>

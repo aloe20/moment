@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.CollapsingToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/toolbarLayout"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  app:collapsedTitleGravity="center"
+  app:collapsedTitleTextAppearance="@style/TitleTextAppearance"
+  app:expandedTitleGravity="center"
+  app:expandedTitleMargin="0dp"
+  app:expandedTitleTextAppearance="@style/TitleTextAppearance"
+  app:layout_collapseMode="pin"
+  app:titleEnabled="true"
+  app:toolbarId="@id/toolbar">
+
+  <com.aloe.moment.view.TitleToolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/actionBarSize"
+    app:buttonGravity="center_vertical"
+    app:titleMarginEnd="16dp"
+    app:titleMarginStart="16dp"
+    tools:title="@string/app_name">
+
+    <ViewStub
+      android:id="@+id/viewStubTab"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_gravity="center"
+      android:inflatedId="@+id/tabLayout"
+      android:layout="@layout/layout_title_tab" />
+  </com.aloe.moment.view.TitleToolbar>
+
+  <ViewStub
+    android:id="@+id/viewStubProgress"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:inflatedId="@+id/progress"
+    android:layout="@layout/layout_indicator_linear" />
+</com.google.android.material.appbar.CollapsingToolbarLayout>

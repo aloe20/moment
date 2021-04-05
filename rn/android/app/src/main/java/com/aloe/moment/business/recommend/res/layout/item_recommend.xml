@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:minHeight="40dp"
+  android:paddingBottom="8dp">
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tagTop"
+    android:layout_width="56dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="-16dp"
+    android:layout_marginTop="6dp"
+    android:background="@color/purple_200"
+    android:gravity="center"
+    android:rotation="-45"
+    android:text="@string/top2"
+    android:textColor="#ccffffff"
+    android:textSize="10sp"
+    tools:ignore="SmallSp" />
+
+  <com.google.android.material.chip.Chip
+    android:layout_width="8dp"
+    android:layout_height="8dp"
+    android:layout_centerVertical="true"
+    android:layout_marginStart="12dp"
+    android:backgroundTint="@color/purple_200"
+    app:chipMinHeight="0dp"
+    app:chipMinTouchTargetSize="0dp" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tvTitle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="28dp"
+    android:layout_marginEnd="16dp"
+    android:maxLines="2"
+    android:paddingTop="4dp"
+    android:textColor="#333"
+    android:textSize="16sp"
+    tools:text="@sample/top.json/data/title" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tvDesc"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tvTitle"
+    android:layout_marginStart="28dp"
+    android:layout_marginEnd="16dp"
+    android:ellipsize="end"
+    android:maxLines="5"
+    android:paddingTop="8dp"
+    android:textColor="@color/color_desc"
+    android:textSize="14sp"
+    tools:text="@sample/top.json/data/desc" />
+
+  <com.google.android.material.chip.Chip
+    android:id="@+id/tagNew"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tvDesc"
+    android:layout_marginStart="28dp"
+    android:layout_marginTop="8dp"
+    android:backgroundTint="@android:color/transparent"
+    android:paddingVertical="2dp"
+    android:text="@string/new2"
+    android:textColor="@color/purple_200"
+    android:textSize="12sp"
+    app:checkedIconVisible="false"
+    app:chipMinHeight="0dp"
+    app:chipMinTouchTargetSize="0dp"
+    app:chipStrokeColor="@color/purple_200"
+    app:chipStrokeWidth="1dp" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tvAuthor"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tvDesc"
+    android:layout_marginStart="28dp"
+    android:layout_marginTop="8dp"
+    android:layout_toEndOf="@id/tagNew"
+    android:drawablePadding="4dp"
+    android:drawableTint="@color/color_desc"
+    android:paddingVertical="2dp"
+    android:textColor="@color/color_desc"
+    android:textSize="12sp"
+    tools:text="@sample/top.json/data/author" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tvDate"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tvDesc"
+    android:layout_alignParentEnd="true"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="8dp"
+    android:paddingVertical="2dp"
+    android:textColor="@color/color_desc"
+    android:textSize="12sp"
+    tools:text="@sample/top.json/data/niceShareDate" />
+
+  <com.google.android.material.chip.Chip
+    android:id="@+id/chipClassify"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tvDate"
+    android:layout_marginStart="28dp"
+    android:layout_marginTop="8dp"
+    android:backgroundTint="@color/purple_200"
+    android:paddingVertical="2dp"
+    android:textColor="@color/white"
+    android:textSize="12sp"
+    app:chipCornerRadius="4dp"
+    app:chipMinHeight="0dp"
+    app:chipMinTouchTargetSize="0dp"
+    tools:text="公众号/鸿洋" />
+
+  <com.google.android.material.chip.ChipGroup
+    android:id="@+id/chipGroup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tvDate"
+    android:layout_marginStart="8dp"
+    android:layout_toEndOf="@id/chipClassify"
+    android:paddingTop="8dp"
+    android:visibility="gone" />
+</RelativeLayout>

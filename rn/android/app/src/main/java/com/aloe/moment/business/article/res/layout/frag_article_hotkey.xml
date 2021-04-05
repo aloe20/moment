@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  app:divider="@drawable/ic_divider"
+  app:showDividers="middle">
+
+  <com.google.android.material.appbar.CollapsingToolbarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:collapsedTitleGravity="center"
+    app:collapsedTitleTextAppearance="@style/TitleTextAppearance"
+    app:expandedTitleGravity="center"
+    app:expandedTitleMargin="0dp"
+    app:expandedTitleTextAppearance="@style/TitleTextAppearance"
+    app:titleEnabled="true"
+    app:toolbarId="@id/toolbar">
+
+    <com.aloe.moment.view.TitleToolbar
+      android:id="@id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/actionBarSize"
+      app:buttonGravity="center_vertical"
+      app:titleMarginEnd="16dp"
+      app:titleMarginStart="16dp">
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="@dimen/dividerSize"
+        app:boxStrokeWidthFocused="@dimen/dividerSize"
+        app:endIconDrawable="@drawable/ic_search"
+        app:endIconMode="custom"
+        app:endIconTint="@color/black"
+        app:hintTextAppearance="@style/HintAppearance"
+        app:hintTextColor="@color/color_desc"
+        tools:hint="Hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+          android:id="@+id/editText"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="center_vertical"
+          android:includeFontPadding="false"
+          android:longClickable="false"
+          android:maxLines="1"
+          android:paddingTop="0dp"
+          android:paddingBottom="0dp"
+          android:textColor="@color/black"
+          android:textCursorDrawable="@drawable/ic_cursor"
+          android:textSelectHandle="@drawable/ic_handle"
+          android:textSize="12sp"
+          tools:text="Android" />
+      </com.google.android.material.textfield.TextInputLayout>
+    </com.aloe.moment.view.TitleToolbar>
+
+  </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+      android:id="@+id/tvTitle"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/search_hot"
+      android:textColor="#333"
+      android:textSize="16sp" />
+
+    <com.google.android.material.chip.ChipGroup
+      android:id="@+id/groupHotkey"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginTop="8dp"
+      app:chipSpacing="8dp" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+
+  <androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/search_history"
+      android:textColor="#333"
+      android:textSize="16sp" />
+  </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

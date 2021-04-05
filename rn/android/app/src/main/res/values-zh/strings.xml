@@ -1,0 +1,17 @@
+<resources>
+  <string name="app_name">时刻</string>
+  <string name="skip">跳过</string>
+  <string name="recommend">推荐</string>
+  <string name="hierarchy">体系</string>
+  <string name="navigation">导航</string>
+  <string name="project">项目</string>
+  <string name="new2">新</string>
+  <string name="project_classify">项目分类</string>
+  <string name="wx_article">公众号</string>
+  <string name="search">搜索</string>
+  <string name="search_hot">热门搜索</string>
+  <string name="search_history">搜索记录</string>
+  <string name="top2">置顶</string>
+  <string name="take_pictures">拍照</string>
+  <string name="photo_album">相册</string>
+</resources>

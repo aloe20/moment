@@ -1,0 +1,20 @@
+<resources>
+  <string name="open" translatable="false">open</string>
+  <string name="close" translatable="false">close</string>
+  <string name="app_name">moment</string>
+  <string name="skip">SKIP</string>
+  <string name="recommend">Recommend</string>
+  <string name="navigation">Navigation</string>
+  <string name="project">Project</string>
+  <string name="react" translatable="false">React</string>
+  <string name="new2">new</string>
+  <string name="project_classify">ProjectClassify</string>
+  <string name="wx_article">WxArticle</string>
+  <string name="search">Search</string>
+  <string name="search_hot">Search hot</string>
+  <string name="search_history">Search history</string>
+  <string name="top2">Top</string>
+  <string name="hierarchy">Hierarchy</string>
+  <string name="take_pictures">Take pictures</string>
+  <string name="photo_album">Photo album</string>
+</resources>

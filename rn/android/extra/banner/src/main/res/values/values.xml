@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <item name="tag_binding" type="id" />
+  <dimen name="defaultMargin">8dp</dimen>
+  <item name="bannerIndicator" type="id" />
+  <declare-styleable name="Banner">
+    <attr name="android:orientation" />
+    <attr name="android:duration" />
+    <attr name="loop" format="boolean" />
+    <attr name="autoStart" format="boolean" />
+    <attr name="bannerLayout" format="reference" />
+    <attr name="indicatorSize" format="dimension" />
+    <attr name="indicatorMargin" format="dimension" />
+    <attr name="indicatorSelectColor" format="color" />
+    <attr name="indicatorNormalColor" format="color" />
+    <attr name="indicatorSelectDrawable" format="reference" />
+    <attr name="indicatorNormalDrawable" format="reference" />
+  </declare-styleable>
+</resources>

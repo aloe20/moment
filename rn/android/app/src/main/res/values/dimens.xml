@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="actionBarSize">44dp</dimen>
+  <dimen name="bottomNavigationBar">56dp</dimen>
+  <dimen name="dividerSize">1px</dimen>
+  <dimen name="unit">1dp</dimen>
+</resources>

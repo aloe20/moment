@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:paddingHorizontal="16dp"
+  android:paddingVertical="8dp">
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tvTitle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxLines="2"
+    android:textColor="#333"
+    android:textSize="16sp"
+    tools:text="@sample/top.json/data/title" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tvDate"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tvDesc"
+    android:layout_marginTop="8dp"
+    android:textColor="@color/color_desc"
+    android:textSize="12sp"
+    tools:text="@sample/top.json/data/niceShareDate" />
+</androidx.appcompat.widget.LinearLayoutCompat>

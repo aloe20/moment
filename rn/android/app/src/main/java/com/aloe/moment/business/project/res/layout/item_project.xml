@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:paddingStart="16dp"
+  android:paddingTop="16dp"
+  android:paddingEnd="16dp">
+
+  <com.aloe.image.EasyImageView
+    android:id="@+id/image"
+    android:layout_width="100dp"
+    android:layout_height="200dp"
+    android:scaleType="centerCrop"
+    app:cornerType="5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@mipmap/tmp"
+    app:startCorner="20dp" />
+
+  <com.aloe.image.EasyImageView
+    android:layout_width="0dp"
+    android:layout_height="200dp"
+    android:scaleType="fitXY"
+    app:cornerType="10"
+    app:endCorner="20dp"
+    app:layout_constraintBottom_toBottomOf="@id/image"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@id/image"
+    app:layout_constraintTop_toTopOf="@id/image"
+    app:strokeColor="@color/color_divider"
+    app:strokeWidth="1dp" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tvTitle"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:ellipsize="end"
+    android:lineSpacingMultiplier="1.2"
+    android:maxLines="2"
+    android:paddingTop="4dp"
+    android:textColor="#333"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@id/image"
+    app:layout_constraintTop_toTopOf="@id/image"
+    tools:text="@sample/project.json/data/datas/title" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tvDesc"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:lineSpacingMultiplier="1.2"
+    android:maxLines="5"
+    android:paddingTop="8dp"
+    android:textColor="@color/color_desc"
+    android:textSize="14sp"
+    app:layout_constraintEnd_toEndOf="@id/tvTitle"
+    app:layout_constraintStart_toStartOf="@id/tvTitle"
+    app:layout_constraintTop_toBottomOf="@id/tvTitle"
+    tools:text="@sample/project.json/data/datas/desc" />
+
+  <com.google.android.material.chip.Chip
+    android:id="@+id/chipClassify"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tvDate"
+    android:layout_marginBottom="4dp"
+    android:backgroundTint="@color/purple_200"
+    android:paddingVertical="2dp"
+    android:textColor="@color/white"
+    android:textSize="12sp"
+    app:chipMinHeight="0dp"
+    app:chipMinTouchTargetSize="0dp"
+    app:layout_constraintBottom_toBottomOf="@id/image"
+    app:layout_constraintStart_toStartOf="@id/tvTitle"
+    tools:text="公众号/鸿洋" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tvAuthor"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:drawablePadding="4dp"
+    android:drawableTint="@color/color_desc"
+    android:gravity="center_vertical"
+    android:paddingVertical="2dp"
+    android:textColor="@color/color_desc"
+    android:textSize="12sp"
+    app:layout_constraintBottom_toTopOf="@id/chipClassify"
+    app:layout_constraintStart_toStartOf="@id/tvTitle"
+    tools:text="@sample/project.json/data/datas/author" />
+
+  <com.google.android.material.textview.MaterialTextView
+    android:id="@+id/tvDate"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:paddingVertical="2dp"
+    android:textColor="@color/color_desc"
+    android:textSize="12sp"
+    app:layout_constraintBottom_toTopOf="@id/chipClassify"
+    app:layout_constraintEnd_toEndOf="@id/tvTitle"
+    tools:text="@sample/project.json/data/datas/niceDate" />
+</androidx.constraintlayout.widget.ConstraintLayout>

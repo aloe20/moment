@@ -1,0 +1,117 @@
+import com.aloe.version.Versions
+import com.aloe.version.Libs
+
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-kapt"
+apply plugin: "dagger.hilt.android.plugin"
+apply from: "../../node_modules/react-native/react.gradle"
+def appId = "com.aloe.moment"
+android {
+  buildToolsVersion Versions.buildTools
+  compileSdkVersion Versions.compileSdk
+  signingConfigs {
+    config {
+      storeFile file("sign.jks")
+      storePassword "111111"
+      keyAlias "android"
+      keyPassword "111111"
+    }
+  }
+  defaultConfig {
+    applicationId appId
+    minSdkVersion Versions.minSdk
+    targetSdkVersion Versions.targetSdk
+    versionCode 1
+    versionName "1.0"
+    resConfigs "en", "zh"
+    signingConfig signingConfigs.config
+  }
+  splits {
+    abi {
+      reset()
+      enable true
+      universalApk false
+      include "arm64-v8a"
+    }
+  }
+  buildTypes {
+    debug {
+      debuggable true
+      jniDebuggable true
+      minifyEnabled false
+      renderscriptDebuggable true
+      proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+    }
+    release {
+      debuggable false
+      jniDebuggable false
+      renderscriptDebuggable false
+      minifyEnabled true
+      zipAlignEnabled true
+      shrinkResources true
+      proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  kotlinOptions {
+    jvmTarget = '1.8'
+    useIR = true
+  }
+  buildFeatures {
+    viewBinding true
+    compose true
+  }
+  composeOptions {
+    kotlinCompilerVersion "$kotlin_version"
+    kotlinCompilerExtensionVersion Versions.compose
+  }
+  sourceSets {
+    main {
+      res.srcDirs = ["src/main/res"]
+      java {
+        srcDirs = ["src/main/java"]
+        srcDirs.forEach {
+          file("${it.path}/${appId.replace('.', '/')}/business").listFiles().each {
+            res.srcDirs += file("${it.path}/res")
+          }
+        }
+      }
+    }
+  }
+  packagingOptions {
+    jniLibs.useLegacyPackaging = true
+    pickFirst 'lib/*/libc++_shared.so'
+    exclude "DebugProbesKt.bin"
+    exclude 'META-INF/**'
+  }
+}
+
+dependencies {
+  implementation fileTree(dir: "libs", include: ["*.jar"])
+  implementation project(path: ":data:http")
+  implementation project(path: ":extra:banner")
+  implementation project(path: ":extra:image")
+  implementation project(path: ":extra:media")
+  implementation(Libs.Androidx.composeMaterial)
+  implementation(Libs.Androidx.composeLiveData)
+  implementation(Libs.Androidx.liveDataCompose)
+  implementation(Libs.Androidx.navigationFrag)
+  implementation(Libs.Androidx.paging)
+  implementation(Libs.reactNative)
+  implementation(Libs.jsc)
+  implementation(Libs.x5web)
+  implementation(Libs.joda)
+  implementation(Libs.Accompanist.coil)
+  implementation(Libs.Accompanist.insets)
+  implementation(Libs.Accompanist.indicators)
+  implementation(Libs.coilGif)
+  implementation(Libs.Dagger.android)
+  kapt(Libs.Dagger.compiler)
+  testImplementation(Libs.junit)
+}
+
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)

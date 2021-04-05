@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="EasyImageView">
+    <attr name="cornerType" format="integer" />
+    <attr name="allCorner" format="dimension" />
+    <attr name="startCorner" format="dimension" />
+    <attr name="topCorner" format="dimension" />
+    <attr name="endCorner" format="dimension" />
+    <attr name="bottomCorner" format="dimension" />
+    <attr name="topStartCorner" format="dimension" />
+    <attr name="topEndCorner" format="dimension" />
+    <attr name="bottomStartCorner" format="dimension" />
+    <attr name="bottomEndCorner" format="dimension" />
+  </declare-styleable>
+</resources>

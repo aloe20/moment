@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.tabs.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/tabLayout"
+  android:layout_width="wrap_content"
+  android:layout_height="match_parent"
+  android:layout_gravity="center"
+  app:tabIndicatorGravity="center"
+  app:tabIndicatorHeight="0dp"
+  app:tabSelectedTextColor="@color/black"
+  app:tabTextAppearance="@style/TitleTextAppearance"
+  app:tabTextColor="@color/color_desc" />

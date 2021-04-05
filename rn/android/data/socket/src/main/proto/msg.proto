@@ -1,0 +1,11 @@
+syntax = "proto3";
+package aloe.proto;
+option java_package = "com.aloe.proto";
+option java_outer_classname = "SocketMsg";
+//option java_multiple_files = true;
+enum Msg {
+    MSG_REQ_BROADCAST = 0;
+    MSG_RSP_BROADCAST = 1;
+    MSG_REQ_HEARTBEAT = 2;
+    MSG_RSP_HEARTBEAT = 3;
+}

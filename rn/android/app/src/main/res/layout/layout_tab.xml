@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  app:divider="@drawable/ic_divider"
+  app:showDividers="middle">
+
+  <include
+    android:id="@+id/layoutTitle"
+    layout="@layout/layout_title" />
+
+  <ViewStub
+    android:id="@+id/viewStubTab2"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:inflatedId="@id/tabLayout"
+    android:layout="@layout/layout_tab_child" />
+
+  <androidx.viewpager2.widget.ViewPager2
+    android:id="@+id/viewPager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+</androidx.appcompat.widget.LinearLayoutCompat>
