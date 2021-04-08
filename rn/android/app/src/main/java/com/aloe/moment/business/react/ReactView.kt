@@ -2,6 +2,7 @@ package com.aloe.moment.business.react
 
 import android.app.Application
 import android.content.Context
+import android.content.ContextWrapper
 import android.net.Uri
 import android.util.AttributeSet
 import androidx.annotation.MainThread
@@ -58,11 +59,7 @@ class ReactView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
   }
 
   private fun initActivity(context: Context) {
-    if (context is ViewComponentManager.FragmentContextWrapper) {
-      activity = context.fragment.requireActivity()
-    } else if (context is AppCompatActivity) {
-      activity = context
-    }
+    activity = (context as ContextWrapper).baseContext as AppCompatActivity
   }
 
   /**

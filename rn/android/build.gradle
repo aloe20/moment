@@ -7,7 +7,7 @@ buildscript {
   }
   dependencies {
     //noinspection AndroidGradlePluginVersion
-    classpath("com.android.tools.build:gradle:4.2.0-beta06")
+    classpath('com.android.tools.build:gradle:4.2.0-rc01')
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     //https://github.com/google/protobuf-gradle-plugin
     classpath("com.google.protobuf:protobuf-gradle-plugin:0.8.15")
@@ -61,7 +61,7 @@ allprojects {
           if (it.requested.name == "annotation") {
             it.useVersion("1.2.0")
           } else if (it.requested.name == "annotation-experimental") {
-            it.useVersion("1.1.0-rc02")
+            it.useVersion("1.1.0")
           }
           break
         case "androidx.appcompat":
@@ -82,7 +82,7 @@ allprojects {
           }
           break
         case "androidx.recyclerview":
-          it.useVersion("1.2.0-rc01")
+          it.useVersion("1.2.0")
           break
         case "androidx.transition":
           it.useVersion("1.4.0")

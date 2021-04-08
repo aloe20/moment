@@ -36,8 +36,8 @@ class SplashFrag : BasicFrag<SplashVm, ViewBinding>() {
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
     return ComposeView(requireContext()).apply {
       setContent { SplashLayout(vm) {
-        //findNavController().navigate(R.id.action_frag_splash_to_frag_home)
-        vm.sendUdpData()
+        findNavController().navigate(R.id.action_frag_splash_to_frag_home)
+        //vm.sendUdpData()
       } }
     }
   }

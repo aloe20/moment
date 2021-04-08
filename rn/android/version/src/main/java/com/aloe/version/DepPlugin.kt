@@ -14,7 +14,7 @@ object Versions {
   private const val compileSdk = 30
   private const val targetSdk = 30
   private const val buildTools = "30.0.3"
-  const val compose = "1.0.0-beta03"
+  const val compose = "1.0.0-beta04"
 }
 
 object Libs {
@@ -46,7 +46,7 @@ object Libs {
 
   object Dagger {
     //https://github.com/google/dagger
-    private const val version = "2.33-beta"
+    private const val version = "2.34-beta"
     private const val android = "com.google.dagger:hilt-android:$version"
     private const val compiler = "com.google.dagger:hilt-android-compiler:$version"
   }
@@ -67,7 +67,7 @@ object Libs {
 
   object Accompanist {
     //https://github.com/chrisbanes/accompanist
-    private const val version = "0.7.0"
+    private const val version = "0.7.1"
     private const val coil = "com.google.accompanist:accompanist-coil:$version"
     private const val insets = "com.google.accompanist:accompanist-insets:$version"
     private const val pager = "com.google.accompanist:accompanist-pager:$version"
@@ -83,8 +83,8 @@ object Libs {
     private const val datastore = "androidx.datastore:datastore-preferences:1.0.0-alpha08"
     private const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
     private const val liveDataRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
-    private const val liveDataCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha03"
-    private const val navigationFrag = "androidx.navigation:navigation-fragment-ktx:2.3.4"
+    private const val liveDataCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha04"
+    private const val navigationFrag = "androidx.navigation:navigation-fragment-ktx:2.3.5"
     private const val paging = "androidx.paging:paging-runtime-ktx:3.0.0-beta03"
     private const val roomCompiler = "androidx.room:room-compiler:$roomVersion"
     private const val room = "androidx.room:room-ktx:$roomVersion"
