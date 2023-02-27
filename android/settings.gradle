@@ -1,0 +1,25 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    enableFeaturePreview("VERSION_CATALOGS")
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { setUrl("https://storage.googleapis.com/download.flutter.io") }
+    }
+}
+rootProject.name = "moment"
+include ':app', ':skin:dark', ':lint'
+setBinding(new Binding([gradle: this]))
+evaluate(new File(settingsDir.parentFile, "flu/flu/.android/include_flutter.groovy"))
+include ':flu'
+project(':flu').projectDir = new File('../flu')
+includeBuild('../node_modules/react-native-gradle-plugin')
+includeBuild('../lib')
+

@@ -1,0 +1,46 @@
+plugins {
+  id 'com.android.application'
+}
+
+android {
+  namespace 'com.aloe.dark'
+  compileSdk libs.versions.sdk.compile.get().toInteger()
+  buildToolsVersion libs.versions.sdk.tool.get()
+  defaultConfig {
+    applicationId "com.aloe.skin"
+    minSdk libs.versions.sdk.min.get().toInteger()
+    targetSdk libs.versions.sdk.target.get().toInteger()
+    versionCode 1
+    versionName "1.0"
+    manifestPlaceholders = [app_name: "skin"]
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
+  }
+
+  applicationVariants.all { variant ->
+    variant.outputs.all {
+      outputFileName = "dark.apk"
+    }
+  }
+}
+
+task copySkin(type: Copy) {
+  copy {
+    from(new File(buildDir, "outputs/apk/release/dark.apk").path)
+    into(new File(rootDir, "app/src/main/assets").path)
+  }
+}
+
+afterEvaluate {
+  def ar = tasks.findByName("assembleRelease")
+  ar.finalizedBy(copySkin)
+}

@@ -1,0 +1,43 @@
+[versions]
+# https://github.com/JetBrains/kotlin
+sdk-min = "24"
+sdk-compile = "33"
+sdk-target = "33"
+sdk-tool = "33.0.2"
+kotlin = "1.8.10"
+androidGradlePlugin = "7.4.1"
+androidxActivity = "1.7.0-beta02"
+androidxAppcompat = "1.6.1"
+androidxLifecycle = "2.6.0-rc01"
+androidxCompose = "1.4.0-beta02"
+androidxCore = "1.10.0-beta01"
+androidxFragment = "1.5.5"
+# https://github.com/google/accompanist
+accompanist = "0.29.1-alpha"
+# https://github.com/diffplug/spotless
+spotless = "6.15.0"
+# https://github.com/pinterest/ktlint
+ktlint = "0.48.2"
+# https://github.com/google/ksp
+ksp = "1.8.10-1.0.9"
+# https://github.com/google/desugar_jdk_libs
+androidDesugarJdkLibs = "2.0.2"
+
+[libraries]
+androidx-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
+compose-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "androidxCompose" }
+compose-material3 = "androidx.compose.material3:material3:+"
+# https://github.com/square/retrofit
+retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
+junit = "junit:junit:4.13.2"
+android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

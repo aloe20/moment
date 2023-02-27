@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly "com.android.tools.lint:lint-api:30.4.1"
+    compileOnly "com.android.tools.lint:lint-checks:30.4.1"
+}
+
+jar {
+    manifest {
+        attributes("Lint-Registry-v2": "com.aloe.lint.AppIssueRegistry")
+    }
+}
