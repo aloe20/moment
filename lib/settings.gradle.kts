@@ -18,4 +18,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "lib"
-include(":convention", ":web")
+include(":convention", ":web", ":data:bean", ":data:http", ":data:local", ":data:socket")
