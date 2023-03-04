@@ -17,6 +17,8 @@
 package com.aloe.http
 
 import android.content.Context
+import com.aloe.http.factory.BitmapConverterFactory
+import com.aloe.http.factory.EnumConverterFactory
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -56,7 +58,8 @@ internal class HttpModule {
     fun getHttp(@ApplicationContext ctx: Context, client: OkHttpClient): IHttp {
         return HttpImpl(
             ctx, Retrofit.Builder()
-            .baseUrl("https://aloe20.cn/").addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+            .baseUrl("http://httpbin.org/").addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+            .addConverterFactory(EnumConverterFactory.create()).addConverterFactory(BitmapConverterFactory.create())
             .client(client).build().create()
         )
     }

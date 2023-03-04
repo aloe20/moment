@@ -27,24 +27,26 @@ android {
   kotlinOptions {
     jvmTarget = "11"
   }
-}
-
-val sourcesJar by tasks.registering(Jar::class){
-  from(android.sourceSets["main"].java.srcDirs)
-  archiveClassifier.set("sources")
-}
-
-publishing{
-  repositories {
-    mavenLocal()
+  publishing{
+    singleVariant("debug") {
+      withSourcesJar()
+      withJavadocJar()
+    }
   }
-  publications{
-    create<MavenPublication>("Main"){
-      artifact(sourcesJar)
-      afterEvaluate { artifact(tasks.getByName("bundleDebugAar")) }
-      groupId = "com.aloe"
-      artifactId = "web"
-      version = "0.1"
+}
+
+afterEvaluate {
+  publishing{
+    repositories {
+      mavenLocal()
+    }
+    publications{
+      register<MavenPublication>("Main"){
+        groupId = "com.aloe"
+        artifactId = "web"
+        version = "0.1"
+        afterEvaluate { from(components["debug"]) }
+      }
     }
   }
 }

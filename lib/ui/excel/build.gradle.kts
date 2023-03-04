@@ -17,11 +17,10 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
 }
 
 android {
-    namespace = "com.aloe.bean"
+    namespace = "com.aloe.excel"
     compileSdk = 33
     buildToolsVersion = "33.0.2"
     defaultConfig {
@@ -47,8 +46,6 @@ android {
         jvmTarget = "11"
     }
 }
-
 dependencies {
-    api(libs.squareup.moshi)
-    ksp(libs.squareup.moshi.codegen)
+    api(libs.androidx.recycler)
 }

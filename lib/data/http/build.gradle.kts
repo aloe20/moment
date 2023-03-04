@@ -17,7 +17,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.kapt")
+    id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
 }
 
@@ -53,5 +53,5 @@ dependencies {
     implementation(project(mapOf("path" to ":data:bean")))
     api(libs.squareup.retrofit.moshi)
     implementation(libs.google.dagger.android)
-    kapt(libs.google.dagger.compiler)
+    ksp(libs.google.dagger.compiler)
 }
