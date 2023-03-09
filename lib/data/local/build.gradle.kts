@@ -17,6 +17,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.protobuf)
 }
 
 android {
@@ -46,6 +47,24 @@ android {
         jvmTarget = "11"
     }
 }
+protobuf {
+    protoc {
+        artifact = libs.google.protobuf.protoc.get().toString()
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                val java by registering {
+                    option("lite")
+                }
+                val kotlin by registering {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
 dependencies {
-
+    api(libs.androidx.store.preferences)
+    api(libs.google.protobuf.kotlin.lite)
 }

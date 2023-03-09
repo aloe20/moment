@@ -70,7 +70,6 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.compose.preview)
     implementation(libs.compose.material3)
-    implementation(libs.retrofit)
     implementation("com.facebook.react:react-android")
     implementation("com.facebook.react:hermes-android")
     testImplementation(libs.junit)
