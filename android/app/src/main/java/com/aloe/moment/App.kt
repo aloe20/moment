@@ -17,8 +17,6 @@
 package com.aloe.moment
 
 import android.app.Application
-import android.util.Log
-import com.aloe.data.Utils
 import com.aloe.moment.flu.FluView
 import com.aloe.moment.react.ReactView
 
@@ -27,7 +25,5 @@ class App : Application() {
         super.onCreate()
         FluView.initEngineGroup(this)
         ReactView.initRn(this)
-        val name = Utils.getName()
-        Log.e("aloe", "---> $name")
     }
 }

@@ -1,3 +1,5 @@
+import groovy.lang.Closure
+
 /*
  * Copyright 2023 The Android Open Source Project
  *
@@ -74,3 +76,5 @@ dependencies {
     implementation("com.facebook.react:hermes-android")
     testImplementation(libs.junit)
 }
+apply(from = "../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle")
+(extra.get("applyNativeModulesAppBuildGradle")as Closure<*>)(project)

@@ -13,12 +13,13 @@ dependencyResolutionManagement {
         maven { setUrl("https://storage.googleapis.com/download.flutter.io") }
     }
 }
-rootProject.name = "moment"
+rootProject.name = "android"
 include ':app', ':skin:dark', ':lint'
 setBinding(new Binding([gradle: this]))
-evaluate(new File(settingsDir.parentFile, "flu/flu/.android/include_flutter.groovy"))
+evaluate(file("../flu/flu/.android/include_flutter.groovy"))
 include ':flu'
-project(':flu').projectDir = new File('../flu')
+project(':flu').projectDir = file('../flu/flu')
 includeBuild('../node_modules/react-native-gradle-plugin')
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 includeBuild('../lib')
 

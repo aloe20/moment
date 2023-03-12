@@ -17,9 +17,7 @@ Bob --> Alice: Authentication Response
 Alice -> Bob: Another authentication Request
 Alice <-- Bob: Another authentication Response
 @enduml
-
 ```
-
 ```puml
 @startjson
 {
@@ -28,7 +26,6 @@ Alice <-- Bob: Another authentication Response
    "color": ["Red", "Green"]
 }
 @endjson
-
 ```
 
 ```mermaid

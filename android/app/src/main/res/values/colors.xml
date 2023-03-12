@@ -26,7 +26,7 @@
     <color name="primary">#FF7D5260</color>
     <color name="onPrimary">#FFFFFF</color>
     <color name="primaryContainer">#EADDFF</color>
-    <color name="OnPrimaryContainer">#21005D</color>
+    <color name="onPrimaryContainer">#21005D</color>
     <color name="inversePrimary">#D0BCFF</color>
     <color name="secondary">#FF625b71</color>
     <color name="onSecondary">#FFFFFF</color>

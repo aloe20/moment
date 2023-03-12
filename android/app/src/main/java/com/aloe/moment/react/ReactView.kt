@@ -20,6 +20,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.net.Uri
+import android.os.Bundle
 import android.util.AttributeSet
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
@@ -33,6 +34,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -159,7 +161,7 @@ class ReactView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         startReactApplication(
             ReactHost(context.applicationContext as Application, jsBundle).reactInstanceManager,
             "rn",
-            null,
+            bundleOf("router" to "hello1", "name" to "Android"),
         )
     }
 

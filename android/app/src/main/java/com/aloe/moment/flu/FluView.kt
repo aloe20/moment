@@ -67,6 +67,7 @@ class FluView : FlutterView, DefaultLifecycleObserver, ExclusiveAppComponent<Act
 
     private fun initEngine(context: Context) {
         flutterEngine = feGroup.createAndRunEngine(context.applicationContext, DartExecutor.DartEntrypoint.createDefault(), "/")
+        flutterEngine.plugins.add(ResPlugin())
         ActivityCompat.setPermissionCompatDelegate(object : ActivityCompat.PermissionCompatDelegate {
             override fun requestPermissions(activity: Activity, permissions: Array<out String>, requestCode: Int): Boolean {
                 return false

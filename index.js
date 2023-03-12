@@ -1,12 +1,25 @@
 import React from 'react';
-import {AppRegistry, StyleSheet, Text, View} from 'react-native';
+import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 
-const HelloWorld = () => {
+const Hello1 = (props) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.hello}>Hello, World!</Text>
+      <Text style={styles.hello}>Hello1, {props.name}!</Text>
     </View>
   );
+}
+const Hello2 = (props) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.hello}>Hello2, {props.name}!</Text>
+    </View>
+  );
+}
+const MainPage = (props) => {
+  switch (props.router) {
+    case 'hello1': return <Hello1 name={props.name}></Hello1>;
+    default: return <Hello2 name={props.name}></Hello2>;
+  }
 };
 var styles = StyleSheet.create({
   container: {
@@ -20,7 +33,4 @@ var styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent(
-  'rn',
-  () => HelloWorld,
-);
+AppRegistry.registerComponent('rn', () => MainPage);
