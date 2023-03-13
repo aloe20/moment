@@ -17,7 +17,6 @@
 package com.aloe.moment.flu
 
 import android.content.Context
-import android.util.Log
 import androidx.core.content.ContextCompat
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -25,9 +24,9 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
-class ResPlugin: FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware {
-    private lateinit var channel : MethodChannel
-    private lateinit var ctx:Context
+class ResPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware {
+    private lateinit var channel: MethodChannel
+    private lateinit var ctx: Context
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(binding.binaryMessenger, "res")
         channel.setMethodCallHandler(this)
@@ -39,11 +38,12 @@ class ResPlugin: FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware {
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
-            "getColor"->{
+            "getColor" -> {
                 val colorName = call.argument<String>("name")
                 val id = ctx.resources.getIdentifier(colorName, "color", ctx.packageName)
-                result.success(if (id==0) 0 else ContextCompat.getColor(ctx, id))
-            } else -> result.notImplemented()
+                result.success(if (id == 0) 0 else ContextCompat.getColor(ctx, id))
+            }
+            else -> result.notImplemented()
         }
     }
 

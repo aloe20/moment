@@ -20,7 +20,9 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -38,7 +40,7 @@ import io.flutter.plugin.platform.PlatformPlugin
 
 @Composable
 fun FlutterLayout() {
-    AndroidView(factory = { FluView(it) })
+    AndroidView(factory = { FluView(it) }, modifier = Modifier.fillMaxSize())
 }
 
 class FluView : FlutterView, DefaultLifecycleObserver, ExclusiveAppComponent<Activity> {
@@ -49,15 +51,24 @@ class FluView : FlutterView, DefaultLifecycleObserver, ExclusiveAppComponent<Act
         initEngine(context)
     }
 
-    constructor(context: Context, flutterSurfaceView: FlutterSurfaceView) : super(context, flutterSurfaceView) {
+    constructor(context: Context, flutterSurfaceView: FlutterSurfaceView) : super(
+        context,
+        flutterSurfaceView
+    ) {
         initEngine(context)
     }
 
-    constructor(context: Context, flutterTextureView: FlutterTextureView) : super(context, flutterTextureView) {
+    constructor(context: Context, flutterTextureView: FlutterTextureView) : super(
+        context,
+        flutterTextureView
+    ) {
         initEngine(context)
     }
 
-    constructor(context: Context, flutterImageView: FlutterImageView) : super(context, flutterImageView) {
+    constructor(context: Context, flutterImageView: FlutterImageView) : super(
+        context,
+        flutterImageView
+    ) {
         initEngine(context)
     }
 
@@ -66,15 +77,33 @@ class FluView : FlutterView, DefaultLifecycleObserver, ExclusiveAppComponent<Act
     }
 
     private fun initEngine(context: Context) {
-        flutterEngine = feGroup.createAndRunEngine(context.applicationContext, DartExecutor.DartEntrypoint.createDefault(), "/")
+        flutterEngine = feGroup.createAndRunEngine(
+            context.applicationContext,
+            DartExecutor.DartEntrypoint.createDefault(),
+            "/"
+        )
         flutterEngine.plugins.add(ResPlugin())
-        ActivityCompat.setPermissionCompatDelegate(object : ActivityCompat.PermissionCompatDelegate {
-            override fun requestPermissions(activity: Activity, permissions: Array<out String>, requestCode: Int): Boolean {
+        ActivityCompat.setPermissionCompatDelegate(object :
+            ActivityCompat.PermissionCompatDelegate {
+            override fun requestPermissions(
+                activity: Activity,
+                permissions: Array<out String>,
+                requestCode: Int
+            ): Boolean {
                 return false
             }
 
-            override fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?): Boolean {
-                return flutterEngine.activityControlSurface.onActivityResult(requestCode, resultCode, data)
+            override fun onActivityResult(
+                activity: Activity,
+                requestCode: Int,
+                resultCode: Int,
+                data: Intent?
+            ): Boolean {
+                return flutterEngine.activityControlSurface.onActivityResult(
+                    requestCode,
+                    resultCode,
+                    data
+                )
             }
         })
     }

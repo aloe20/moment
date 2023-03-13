@@ -10,8 +10,8 @@ java {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    compileOnly "com.android.tools.lint:lint-api:30.4.1"
-    compileOnly "com.android.tools.lint:lint-checks:30.4.1"
+    compileOnly "com.android.tools.lint:lint-api:30.3.1"
+    compileOnly "com.android.tools.lint:lint-checks:30.3.1"
 }
 
 jar {

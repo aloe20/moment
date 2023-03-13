@@ -19,28 +19,26 @@ package com.aloe.moment
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.aloe.moment.flu.FlutterLayout
-import com.aloe.moment.react.ReactLayout
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.aloe.moment.main.mainPage
 import com.aloe.moment.ui.theme.MomentTheme
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MomentTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    HorizontalPager(pageCount = 2) {
-                        when (it) {
-                            0 -> FlutterLayout()
-                            1 -> ReactLayout(url = "assets://index.android.bundle")
-                        }
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    NavHost(navController = rememberNavController(), startDestination = "mainPage") {
+                        mainPage()
                     }
                 }
             }

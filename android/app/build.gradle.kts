@@ -1,5 +1,3 @@
-import groovy.lang.Closure
-
 /*
  * Copyright 2023 The Android Open Source Project
  *
@@ -72,9 +70,12 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.compose.preview)
     implementation(libs.compose.material3)
+    implementation(libs.compose.navigation)
+    implementation(libs.androidx.startup)
+    //implementation(libs.accompanist.systemui)
     implementation("com.facebook.react:react-android")
     implementation("com.facebook.react:hermes-android")
     testImplementation(libs.junit)
 }
 apply(from = "../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle")
-(extra.get("applyNativeModulesAppBuildGradle")as Closure<*>)(project)
+(extra.get("applyNativeModulesAppBuildGradle")as groovy.lang.Closure<*>)(project)

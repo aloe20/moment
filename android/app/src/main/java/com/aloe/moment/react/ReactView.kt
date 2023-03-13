@@ -20,17 +20,12 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.net.Uri
-import android.os.Bundle
 import android.util.AttributeSet
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.MainThread
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -60,21 +55,25 @@ import okio.buffer
 import okio.sink
 import java.io.File
 import java.io.IOException
+
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun ReactLayout(url: String) {
-    Scaffold(modifier = Modifier.statusBarsPadding()) {
-        Column(modifier = Modifier.fillMaxSize().padding(it)) {
-            AndroidView(
-                factory = { ReactView(it).apply { setBackBtnHandler { /*navController.navigateUp()*/ } } },
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                it.loadPage(Uri.parse(url))
-            }
+    Column(modifier = Modifier.fillMaxSize()) {
+        AndroidView(
+            factory = { ReactView(it).apply { setBackBtnHandler { /*navController.navigateUp()*/ } } },
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            it.loadPage(Uri.parse(url))
         }
     }
 }
-class ReactView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
+
+class ReactView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) :
     ReactRootView(context, attrs, defStyle) {
     private var activity: ComponentActivity? = context as? ComponentActivity
     private var backCallback: (() -> Unit)? = null
@@ -89,7 +88,10 @@ class ReactView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
                     activity?.also {
                         when (event) {
-                            Lifecycle.Event.ON_RESUME -> reactInstanceManager?.onHostResume(it, btnHandler)
+                            Lifecycle.Event.ON_RESUME -> reactInstanceManager?.onHostResume(
+                                it,
+                                btnHandler
+                            )
                             Lifecycle.Event.ON_PAUSE -> reactInstanceManager?.onHostPause(it)
                             Lifecycle.Event.ON_DESTROY -> {
                                 reactInstanceManager?.onHostDestroy(it)
@@ -128,7 +130,8 @@ class ReactView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             if (file.exists() && file.length() > 0) {
                 realLoadPage(Uri.fromFile(file))
             } else {
-                OkHttpClientProvider.getOkHttpClient().newCall(Request.Builder().url(jsBundle.toString()).build())
+                OkHttpClientProvider.getOkHttpClient()
+                    .newCall(Request.Builder().url(jsBundle.toString()).build())
                     .enqueue(object : Callback {
                         override fun onFailure(call: Call, e: IOException) {
                             e.printStackTrace()
@@ -170,10 +173,15 @@ class ReactView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     companion object {
         @Volatile
         private var isInitialized = false
-        private class ReactHost(app: Application, private val jsBundle: Uri) : ReactNativeHost(app) {
+
+        private class ReactHost(app: Application, private val jsBundle: Uri) :
+            ReactNativeHost(app) {
             override fun getUseDeveloperSupport(): Boolean = BuildConfig.DEBUG
 
-            override fun getPackages(): MutableList<ReactPackage> = mutableListOf(MainReactPackage(), RnReactPackage())
+            override fun getPackages(): MutableList<ReactPackage> = mutableListOf(
+                MainReactPackage(),
+                RnReactPackage()
+            )
 
             override fun getJSMainModuleName(): String = "index"
 

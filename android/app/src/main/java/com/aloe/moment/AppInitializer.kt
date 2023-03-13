@@ -16,14 +16,16 @@
 
 package com.aloe.moment
 
-import android.app.Application
+import android.content.Context
+import androidx.startup.Initializer
 import com.aloe.moment.flu.FluView
 import com.aloe.moment.react.ReactView
 
-class App : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        FluView.initEngineGroup(this)
-        ReactView.initRn(this)
+class AppInitializer : Initializer<Unit> {
+    override fun create(context: Context) {
+        FluView.initEngineGroup(context)
+        ReactView.initRn(context)
     }
+
+    override fun dependencies(): MutableList<Class<out Initializer<*>>> = mutableListOf()
 }

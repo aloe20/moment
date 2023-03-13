@@ -10,7 +10,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { setUrl("https://jitpack.io") }
     }
     versionCatalogs {
         create("libs") {
@@ -19,4 +18,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "lib"
-include(":convention", ":ui:web", ":data:bean", ":data:http", ":data:local", ":data:socket", ":ui:excel", ":ui:chart")
+include(":convention")

@@ -17,29 +17,88 @@
 package com.aloe.moment.main
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.aloe.moment.flu.FlutterLayout
 import com.aloe.moment.react.ReactLayout
+import kotlinx.coroutines.launch
+
+fun NavGraphBuilder.mainPage() {
+    composable("mainPage") {
+        MainLayout()
+    }
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainLayout() {
-    Column() {
-        HorizontalPager(pageCount = 2, modifier = Modifier.weight(1F)) {
+    val pageState = rememberPagerState()
+    val items = mutableListOf("推荐", "项目", "公众号", "我的")
+    val scope = rememberCoroutineScope()
+    Column(modifier = Modifier.background(Color.White)) {
+        HorizontalPager(
+            modifier = Modifier.weight(1F),
+            pageCount = items.size,
+            state = pageState
+        ) {
             when (it) {
-                0 -> FlutterLayout()
+                0 -> Text(
+                    text = "第一页", modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color.Red)
+                )
                 1 -> ReactLayout(url = "assets://index.android.bundle")
+                2 -> FlutterLayout()
+                3 -> Text(
+                    text = "第四页", modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color.Blue)
+                )
             }
         }
-        
-        Row(modifier = Modifier.height(56.dp)) {
-
+        Row {
+            items.forEachIndexed { index, s ->
+                Column(modifier = Modifier.weight(1F)) {
+                    Icon(
+                        painter = painterResource(id = android.R.drawable.ic_menu_add),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .clickable {
+                                scope.launch {
+                                    pageState.scrollToPage(index, 0F)
+                                }
+                            },
+                        tint = if (index == pageState.currentPage) Color.Red else Color.Black
+                    )
+                    Text(
+                        text = s,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .clickable {
+                                scope.launch {
+                                    pageState.scrollToPage(index, 0F)
+                                }
+                            },
+                        color = if (index == pageState.currentPage) Color.Red else Color.Black
+                    )
+                }
+            }
         }
     }
 }
