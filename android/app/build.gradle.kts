@@ -16,6 +16,8 @@
 plugins {
     id("moment.android.application")
     id("com.facebook.react")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -52,6 +54,13 @@ android {
             )
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
     buildFeatures {
         compose = true
     }
@@ -67,12 +76,14 @@ android {
 
 dependencies {
     implementation(project(":flutter"))
+    implementation(project(":data:http"))
     implementation(libs.androidx.activity)
     implementation(libs.compose.preview)
     implementation(libs.compose.material3)
     implementation(libs.compose.navigation)
     implementation(libs.androidx.startup)
-    //implementation(libs.accompanist.systemui)
+    implementation(libs.google.dagger.android)
+    kapt(libs.google.dagger.compiler)
     implementation("com.facebook.react:react-android")
     implementation("com.facebook.react:hermes-android")
     testImplementation(libs.junit)

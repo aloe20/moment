@@ -18,6 +18,8 @@ package com.aloe.http.factory
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -34,11 +36,10 @@ class BitmapConverterFactory : Converter.Factory() {
         fun create(): BitmapConverterFactory = BitmapConverterFactory()
         private class BitmapResponseBodyConverter : Converter<ResponseBody, Bitmap> {
             override fun convert(value: ResponseBody): Bitmap? {
-                val bitmap = value.use {
+                return value.use {
                     val bytes = value.bytes()
                     BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                 }
-                return bitmap
             }
         }
     }

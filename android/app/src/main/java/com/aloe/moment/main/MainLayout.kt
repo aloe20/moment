@@ -17,11 +17,13 @@
 package com.aloe.moment.main
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
@@ -31,11 +33,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.aloe.moment.flu.FlutterLayout
 import com.aloe.moment.react.ReactLayout
+import com.aloe.moment.recommend.RecommendLayout
+import com.aloe.moment.rememberHttpPainter
 import kotlinx.coroutines.launch
 
 fun NavGraphBuilder.mainPage() {
@@ -57,17 +63,16 @@ fun MainLayout() {
             state = pageState
         ) {
             when (it) {
-                0 -> Text(
-                    text = "第一页", modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = Color.Red)
-                )
+                0 -> RecommendLayout()
                 1 -> ReactLayout(url = "assets://index.android.bundle")
                 2 -> FlutterLayout()
-                3 -> Text(
-                    text = "第四页", modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = Color.Blue)
+                3 -> Image(
+                    painter = rememberHttpPainter(
+                        url = "https://www.wanandroid.com/blogimgs/62c1bd68-b5f3-4a3c-a649-7ca8c7dfabe6.png",
+                    ),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = "",
+                    modifier = Modifier.fillMaxWidth().height(160.dp)
                 )
             }
         }

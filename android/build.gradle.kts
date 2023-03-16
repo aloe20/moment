@@ -26,11 +26,9 @@ plugins {
     alias(libs.plugins.android.application).apply(false)
     alias(libs.plugins.android.library).apply(false)
     alias(libs.plugins.kotlin.android).apply(false)
-    alias(libs.plugins.kotlin.jvm).apply(false)
     alias(libs.plugins.kotlin.serialization).apply(false)
     alias(libs.plugins.spotless).apply(false)
     alias(libs.plugins.hilt).apply(false)
-    alias(libs.plugins.ksp).apply(false)
 }
 subprojects {
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
@@ -66,9 +64,6 @@ subprojects {
                 "androidx.core" -> useVersion(libs.versions.androidxCore.get())
                 "androidx.fragment" -> useVersion(libs.versions.androidxFragment.get())
                 "androidx.tracing" -> useVersion(libs.versions.androidxTracing.get())
-                "com.android.tools.build" -> if (requested.name!="manifest-merger") useVersion(libs.versions.merger.get())
-                "com.google.errorprone" -> useVersion(libs.versions.errorprone.get())
-                "com.google.guava" -> if(requested.name=="guava") useVersion(libs.versions.guava.get())
                 "com.squareup.okhttp3" -> useVersion(libs.versions.okhttp.get())
                 "com.squareup.okio" -> useVersion(libs.versions.okio.get())
                 "org.jetbrains.kotlin" -> useVersion(libs.versions.kotlin.get())

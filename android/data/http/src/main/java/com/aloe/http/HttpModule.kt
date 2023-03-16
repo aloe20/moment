@@ -25,6 +25,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Cache
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -49,8 +50,12 @@ internal class HttpModule {
 
     @Provides
     @Singleton
-    fun getOkHttpClient(executor: ExecutorService): OkHttpClient = OkHttpClient.Builder().dispatcher(
-        Dispatcher(executor)
+    fun getDispatcher(executor: ExecutorService):Dispatcher = Dispatcher(executor)
+
+    @Provides
+    @Singleton
+    fun getOkHttpClient(@ApplicationContext ctx: Context,dispatcher: Dispatcher): OkHttpClient = OkHttpClient.Builder().dispatcher(dispatcher).cache(
+        Cache(ctx.cacheDir, 1024_1000_100)
     ).build()
 
     @Provides
@@ -58,8 +63,9 @@ internal class HttpModule {
     fun getHttp(@ApplicationContext ctx: Context, client: OkHttpClient): IHttp {
         return HttpImpl(
             ctx, Retrofit.Builder()
-            .baseUrl("http://httpbin.org/").addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
-            .addConverterFactory(EnumConverterFactory.create()).addConverterFactory(BitmapConverterFactory.create())
+            .baseUrl("http://httpbin.org/")
+            .addConverterFactory(BitmapConverterFactory.create()).addConverterFactory(EnumConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
             .client(client).build().create()
         )
     }

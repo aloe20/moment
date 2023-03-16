@@ -17,6 +17,7 @@
 package com.aloe.http
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Environment
 import com.aloe.bean.ArticleBean
 import com.aloe.bean.BannerBean
@@ -59,4 +60,6 @@ internal class HttpImpl constructor(private val ctx: Context, private val api: H
             }
         }
     }
+
+    override suspend fun loadImage(url: String): Result<Bitmap> = runCatching { api.loadImage(url) }
 }

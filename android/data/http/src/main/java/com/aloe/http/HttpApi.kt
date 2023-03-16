@@ -16,12 +16,14 @@
 
 package com.aloe.http
 
+import android.graphics.Bitmap
 import com.aloe.bean.ArticleBean
 import com.aloe.bean.BannerBean
 import com.aloe.bean.HttpBean
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.Streaming
 import retrofit2.http.Url
 
@@ -31,6 +33,11 @@ internal interface HttpApi {
 
     @GET("article/top/json")
     suspend fun loadTop(): HttpBean<List<ArticleBean>>
+
+    @GET
+    @Headers("Cache-Control:public,max-age=360000")
+    @Streaming
+    suspend fun loadImage(@Url url: String): Bitmap
 
     @GET
     @Streaming

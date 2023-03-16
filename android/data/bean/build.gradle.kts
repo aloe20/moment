@@ -17,7 +17,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
+    id("kotlin-kapt")
 }
 
 android {
@@ -50,5 +50,5 @@ android {
 
 dependencies {
     api(libs.squareup.moshi)
-    ksp(libs.squareup.moshi.codegen)
+    kapt(libs.squareup.moshi.codegen)
 }

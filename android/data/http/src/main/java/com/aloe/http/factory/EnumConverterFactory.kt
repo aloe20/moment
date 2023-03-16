@@ -17,7 +17,9 @@
 package com.aloe.http.factory
 
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -30,11 +32,7 @@ class EnumConverterFactory: Converter.Factory() {
         methodAnnotations: Array<out Annotation>,
         retrofit: Retrofit
     ): Converter<*, RequestBody>? {
-        if ((type as? Class<*>)?.isEnum==true){
-            return EnumRequestConverter()
-        } else {
-            return null
-        }
+        return if ((type as? Class<*>)?.isEnum==true) EnumRequestConverter() else null
     }
 
     override fun responseBodyConverter(
@@ -49,7 +47,7 @@ class EnumConverterFactory: Converter.Factory() {
         fun create(): EnumConverterFactory = EnumConverterFactory()
         private class EnumRequestConverter:Converter<Enum<*>,RequestBody>{
             override fun convert(value: Enum<*>): RequestBody {
-                return RequestBody.create(MediaType.get("application/json; charset=UTF-8"), value.toString())
+                return value.toString().toRequestBody("application/json; charset=UTF-8".toMediaType())
             }
         }
 

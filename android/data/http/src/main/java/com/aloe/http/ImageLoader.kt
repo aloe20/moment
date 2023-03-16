@@ -13,13 +13,11 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-subprojects {
-    configurations.all {
-        resolutionStrategy.eachDependency {
-            when (requested.group) {
-                "com.android.tools.build" -> if (requested.name!="manifest-merger") useVersion(libs.versions.merger.get())
-                "org.jetbrains.kotlin" -> useVersion(libs.versions.kotlin.get())
-            }
-        }
-    }
+
+package com.aloe.http
+
+import android.graphics.Bitmap
+
+interface ImageLoader {
+    suspend fun loadImage(url: String): Result<Bitmap>
 }

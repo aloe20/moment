@@ -14,14 +14,18 @@
  *   limitations under the License.
  */
 
-package com.aloe.http
+package com.aloe.moment
 
-import com.aloe.bean.ArticleBean
-import com.aloe.bean.BannerBean
-import kotlinx.coroutines.flow.Flow
+import android.app.Application
+import com.aloe.http.IHttp
+import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
-interface IHttp:ImageLoader {
-    suspend fun loadBanner(): Result<List<BannerBean>?>
-    suspend fun loadTop(): Result<List<ArticleBean>?>
-    fun download(url: String, path:String?=null): Flow<Int>
+@HiltAndroidApp
+class App:Application() {
+    @Inject
+    lateinit var http:IHttp
+    override fun onCreate() {
+        super.onCreate()
+    }
 }
