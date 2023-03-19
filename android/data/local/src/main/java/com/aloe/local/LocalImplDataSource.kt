@@ -22,6 +22,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
+import com.aloe.bean.ArticleBean
+import com.aloe.local.room.AppDatabase
+import com.aloe.local.room.ArticleDao
 import com.aloe.local.store.bannerDataStore
 import com.aloe.proto.Banner
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -33,7 +36,8 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import javax.inject.Inject
 
-internal class LocalImplDataSource @Inject constructor(@ApplicationContext val ctx: Context) : LocalDataSource {
+internal class LocalImplDataSource @Inject constructor(@ApplicationContext val ctx: Context,db:AppDatabase) : LocalDataSource {
+    private val articleDao:ArticleDao = db.getArticleDao()
     private val settingsDataStore: DataStore<Preferences> =
         preferencesDataStore(name = "settings").getValue(ctx, Preferences::javaClass)
 
@@ -66,6 +70,9 @@ internal class LocalImplDataSource @Inject constructor(@ApplicationContext val c
     }
 
     override fun getBanner(): Flow<MutableList<Banner>?> = ctx.bannerDataStore.data.map { it?.bannersList }
+    override suspend fun putTop(top: List<ArticleBean>) = articleDao.putArticles(top)
+
+    override suspend fun getTop(): List<ArticleBean> = articleDao.getArticles()
 }
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")

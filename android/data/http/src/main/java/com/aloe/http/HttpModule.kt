@@ -71,25 +71,11 @@ internal class HttpModule {
     @Singleton
     fun getHttpApi(client: OkHttpClient): HttpApi = Retrofit.Builder()
         //.baseUrl("http://httpbin.org/")
-        .baseUrl("http://192.168.137.1:3000/")
+        .baseUrl("http://192.168.1.6:3000/")
         .addConverterFactory(BitmapConverterFactory.create())
         .addConverterFactory(EnumConverterFactory.create())
         .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
         .client(client).build().create()
-
-    /*@Provides
-    @Singleton
-    fun getDataSource(@ApplicationContext ctx: Context, client: OkHttpClient): RemoteDataSource {
-        return RemoteImplDataSource(
-            ctx, Retrofit.Builder()
-            //.baseUrl("http://httpbin.org/")
-            .baseUrl("http://192.168.137.1:3000/")
-            .addConverterFactory(BitmapConverterFactory.create()).addConverterFactory(EnumConverterFactory.create())
-            .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
-            .client(client).build().create(),
-            LocalImpl(ctx)
-        )
-    }*/
 }
 
 @Module(includes = [HttpModule::class])

@@ -19,9 +19,6 @@ package com.aloe.moment
 import android.app.Application
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.FilterQuality
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.ImageLoader
 import coil.compose.AsyncImagePainter
@@ -36,13 +33,18 @@ import javax.inject.Inject
 class App:Application() {
     @Inject
     lateinit var okHttpClient: OkHttpClient
+    lateinit var imageLoader: ImageLoader
+    override fun onCreate() {
+        super.onCreate()
+        imageLoader = ImageLoader.Builder(this).okHttpClient((applicationContext as App).okHttpClient)
+            .diskCache(DiskCache.Builder().directory(externalCacheDir?:cacheDir).build())
+            .memoryCache(MemoryCache.Builder(this).build())
+            .build()
+    }
 }
 
 val Context.imageLoader: ImageLoader
-    get() = ImageLoader.Builder(this).okHttpClient((applicationContext as App).okHttpClient)
-        .diskCache(DiskCache.Builder().directory(externalCacheDir?:cacheDir).build())
-        .memoryCache(MemoryCache.Builder(this).build())
-        .build()
+    get() = (applicationContext as App).imageLoader
 
 @Composable
 fun rememberAsyncPainter(model: Any?): AsyncImagePainter {

@@ -17,6 +17,7 @@
 plugins {
     id("moment.android.library")
     id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -36,4 +37,6 @@ android {
 dependencies {
     api(libs.squareup.moshi)
     kapt(libs.squareup.moshi.codegen)
+    api("androidx.room:room-ktx:2.5.0")
+    ksp("androidx.room:room-compiler:2.5.0")
 }

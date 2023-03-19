@@ -14,19 +14,18 @@
  *   limitations under the License.
  */
 
-package com.aloe.local
+package com.aloe.local.room
 
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.aloe.bean.ArticleBean
-import com.aloe.proto.Banner
-import kotlinx.coroutines.flow.Flow
 
-interface LocalDataSource {
-    suspend fun getAssetsStr(name: String): String?
-    suspend fun putPrivacyVisible(isVisible: Boolean)
-    suspend fun getPrivacyVisible(): Flow<Boolean>
-    suspend fun putBanner(banner: List<Banner>)
-    fun getBanner(): Flow<MutableList<Banner>?>
-
-    suspend fun putTop(top:List<ArticleBean>)
-    suspend fun getTop():List<ArticleBean>
+@Dao
+internal interface ArticleDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun putArticles(list:List<ArticleBean>)
+    @Query("SELECT * FROM article")
+    suspend fun getArticles(): List<ArticleBean>
 }

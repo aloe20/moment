@@ -14,19 +14,13 @@
  *   limitations under the License.
  */
 
-package com.aloe.local
+package com.aloe.local.room
 
+import androidx.room.Database
+import androidx.room.RoomDatabase
 import com.aloe.bean.ArticleBean
-import com.aloe.proto.Banner
-import kotlinx.coroutines.flow.Flow
 
-interface LocalDataSource {
-    suspend fun getAssetsStr(name: String): String?
-    suspend fun putPrivacyVisible(isVisible: Boolean)
-    suspend fun getPrivacyVisible(): Flow<Boolean>
-    suspend fun putBanner(banner: List<Banner>)
-    fun getBanner(): Flow<MutableList<Banner>?>
-
-    suspend fun putTop(top:List<ArticleBean>)
-    suspend fun getTop():List<ArticleBean>
+@Database(entities = [ArticleBean::class], version = 1)
+internal abstract class AppDatabase: RoomDatabase()  {
+    abstract fun getArticleDao():ArticleDao
 }

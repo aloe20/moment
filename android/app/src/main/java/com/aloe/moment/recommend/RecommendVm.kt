@@ -32,7 +32,7 @@ class RecommendVm @Inject constructor(private val repository:RecommendRepository
     val uiState: StateFlow<RecommendUiState> = _uiState.asStateFlow()
     init {
         loadBanner()
-        //loadTop()
+        loadTop()
     }
 
     fun loadBanner(){
@@ -48,7 +48,7 @@ class RecommendVm @Inject constructor(private val repository:RecommendRepository
     fun loadTop(){
         loadData("top") {
             val top = repository.loadTop()
-            Log.e("aloe", "$top")
+            Log.e("aloe", "===> $top")
         }
     }
 }

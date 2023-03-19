@@ -16,13 +16,22 @@
 
 package com.aloe.bean
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
 
+@Entity(tableName = "article")
 @JsonClass(generateAdapter = true)
 data class ArticleBean(
-    val title: String? = null,
-    val author: String? = null,
-    val superChapterName: String? = null,
-    val niceDate: String? = null,
-    val link: String? = null
+    @PrimaryKey val id: Int=0,
+    @ColumnInfo(name = "course_id") val courseId: Int = 0,
+    @ColumnInfo(name = "chapter_id") val chapterId: Int = 0,
+    @ColumnInfo(name = "title") val title: String? = null,
+    @ColumnInfo(name = "author") val author: String? = null,
+    @ColumnInfo(name = "super_chapter_name") val superChapterName: String? = null,
+    @ColumnInfo(name = "nice_date") val niceDate: String? = null,
+    @ColumnInfo(name = "nice_share_date") val niceShareDate: String? = null,
+    @ColumnInfo(name = "chapter_name") val chapterName: String? = null,
+    @ColumnInfo(name = "link") val link: String? = null
 )
