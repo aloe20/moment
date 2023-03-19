@@ -20,6 +20,7 @@ import android.content.Context
 import com.aloe.http.factory.BitmapConverterFactory
 import com.aloe.http.factory.EnumConverterFactory
 import com.squareup.moshi.Moshi
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,37 +37,66 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+import kotlin.math.max
+import kotlin.math.min
 
 @Module
 @InstallIn(SingletonComponent::class)
 internal class HttpModule {
     private val moshi: Moshi = Moshi.Builder().build()
-    @Provides
-    @Singleton
-    fun getExecutor(): ExecutorService = ThreadPoolExecutor(
-        5, 10, 60, TimeUnit.SECONDS,
-        ArrayBlockingQueue(10)
-    )
 
     @Provides
     @Singleton
-    fun getDispatcher(executor: ExecutorService):Dispatcher = Dispatcher(executor)
+    fun getExecutor(): ExecutorService {
+        val count = Runtime.getRuntime().availableProcessors()
+        return ThreadPoolExecutor(
+            max(2, min(4, count - 1)),
+            count.shl(1) + 1,
+            30,
+            TimeUnit.SECONDS,
+            ArrayBlockingQueue(10)
+        )
+    }
 
     @Provides
     @Singleton
-    fun getOkHttpClient(@ApplicationContext ctx: Context,dispatcher: Dispatcher): OkHttpClient = OkHttpClient.Builder().dispatcher(dispatcher).cache(
+    fun getOkHttpClient(
+        @ApplicationContext ctx: Context,
+        executor: ExecutorService
+    ): OkHttpClient = OkHttpClient.Builder().dispatcher(Dispatcher(executor)).cache(
         Cache(ctx.cacheDir, 1024_1000_100)
     ).build()
 
     @Provides
     @Singleton
-    fun getHttp(@ApplicationContext ctx: Context, client: OkHttpClient): IHttp {
-        return HttpImpl(
+    fun getHttpApi(client: OkHttpClient): HttpApi = Retrofit.Builder()
+        //.baseUrl("http://httpbin.org/")
+        .baseUrl("http://192.168.137.1:3000/")
+        .addConverterFactory(BitmapConverterFactory.create())
+        .addConverterFactory(EnumConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
+        .client(client).build().create()
+
+    /*@Provides
+    @Singleton
+    fun getDataSource(@ApplicationContext ctx: Context, client: OkHttpClient): RemoteDataSource {
+        return RemoteImplDataSource(
             ctx, Retrofit.Builder()
-            .baseUrl("http://httpbin.org/")
+            //.baseUrl("http://httpbin.org/")
+            .baseUrl("http://192.168.137.1:3000/")
             .addConverterFactory(BitmapConverterFactory.create()).addConverterFactory(EnumConverterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
-            .client(client).build().create()
+            .client(client).build().create(),
+            LocalImpl(ctx)
         )
-    }
+    }*/
+}
+
+@Module(includes = [HttpModule::class])
+@InstallIn(SingletonComponent::class)
+internal abstract class AbsHttpModule {
+
+    @Binds
+    @Singleton
+    abstract fun getHttp(impl: RemoteImplDataSource): RemoteDataSource
 }

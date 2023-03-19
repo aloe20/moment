@@ -24,10 +24,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aloe.moment.main.mainPage
+import com.aloe.moment.main.MainLayout
 import com.aloe.moment.ui.theme.MomentTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +41,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavHost(navController = rememberNavController(), startDestination = "mainPage") {
-                        mainPage()
+                        composable("mainPage") { MainLayout() }
+
                     }
                 }
             }

@@ -17,10 +17,9 @@
 package com.aloe.http
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.os.Environment
 import com.aloe.bean.ArticleBean
-import com.aloe.bean.BannerBean
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,14 +28,22 @@ import okio.buffer
 import okio.sink
 import okio.source
 import java.io.File
+import javax.inject.Inject
 
-internal class HttpImpl constructor(private val ctx: Context, private val api: HttpApi) : IHttp {
-    override suspend fun loadBanner(): Result<List<BannerBean>?> = runCatching { api.loadBanner().data }
+internal class RemoteImplDataSource @Inject constructor(
+    @ApplicationContext val ctx: Context,
+    val api: HttpApi
+) : RemoteDataSource {
+    override suspend fun loadBanner(): Result<String> = runCatching { api.loadBanner() }
+
     override suspend fun loadTop(): Result<List<ArticleBean>?> = runCatching { api.loadTop().data }
 
     override fun download(url: String, path: String?): Flow<Int> = flow {
         val name = url.substring(url.lastIndexOf("/") + 1)
-        val file = if (path == null) File(ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), name) else File(path)
+        val file = if (path == null) File(
+            ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
+            name
+        ) else File(path)
         val body = api.download(url, "bytes=${file.length()}-")
         val length = body.contentLength()
         withContext(Dispatchers.IO) {
@@ -60,6 +67,4 @@ internal class HttpImpl constructor(private val ctx: Context, private val api: H
             }
         }
     }
-
-    override suspend fun loadImage(url: String): Result<Bitmap> = runCatching { api.loadImage(url) }
 }

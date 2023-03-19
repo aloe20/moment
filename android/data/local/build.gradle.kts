@@ -15,20 +15,15 @@
  */
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("moment.android.library")
+    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
     alias(libs.plugins.protobuf)
 }
 
 android {
     namespace = "com.aloe.local"
-    compileSdk = 33
-    buildToolsVersion = "33.0.2"
-    defaultConfig {
-        minSdk = 24
-        targetSdk = 33
-        consumerProguardFiles("consumer-rules.pro")
-    }
 
     buildTypes {
         release {
@@ -38,13 +33,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
     }
 }
 protobuf {
@@ -67,4 +55,8 @@ protobuf {
 dependencies {
     api(libs.androidx.store.preferences)
     api(libs.google.protobuf.kotlin.lite)
+    api(libs.google.hilt.android)
+    kapt(libs.google.hilt.compiler)
+    api("androidx.room:room-ktx:2.5.0")
+    ksp("androidx.room:room-compiler:2.5.0")
 }

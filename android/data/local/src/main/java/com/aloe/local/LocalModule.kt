@@ -14,14 +14,18 @@
  *   limitations under the License.
  */
 
-package com.aloe.http
+package com.aloe.local
 
-import com.aloe.bean.ArticleBean
-import com.aloe.bean.BannerBean
-import kotlinx.coroutines.flow.Flow
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-interface IHttp:ImageLoader {
-    suspend fun loadBanner(): Result<List<BannerBean>?>
-    suspend fun loadTop(): Result<List<ArticleBean>?>
-    fun download(url: String, path:String?=null): Flow<Int>
+@Module
+@InstallIn(SingletonComponent::class)
+internal abstract class LocalModule {
+    @Binds
+    @Singleton
+    abstract fun getLocal(impl: LocalImplDataSource):LocalDataSource
 }

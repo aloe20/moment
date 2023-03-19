@@ -18,7 +18,6 @@ package com.aloe.http
 
 import android.graphics.Bitmap
 import com.aloe.bean.ArticleBean
-import com.aloe.bean.BannerBean
 import com.aloe.bean.HttpBean
 import okhttp3.ResponseBody
 import retrofit2.http.GET
@@ -29,9 +28,9 @@ import retrofit2.http.Url
 
 internal interface HttpApi {
     @GET("banner/json")
-    suspend fun loadBanner(): HttpBean<List<BannerBean>>
+    suspend fun loadBanner(): String
 
-    @GET("article/top/json")
+    @GET("article/top.json")
     suspend fun loadTop(): HttpBean<List<ArticleBean>>
 
     @GET

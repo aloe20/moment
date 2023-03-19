@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.aloe.local
+package com.aloe.local.store
 
 import android.content.Context
 import androidx.datastore.core.DataStore

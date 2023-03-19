@@ -15,21 +15,13 @@
  */
 
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("moment.android.library")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
 }
 
 android {
     namespace = "com.aloe.http"
-    compileSdk = 33
-    buildToolsVersion = "33.0.2"
-    defaultConfig {
-        minSdk = 24
-        targetSdk = 33
-        consumerProguardFiles("consumer-rules.pro")
-    }
 
     buildTypes {
         release {
@@ -40,18 +32,12 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 }
 
 dependencies {
-    implementation(project(mapOf("path" to ":data:bean")))
+    api(project(mapOf("path" to ":data:bean")))
+    api(project(mapOf("path" to ":data:local")))
     api(libs.squareup.retrofit.moshi)
-    implementation(libs.google.dagger.android)
-    kapt(libs.google.dagger.compiler)
+    implementation(libs.google.hilt.android)
+    kapt(libs.google.hilt.compiler)
 }

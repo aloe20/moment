@@ -35,5 +35,9 @@ gradlePlugin {
             id = "moment.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+        register("androidLibrary") {
+            id = "moment.android.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
     }
 }

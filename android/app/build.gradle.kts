@@ -45,7 +45,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
+        }
         release {
+            isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -53,13 +59,15 @@ android {
                 "proguard-rules.pro"
             )
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
+        create("profile") {
+            initWith(getByName("debug"))
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
     }
     buildFeatures {
         compose = true
@@ -75,18 +83,27 @@ android {
 }
 
 dependencies {
-    implementation(project(":flutter"))
     implementation(project(":data:http"))
     implementation(libs.androidx.activity)
-    implementation(libs.compose.preview)
+    debugImplementation(libs.compose.preview)
     implementation(libs.compose.material3)
     implementation(libs.compose.navigation)
+    implementation(libs.compose.hilt)
+    implementation(libs.compose.lifecycle)
     implementation(libs.androidx.startup)
-    implementation(libs.google.dagger.android)
-    kapt(libs.google.dagger.compiler)
+    implementation(libs.google.hilt.android)
+    kapt(libs.google.hilt.compiler)
     implementation("com.facebook.react:react-android")
     implementation("com.facebook.react:hermes-android")
+    implementation("io.coil-kt:coil-compose-base:2.2.2")
     testImplementation(libs.junit)
+    if ((gradle as ExtensionAware).extra["useAar"]==true) {
+        debugImplementation("com.aloe.flu:flutter_debug:1.0")
+        //profileImplementation("com.aloe.flu:flutter_profile:1.0")
+        releaseImplementation("com.aloe.flu:flutter_release:1.0")
+    } else {
+        implementation(project(":flutter"))
+    }
 }
 apply(from = "../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle")
-(extra.get("applyNativeModulesAppBuildGradle")as groovy.lang.Closure<*>)(project)
+(extra.get("applyNativeModulesAppBuildGradle") as groovy.lang.Closure<*>)(project)

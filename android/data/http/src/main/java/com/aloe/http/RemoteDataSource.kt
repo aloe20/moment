@@ -14,23 +14,13 @@
  *   limitations under the License.
  */
 
-plugins {
-    id("moment.android.library")
-}
+package com.aloe.http
 
-android {
-    namespace = "com.aloe.excel"
+import com.aloe.bean.ArticleBean
+import kotlinx.coroutines.flow.Flow
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-}
-dependencies {
-    api(libs.androidx.recycler)
+interface RemoteDataSource {
+    suspend fun loadBanner(): Result<String>
+    suspend fun loadTop(): Result<List<ArticleBean>?>
+    fun download(url: String, path:String?=null): Flow<Int>
 }

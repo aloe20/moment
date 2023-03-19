@@ -34,21 +34,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import com.aloe.moment.flu.FlutterLayout
 import com.aloe.moment.react.ReactLayout
 import com.aloe.moment.recommend.RecommendLayout
-import com.aloe.moment.rememberHttpPainter
+import com.aloe.moment.rememberAsyncPainter
 import kotlinx.coroutines.launch
-
-fun NavGraphBuilder.mainPage() {
-    composable("mainPage") {
-        MainLayout()
-    }
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -62,13 +55,14 @@ fun MainLayout() {
             pageCount = items.size,
             state = pageState
         ) {
+            val width = LocalContext.current.resources.displayMetrics.widthPixels
             when (it) {
                 0 -> RecommendLayout()
                 1 -> ReactLayout(url = "assets://index.android.bundle")
                 2 -> FlutterLayout()
                 3 -> Image(
-                    painter = rememberHttpPainter(
-                        url = "https://www.wanandroid.com/blogimgs/62c1bd68-b5f3-4a3c-a649-7ca8c7dfabe6.png",
+                    painter = rememberAsyncPainter(
+                        model  = "https://picsum.photos/seed/1/$width/500",
                     ),
                     contentScale = ContentScale.Crop,
                     contentDescription = "",

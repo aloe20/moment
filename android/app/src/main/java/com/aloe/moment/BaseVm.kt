@@ -14,15 +14,26 @@
  *   limitations under the License.
  */
 
-package com.aloe.local
+package com.aloe.moment
 
-import com.aloe.proto.Banner
-import kotlinx.coroutines.flow.Flow
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
-interface ILocal {
-    suspend fun getAssetsStr(name: String): String?
-    suspend fun putPrivacyVisible(isVisible: Boolean)
-    suspend fun getPrivacyVisible(): Flow<Boolean>
-    suspend fun putBanner(banner: List<Banner>)
-    suspend fun getBanner(): Flow<MutableList<Banner>?>
+open class BaseVm : ViewModel() {
+    private val map = mutableMapOf<String,Job?>()
+    fun loadData(key:String, callback: suspend () -> Unit) {
+        map[key]?.cancel()
+        map[key]=viewModelScope.launch {
+            callback.invoke()
+        }
+    }
+
+    override fun onCleared() {
+        map.forEach {
+            it.value?.cancel()
+        }
+        map.clear()
+    }
 }

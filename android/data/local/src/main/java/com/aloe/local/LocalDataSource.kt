@@ -14,10 +14,15 @@
  *   limitations under the License.
  */
 
-package com.aloe.http
+package com.aloe.local
 
-import android.graphics.Bitmap
+import com.aloe.proto.Banner
+import kotlinx.coroutines.flow.Flow
 
-interface ImageLoader {
-    suspend fun loadImage(url: String): Result<Bitmap>
+interface LocalDataSource {
+    suspend fun getAssetsStr(name: String): String?
+    suspend fun putPrivacyVisible(isVisible: Boolean)
+    suspend fun getPrivacyVisible(): Flow<Boolean>
+    suspend fun putBanner(banner: List<Banner>)
+    fun getBanner(): Flow<MutableList<Banner>?>
 }

@@ -12,14 +12,20 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { setUrl("https://jitpack.io") }
         maven { setUrl("https://storage.googleapis.com/download.flutter.io") }
+        maven {
+            setUrl("../flu/flu/build/host/outputs/repo")
+        }
     }
 }
 rootProject.name = "android"
 includeBuild("../lib")
 include(":app", ":skin:dark", ":lint", ":ui:web", ":data:bean", ":data:http", ":data:local", ":data:socket", ":ui:excel", ":ui:chart")
-setBinding(new Binding([gradle: this]))
-evaluate(file("../flu/flu/.android/include_flutter.groovy"))
-include(":flu")
-project(":flu").projectDir = file("../flu/flu")
+gradle.ext.useAar=true
+if (!gradle.ext.useAar){
+    setBinding(new Binding([gradle: this]))
+    evaluate(file("../flu/flu/.android/include_flutter.groovy"))
+    include(":flu")
+    project(":flu").projectDir = file("../flu/flu")
+}
 includeBuild("../node_modules/react-native-gradle-plugin")
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)

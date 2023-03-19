@@ -14,23 +14,8 @@
  *   limitations under the License.
  */
 
-plugins {
-    id("moment.android.library")
-}
+package com.aloe.moment.recommend
 
-android {
-    namespace = "com.aloe.excel"
+import com.aloe.proto.Banner
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-}
-dependencies {
-    api(libs.androidx.recycler)
-}
+data class RecommendUiState(val banner: List<Banner> = listOf())

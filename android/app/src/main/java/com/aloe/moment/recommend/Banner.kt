@@ -18,15 +18,27 @@ package com.aloe.moment.recommend
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.DragInteraction
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.VerticalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,8 +47,82 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlin.math.absoluteValue
 import kotlin.math.sign
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun Banner(modifier: Modifier = Modifier,isVertical: Boolean = false, count: Int, content: @Composable BoxScope.(Int) -> Unit) {
+    Box(modifier = modifier) {
+        val loopCount = Int.MAX_VALUE
+        val startIndex = loopCount / 2
+        val pagerState = rememberPagerState(initialPage = startIndex)
+        fun pageMapper(index: Int): Int = (index - startIndex).let {
+            if (count == 0) it else it - it.floorDiv(count) * count
+        }
+        if (isVertical) {
+            VerticalPager(pageCount = loopCount, state = pagerState) { content(pageMapper(it)) }
+            VerticalPagerIndicator(
+                pagerState = pagerState,
+                pageCount = count,
+                modifier = Modifier
+                    .align(Alignment.CenterStart)
+                    .padding(4.dp),
+                pageIndexMapping = ::pageMapper
+            )
+        } else {
+            HorizontalPager(pageCount = loopCount, state = pagerState) { content(pageMapper(it)) }
+            HorizontalPagerIndicator(
+                pagerState = pagerState,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(4.dp),
+                pageCount = count,
+                pageIndexMapping = ::pageMapper
+            )
+        }
+
+        var underDragging by remember { mutableStateOf(false) }
+        LaunchedEffect(key1 = Unit) {
+            pagerState.interactionSource.interactions.collectLatest { interaction ->
+                when (interaction) {
+                    is PressInteraction.Press -> underDragging = true
+                    is PressInteraction.Release -> underDragging = false
+                    is PressInteraction.Cancel -> underDragging = false
+                    is DragInteraction.Start -> underDragging = true
+                    is DragInteraction.Stop -> underDragging = false
+                    is DragInteraction.Cancel -> underDragging = false
+                }
+            }
+        }
+        if (underDragging.not()) {
+            LaunchedEffect(key1 = underDragging) {
+                try {
+                    while (true) {
+                        delay(2000L)
+                        val current = pagerState.currentPage
+                        val currentPos = pageMapper(current)
+                        val nextPage = current + 1
+                        if (underDragging.not()) {
+                            val toPage = nextPage.takeIf { nextPage < loopCount }
+                                ?: (currentPos + startIndex + 1)
+                            if (toPage > current) {
+                                pagerState.animateScrollToPage(toPage)
+                            } else {
+                                pagerState.scrollToPage(toPage)
+                            }
+                        }
+                    }
+                } catch (e: CancellationException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -54,10 +140,7 @@ fun HorizontalPagerIndicator(
 ) {
     val indicatorWidthPx = LocalDensity.current.run { indicatorWidth.roundToPx() }
     val spacingPx = LocalDensity.current.run { spacing.roundToPx() }
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.CenterStart
-    ) {
+    Box(modifier = modifier, contentAlignment = Alignment.CenterStart) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(spacing),
             verticalAlignment = Alignment.CenterVertically,

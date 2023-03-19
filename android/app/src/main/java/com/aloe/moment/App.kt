@@ -17,15 +17,35 @@
 package com.aloe.moment
 
 import android.app.Application
-import com.aloe.http.IHttp
+import android.content.Context
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import coil.ImageLoader
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.disk.DiskCache
+import coil.memory.MemoryCache
 import dagger.hilt.android.HiltAndroidApp
+import okhttp3.OkHttpClient
 import javax.inject.Inject
 
 @HiltAndroidApp
 class App:Application() {
     @Inject
-    lateinit var http:IHttp
-    override fun onCreate() {
-        super.onCreate()
-    }
+    lateinit var okHttpClient: OkHttpClient
+}
+
+val Context.imageLoader: ImageLoader
+    get() = ImageLoader.Builder(this).okHttpClient((applicationContext as App).okHttpClient)
+        .diskCache(DiskCache.Builder().directory(externalCacheDir?:cacheDir).build())
+        .memoryCache(MemoryCache.Builder(this).build())
+        .build()
+
+@Composable
+fun rememberAsyncPainter(model: Any?): AsyncImagePainter {
+    val imageLoader = LocalContext.current.imageLoader
+    return rememberAsyncImagePainter(model, imageLoader)
 }
