@@ -37,10 +37,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.aloe.moment.app.rememberAsyncPainter
 import com.aloe.moment.flu.FlutterLayout
 import com.aloe.moment.react.ReactLayout
 import com.aloe.moment.recommend.RecommendLayout
-import com.aloe.moment.rememberAsyncPainter
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)

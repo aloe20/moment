@@ -24,6 +24,8 @@ accompanist = "0.29.2-rc"
 spotless = "6.16.0"
 # https://github.com/pinterest/ktlint
 ktlint = "0.48.2"
+# https://ktor.io
+ktor="2.2.4"
 
 # https://github.com/google/dagger
 dagger = "2.45"
@@ -64,8 +66,16 @@ squareup-moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "mo
 squareup-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 # https://github.com/netty/netty
 netty = "io.netty:netty-transport:4.1.52.Final"
+coil = "io.coil-kt:coil-compose-base:2.2.2"
 # https://github.com/PhilJay/MPAndroidChart
 mpchart = "com.github.PhilJay:MPAndroidChart:3.1.0"
+
+ktor-core = {group="io.ktor", name="ktor-server-core", version.ref="ktor"}
+ktor-netty = {group="io.ktor", name="ktor-server-netty", version.ref="ktor"}
+ktor-freemarker = {group="io.ktor", name="ktor-server-freemarker", version.ref="ktor"}
+ktor-content = {group="io.ktor", name="ktor-server-content-negotiation", version.ref="ktor"}
+ktor-json = {group="io.ktor", name="ktor-serialization-kotlinx-json", version.ref="ktor"}
+ktor-log = "ch.qos.logback:logback-classic:1.4.6"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

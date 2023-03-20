@@ -83,6 +83,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":data:local"))
     implementation(project(":data:http"))
     implementation(libs.androidx.activity)
     debugImplementation(libs.compose.preview)
@@ -92,10 +93,10 @@ dependencies {
     implementation(libs.compose.lifecycle)
     implementation(libs.androidx.startup)
     implementation(libs.google.hilt.android)
+    implementation(libs.coil)
     kapt(libs.google.hilt.compiler)
     implementation("com.facebook.react:react-android")
     implementation("com.facebook.react:hermes-android")
-    implementation("io.coil-kt:coil-compose-base:2.2.2")
     testImplementation(libs.junit)
     if ((gradle as ExtensionAware).extra["useAar"]==true) {
         debugImplementation("com.aloe.flu:flutter_debug:1.0")

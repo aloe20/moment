@@ -15,28 +15,21 @@
  */
 
 plugins {
-    id("moment.android.library")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    id("java-library")
+    id("org.jetbrains.kotlin.jvm")
+    id ("org.jetbrains.kotlin.plugin.serialization")
 }
 
-android {
-    namespace = "com.aloe.http"
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {
-    api(project(":data:bean"))
-    api(libs.squareup.retrofit.moshi)
-    implementation(libs.google.hilt.android)
-    kapt(libs.google.hilt.compiler)
+    implementation(libs.ktor.core)
+    implementation(libs.ktor.netty)
+    implementation(libs.ktor.freemarker)
+    implementation(libs.ktor.content)
+    implementation(libs.ktor.json)
+    implementation(libs.ktor.log)
 }

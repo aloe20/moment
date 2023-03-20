@@ -71,7 +71,7 @@ internal class HttpModule {
     @Singleton
     fun getHttpApi(client: OkHttpClient): HttpApi = Retrofit.Builder()
         //.baseUrl("http://httpbin.org/")
-        .baseUrl("http://192.168.1.6:3000/")
+        .baseUrl("http://192.168.1.6:8000/")
         .addConverterFactory(BitmapConverterFactory.create())
         .addConverterFactory(EnumConverterFactory.create())
         .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())

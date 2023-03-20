@@ -12,16 +12,15 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { setUrl("https://jitpack.io") }
         maven { setUrl("https://storage.googleapis.com/download.flutter.io") }
-        maven {
-            setUrl("../flu/flu/build/host/outputs/repo")
-        }
+        maven { setUrl("../flu/flu/build/host/outputs/repo") }
+        maven { setUrl("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
     }
 }
 rootProject.name = "android"
 includeBuild("../lib")
-include(":app", ":skin:dark", ":lint", ":ui:web", ":data:bean", ":data:http", ":data:local", ":data:socket", ":ui:excel", ":ui:chart")
-gradle.ext.useAar=true
-if (!gradle.ext.useAar){
+include(":app", ":skin:dark", ":lint", ":server", ":data:bean", ":data:http", ":data:local", ":data:socket", ":ui:excel", ":ui:chart", ":ui:web")
+gradle.ext.useAar = true
+if (!gradle.ext.useAar) {
     setBinding(new Binding([gradle: this]))
     evaluate(file("../flu/flu/.android/include_flutter.groovy"))
     include(":flu")

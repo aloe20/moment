@@ -27,28 +27,40 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class RecommendVm @Inject constructor(private val repository:RecommendRepository):BaseVm() {
+class RecommendVm @Inject constructor(private val repository: RecommendUseCase) : BaseVm() {
     private val _uiState = MutableStateFlow(RecommendUiState())
     val uiState: StateFlow<RecommendUiState> = _uiState.asStateFlow()
+
     init {
-        loadBanner()
-        loadTop()
+        sendEvent(RefreshEvent)
     }
 
-    fun loadBanner(){
+    fun sendEvent(event: Event) {
+        when (event) {
+            is RefreshEvent -> {
+                loadBanner()
+                loadTop()
+            }
+        }
+    }
+
+    private fun loadBanner() {
         loadData("banner") {
-            repository.loadBanner().collectLatest {banner->
+            repository.loadBanner().collectLatest { banner ->
                 _uiState.update {
-                    it.copy(banner = banner?: listOf())
+                    it.copy(banner = banner ?: listOf())
                 }
             }
         }
     }
 
-    fun loadTop(){
+    private fun loadTop() {
         loadData("top") {
             val top = repository.loadTop()
             Log.e("aloe", "===> $top")
         }
     }
 }
+
+sealed class Event
+object RefreshEvent : Event()

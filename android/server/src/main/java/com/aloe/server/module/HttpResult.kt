@@ -14,18 +14,9 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment
+package com.aloe.server.module
 
-import android.content.Context
-import androidx.startup.Initializer
-import com.aloe.moment.flu.FluView
-import com.aloe.moment.react.ReactView
+import kotlinx.serialization.Serializable
 
-class AppInitializer : Initializer<Unit> {
-    override fun create(context: Context) {
-        FluView.initEngineGroup(context)
-        ReactView.initRn(context)
-    }
-
-    override fun dependencies(): MutableList<Class<out Initializer<*>>> = mutableListOf()
-}
+@Serializable
+data class HttpResult<T>(val code: Int=0, val msg: String="", val data: T?=null)

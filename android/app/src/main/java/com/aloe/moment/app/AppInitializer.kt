@@ -14,29 +14,18 @@
  *   limitations under the License.
  */
 
-plugins {
-    id("moment.android.library")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-}
+package com.aloe.moment.app
 
-android {
-    namespace = "com.aloe.http"
+import android.content.Context
+import androidx.startup.Initializer
+import com.aloe.moment.flu.FluView
+import com.aloe.moment.react.ReactView
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
+class AppInitializer : Initializer<Unit> {
+    override fun create(context: Context) {
+        FluView.initEngineGroup(context)
+        ReactView.initRn(context)
     }
-}
 
-dependencies {
-    api(project(":data:bean"))
-    api(libs.squareup.retrofit.moshi)
-    implementation(libs.google.hilt.android)
-    kapt(libs.google.hilt.compiler)
+    override fun dependencies(): MutableList<Class<out Initializer<*>>> = mutableListOf()
 }

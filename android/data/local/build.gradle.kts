@@ -53,7 +53,7 @@ protobuf {
     }
 }
 dependencies {
-    api(project(mapOf("path" to ":data:bean")))
+    api(project(":data:bean"))
     api(libs.androidx.store.preferences)
     api(libs.google.protobuf.kotlin.lite)
     api(libs.google.hilt.android)

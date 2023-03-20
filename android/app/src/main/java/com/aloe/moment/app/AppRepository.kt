@@ -14,29 +14,11 @@
  *   limitations under the License.
  */
 
-plugins {
-    id("moment.android.library")
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
-}
+package com.aloe.moment.app
 
-android {
-    namespace = "com.aloe.http"
+import com.aloe.http.RemoteDataSource
+import com.aloe.local.LocalDataSource
+import javax.inject.Inject
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-}
-
-dependencies {
-    api(project(":data:bean"))
-    api(libs.squareup.retrofit.moshi)
-    implementation(libs.google.hilt.android)
-    kapt(libs.google.hilt.compiler)
-}
+abstract class LocalRepository(local: LocalDataSource) : LocalDataSource by local
+class AppRepository @Inject constructor(local:LocalDataSource, remote:RemoteDataSource) :LocalRepository(local), RemoteDataSource by remote
