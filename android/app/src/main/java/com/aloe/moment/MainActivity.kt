@@ -16,6 +16,7 @@
 
 package com.aloe.moment
 
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,13 +27,16 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.aloe.moment.app.SkinResources
 import com.aloe.moment.main.MainLayout
 import com.aloe.moment.ui.theme.MomentTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private lateinit var skinResources:SkinResources
     override fun onCreate(savedInstanceState: Bundle?) {
+        skinResources = SkinResources(super.getResources(), packageManager)
         super.onCreate(savedInstanceState)
         setContent {
             MomentTheme {
@@ -47,5 +51,9 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun getResources(): Resources {
+        return if (this::skinResources.isInitialized) skinResources else super.getResources()
     }
 }
