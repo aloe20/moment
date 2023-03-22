@@ -17,7 +17,9 @@
 package com.aloe.moment.recommend
 
 import android.util.Log
+import com.aloe.bean.ArticleBean
 import com.aloe.moment.BaseVm
+import com.aloe.proto.Banner
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,7 +29,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class RecommendVm @Inject constructor(private val repository: RecommendUseCase) : BaseVm() {
+class RecommendVm @Inject constructor(private val useCase: RecommendUseCase) : BaseVm() {
     private val _uiState = MutableStateFlow(RecommendUiState())
     val uiState: StateFlow<RecommendUiState> = _uiState.asStateFlow()
 
@@ -46,7 +48,7 @@ class RecommendVm @Inject constructor(private val repository: RecommendUseCase) 
 
     private fun loadBanner() {
         loadData("banner") {
-            repository.loadBanner().collectLatest { banner ->
+            useCase.loadBanner().collectLatest { banner ->
                 _uiState.update {
                     it.copy(banner = banner ?: listOf())
                 }
@@ -56,11 +58,15 @@ class RecommendVm @Inject constructor(private val repository: RecommendUseCase) 
 
     private fun loadTop() {
         loadData("top") {
-            val top = repository.loadTop()
-            Log.e("aloe", "===> $top")
+            _uiState.update { it.copy(top = useCase.loadTop()) }
         }
     }
 }
+
+data class RecommendUiState(
+    val banner: List<Banner> = listOf(),
+    val top: List<ArticleBean> = listOf()
+)
 
 sealed class Event
 object RefreshEvent : Event()

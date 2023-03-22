@@ -92,6 +92,7 @@ dependencies {
     implementation(libs.compose.hilt)
     implementation(libs.compose.lifecycle)
     implementation(libs.androidx.startup)
+    implementation(libs.accompanist.swiperefresh)
     implementation(libs.google.hilt.android)
     implementation(libs.coil)
     kapt(libs.google.hilt.compiler)

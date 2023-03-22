@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:allowBackup="true"
-        android:supportsRtl="true"
-        android:icon="@android:drawable/ic_menu_add"
-        android:theme="@style/Theme.Android" />
+        android:icon="@android:drawable/ic_menu_help"
+        android:theme="@android:style/Theme.Light" />
 
 </manifest>

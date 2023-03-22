@@ -30,7 +30,7 @@ ktor="2.2.4"
 # https://github.com/google/dagger
 dagger = "2.45"
 okhttp = "4.9.2"
-okio = "3.1.0"
+okio = "3.3.0"
 # https://github.com/square/moshi
 moshi = "1.14.0"
 # https://github.com/protocolbuffers/protobuf
@@ -56,6 +56,7 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 #accompanist-systemui = {group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist"}
 #accompanist-indicators = {group = "com.google.accompanist", name = "pager-indicators", version.ref = "accompanist"}
+accompanist-swiperefresh = {group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanist"}
 google-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 google-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger" }
 google-protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
@@ -65,7 +66,8 @@ squareup-retrofit-moshi = "com.squareup.retrofit2:converter-moshi:2.9.0"
 squareup-moshi = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 squareup-moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 # https://github.com/netty/netty
-netty = "io.netty:netty-transport:4.1.52.Final"
+netty = "io.netty:netty-transport:4.1.90.Final"
+# https://github.com/coil-kt/coil
 coil = "io.coil-kt:coil-compose-base:2.2.2"
 # https://github.com/PhilJay/MPAndroidChart
 mpchart = "com.github.PhilJay:MPAndroidChart:3.1.0"
@@ -86,5 +88,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-# https://github.com/google/protobuf-gradle-plugin
 protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
