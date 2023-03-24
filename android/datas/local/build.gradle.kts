@@ -17,11 +17,13 @@
 plugins {
     id("moment.android.library")
     id("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+    alias(libs.plugins.protobuf)
 }
 
 android {
-    namespace = "com.aloe.http"
+    namespace = "com.aloe.local"
 
     buildTypes {
         release {
@@ -33,10 +35,29 @@ android {
         }
     }
 }
-
+protobuf {
+    protoc {
+        artifact = libs.google.protobuf.protoc.get().toString()
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                val java by registering {
+                    option("lite")
+                }
+                val kotlin by registering {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
 dependencies {
-    api(project(":data:bean"))
-    api(libs.squareup.retrofit.moshi)
-    implementation(libs.google.hilt.android)
+    api(project(":datas:bean"))
+    api(libs.androidx.store.preferences)
+    api(libs.google.protobuf.kotlin.lite)
+    api(libs.google.hilt.android)
     kapt(libs.google.hilt.compiler)
+    api("androidx.room:room-ktx:2.5.0")
+    ksp("androidx.room:room-compiler:2.5.0")
 }

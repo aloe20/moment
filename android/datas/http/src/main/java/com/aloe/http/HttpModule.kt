@@ -29,6 +29,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
@@ -63,9 +64,9 @@ internal class HttpModule {
     fun getOkHttpClient(
         @ApplicationContext ctx: Context,
         executor: ExecutorService
-    ): OkHttpClient = OkHttpClient.Builder().dispatcher(Dispatcher(executor)).cache(
-        Cache(ctx.cacheDir, 1024_1000_100)
-    ).build()
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        .dispatcher(Dispatcher(executor)).cache(Cache(ctx.cacheDir, 1024_1000_100)).build()
 
     @Provides
     @Singleton

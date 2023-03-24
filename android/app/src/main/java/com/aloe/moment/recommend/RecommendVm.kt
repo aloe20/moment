@@ -16,7 +16,7 @@
 
 package com.aloe.moment.recommend
 
-import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import com.aloe.bean.ArticleBean
 import com.aloe.moment.BaseVm
 import com.aloe.proto.Banner
@@ -32,33 +32,25 @@ import javax.inject.Inject
 class RecommendVm @Inject constructor(private val useCase: RecommendUseCase) : BaseVm() {
     private val _uiState = MutableStateFlow(RecommendUiState())
     val uiState: StateFlow<RecommendUiState> = _uiState.asStateFlow()
+    var isRefreshing = mutableStateOf(false)
 
     init {
         sendEvent(RefreshEvent)
     }
 
     fun sendEvent(event: Event) {
+        isRefreshing.value = true
         when (event) {
             is RefreshEvent -> {
-                loadBanner()
-                loadTop()
-            }
-        }
-    }
-
-    private fun loadBanner() {
-        loadData("banner") {
-            useCase.loadBanner().collectLatest { banner ->
-                _uiState.update {
-                    it.copy(banner = banner ?: listOf())
+                loadData("banner") {
+                    useCase.loadBanner().collectLatest { banner ->
+                        _uiState.update {
+                            it.copy(banner = banner ?: listOf(),top = useCase.loadTop())
+                        }
+                        isRefreshing.value = false
+                    }
                 }
             }
-        }
-    }
-
-    private fun loadTop() {
-        loadData("top") {
-            _uiState.update { it.copy(top = useCase.loadTop()) }
         }
     }
 }

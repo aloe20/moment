@@ -83,16 +83,18 @@ android {
 }
 
 dependencies {
-    implementation(project(":data:local"))
-    implementation(project(":data:http"))
+    implementation(project(":datas:local"))
+    implementation(project(":datas:http"))
     implementation(libs.androidx.activity)
     debugImplementation(libs.compose.preview)
+    implementation(libs.compose.material)
     implementation(libs.compose.material3)
     implementation(libs.compose.navigation)
     implementation(libs.compose.hilt)
     implementation(libs.compose.lifecycle)
+    implementation(libs.compose.paging)
     implementation(libs.androidx.startup)
-    implementation(libs.accompanist.swiperefresh)
+//    implementation(libs.accompanist.swiperefresh)
     implementation(libs.google.hilt.android)
     implementation(libs.coil)
     kapt(libs.google.hilt.compiler)

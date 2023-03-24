@@ -30,7 +30,7 @@ internal interface HttpApi {
     @GET("banner/json")
     suspend fun loadBanner(): String
 
-    @GET("article/top.json")
+    @GET("/static/article/top.json")
     suspend fun loadTop(): HttpBean<List<ArticleBean>>
 
     @GET
