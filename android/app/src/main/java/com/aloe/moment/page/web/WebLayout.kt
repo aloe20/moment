@@ -17,8 +17,11 @@
 package com.aloe.moment.page.web
 
 import android.annotation.SuppressLint
+import android.os.Build
+import android.util.Log
 import android.webkit.WebView
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -26,12 +29,15 @@ import androidx.compose.ui.viewinterop.AndroidView
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebLayout(url: String) {
-    Box(modifier = Modifier) {
-        AndroidView(factory = { WebView(it) }) {
+    Box {
+        AndroidView(factory = { WebView(it) }, modifier = Modifier.fillMaxSize()) {
             with(it) {
                 settings.javaScriptEnabled = true
+                settings.userAgentString = "Mozilla/5.0 (Linux; Android ${Build.VERSION.RELEASE}; ${Build.BRAND} Build/${Build.BOARD})"
             }
-            it.loadUrl("file:///android_asset/bridge.html")
+            Log.i("aloe", url)
+            it.loadUrl(url)
+            // it.loadUrl("file:///android_asset/bridge.html")
         }
     }
 }

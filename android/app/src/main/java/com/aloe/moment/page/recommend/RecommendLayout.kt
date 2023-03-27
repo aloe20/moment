@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -54,11 +55,12 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.aloe.bean.ArticleBean
 import com.aloe.moment.app.rememberAsyncPainter
+import com.aloe.moment.page.main.LocalNav
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun RecommendLayout(vm: RecommendVm = hiltViewModel()) {
+fun RecommendLayout(vm: RecommendVm = hiltViewModel(), nav: NavHostController = LocalNav.current) {
     val uiState by vm.sendEvent<StateFlow<RecommendUiState>>(UiStateEvent)
         .collectAsStateWithLifecycle()
     val refreshing by vm.sendEvent<MutableState<Boolean>>(RefreshStateEvent)
@@ -87,6 +89,7 @@ fun RecommendLayout(vm: RecommendVm = hiltViewModel()) {
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clickable {
+                                    nav.navigate("web?url=${uiState.banner[it].url}")
                                 },
                             alignment = Alignment.Center,
                         )

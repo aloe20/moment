@@ -24,12 +24,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.platform.LocalContext
 import com.aloe.moment.app.SkinResources
-import com.aloe.moment.page.main.MainLayout
-import com.aloe.moment.page.web.WebLayout
+import com.aloe.moment.page.main.MainHost
 import com.aloe.moment.ui.theme.MomentTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,20 +37,13 @@ class MainActivity : ComponentActivity() {
         skinResources = SkinResources(super.getResources(), packageManager)
         super.onCreate(savedInstanceState)
         setContent {
+            LocalContext.current
             MomentTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    NavHost(
-                        navController = rememberNavController(),
-                        startDestination = "mainPage",
-                    ) {
-                        composable("mainPage") { MainLayout() }
-                        composable("web") {
-                            WebLayout(url = "")
-                        }
-                    }
+                    MainHost()
                 }
             }
         }

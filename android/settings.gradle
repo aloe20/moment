@@ -19,7 +19,7 @@ dependencyResolutionManagement {
 rootProject.name = "android"
 includeBuild("../lib")
 include(":app", ":skin:dark", ":lint", ":server", ":datas:bean", ":datas:http", ":datas:local", ":datas:socket", ":ui:excel", ":ui:chart", ":ui:web")
-gradle.ext.useAar = false
+gradle.ext.useAar = true
 if (!gradle.ext.useAar) {
     setBinding(new Binding([gradle: this]))
     evaluate(file("../flu/flu/.android/include_flutter.groovy"))
@@ -28,6 +28,3 @@ if (!gradle.ext.useAar) {
 }
 includeBuild("../node_modules/react-native-gradle-plugin")
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
-
-include ':flu'
-project(':flu').projectDir = new File('../flu/flu')

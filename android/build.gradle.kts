@@ -73,3 +73,11 @@ subprojects {
         }
     }
 }
+
+tasks.register<Copy>("copyHookCommit"){
+    val file = file("../.git/hooks/pre-commit")
+    if (!file.exists()) {
+        from(file("hooks/pre-commit"))
+        into(file.parentFile)
+    }
+}
