@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment.recommend
+package com.aloe.moment.page.recommend
 
 import androidx.compose.runtime.mutableStateOf
 import com.aloe.bean.ArticleBean
@@ -22,7 +22,6 @@ import com.aloe.moment.BaseVm
 import com.aloe.proto.Banner
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
@@ -31,34 +30,42 @@ import javax.inject.Inject
 @HiltViewModel
 class RecommendVm @Inject constructor(private val useCase: RecommendUseCase) : BaseVm() {
     private val _uiState = MutableStateFlow(RecommendUiState())
-    val uiState: StateFlow<RecommendUiState> = _uiState.asStateFlow()
-    var isRefreshing = mutableStateOf(false)
+    private val isRefreshing = mutableStateOf(false)
 
     init {
-        sendEvent(RefreshEvent)
+        sendEvent<Unit>(RefreshEvent)
     }
 
-    fun sendEvent(event: Event) {
-        isRefreshing.value = true
+    @Suppress("UNCHECKED_CAST")
+    fun <T> sendEvent(event: Event): T {
         when (event) {
             is RefreshEvent -> {
+                isRefreshing.value = true
                 loadData("banner") {
                     useCase.loadBanner().collectLatest { banner ->
-                        _uiState.update {
-                            it.copy(banner = banner ?: listOf(),top = useCase.loadTop())
-                        }
                         isRefreshing.value = false
+                        _uiState.update {
+                            it.copy(banner = banner ?: listOf(), top = useCase.loadTop())
+                        }
                     }
                 }
             }
+            is UiStateEvent -> return _uiState.asStateFlow() as T
+            is RefreshStateEvent -> return isRefreshing as T
+            is PagingSourceEvent -> return useCase.pagingSource as T
         }
+        return Unit as T
     }
 }
 
 data class RecommendUiState(
     val banner: List<Banner> = listOf(),
-    val top: List<ArticleBean> = listOf()
+    val top: List<ArticleBean> = listOf(),
 )
 
 sealed class Event
 object RefreshEvent : Event()
+
+object UiStateEvent : Event()
+object RefreshStateEvent : Event()
+object PagingSourceEvent : Event()

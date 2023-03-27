@@ -24,7 +24,7 @@ import com.squareup.moshi.JsonClass
 @Entity(tableName = "article")
 @JsonClass(generateAdapter = true)
 data class ArticleBean(
-    @PrimaryKey val id: Int=0,
+    @PrimaryKey val id: Int = 0,
     @ColumnInfo(name = "course_id") val courseId: Int = 0,
     @ColumnInfo(name = "chapter_id") val chapterId: Int = 0,
     @ColumnInfo(name = "title") val title: String? = null,
@@ -33,5 +33,5 @@ data class ArticleBean(
     @ColumnInfo(name = "nice_date") val niceDate: String? = null,
     @ColumnInfo(name = "nice_share_date") val niceShareDate: String? = null,
     @ColumnInfo(name = "chapter_name") val chapterName: String? = null,
-    @ColumnInfo(name = "link") val link: String? = null
+    @ColumnInfo(name = "link") val link: String? = null,
 )

@@ -23,4 +23,3 @@ import com.squareup.moshi.JsonClass
  */
 @JsonClass(generateAdapter = true)
 data class HttpBean<T>(val errorCode: Int? = 0, val errorMsg: String? = "", val data: T? = null)
-

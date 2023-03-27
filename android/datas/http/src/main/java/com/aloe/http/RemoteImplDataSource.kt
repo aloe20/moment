@@ -32,7 +32,7 @@ import javax.inject.Inject
 
 internal class RemoteImplDataSource @Inject constructor(
     @ApplicationContext val ctx: Context,
-    val api: HttpApi
+    val api: HttpApi,
 ) : RemoteDataSource {
     override suspend fun loadBanner(): Result<String> = runCatching { api.loadBanner() }
 
@@ -40,10 +40,14 @@ internal class RemoteImplDataSource @Inject constructor(
 
     override fun download(url: String, path: String?): Flow<Int> = flow {
         val name = url.substring(url.lastIndexOf("/") + 1)
-        val file = if (path == null) File(
-            ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
-            name
-        ) else File(path)
+        val file = if (path == null) {
+            File(
+                ctx.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
+                name,
+            )
+        } else {
+            File(path)
+        }
         val body = api.download(url, "bytes=${file.length()}-")
         val length = body.contentLength()
         withContext(Dispatchers.IO) {

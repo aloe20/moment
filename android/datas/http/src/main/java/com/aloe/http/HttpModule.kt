@@ -55,7 +55,7 @@ internal class HttpModule {
             count.shl(1) + 1,
             30,
             TimeUnit.SECONDS,
-            ArrayBlockingQueue(10)
+            ArrayBlockingQueue(10),
         )
     }
 
@@ -63,7 +63,7 @@ internal class HttpModule {
     @Singleton
     fun getOkHttpClient(
         @ApplicationContext ctx: Context,
-        executor: ExecutorService
+        executor: ExecutorService,
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         .dispatcher(Dispatcher(executor)).cache(Cache(ctx.cacheDir, 1024_1000_100)).build()
@@ -71,7 +71,7 @@ internal class HttpModule {
     @Provides
     @Singleton
     fun getHttpApi(client: OkHttpClient): HttpApi = Retrofit.Builder()
-        //.baseUrl("http://httpbin.org/")
+        // .baseUrl("http://httpbin.org/")
         .baseUrl("http://192.168.1.6:8000/")
         .addConverterFactory(BitmapConverterFactory.create())
         .addConverterFactory(EnumConverterFactory.create())

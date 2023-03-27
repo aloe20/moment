@@ -40,7 +40,7 @@ class KlineChartTouchListener(val chart: KlineCombinedChart, touchMatrix: Matrix
             }
             MotionEvent.ACTION_MOVE -> {
                 if ((mChart as KlineCombinedChart).highlightShow && (abs(event.x - x) > touchSlop || abs(event.y - y) > touchSlop)) {
-                    //高亮选中线显示时，滑动则移动高度选中线。滑动距离需要大于最小有效距离，否则算点击事件处理
+                    // 高亮选中线显示时，滑动则移动高度选中线。滑动距离需要大于最小有效距离，否则算点击事件处理
                     performHighlightDrag(event)
                 }
             }

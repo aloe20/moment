@@ -45,8 +45,8 @@ class EneIndex : MaIndex() {
             mutableListOf<MutableList<Entry>>(
                 mutableListOf(),
                 mutableListOf(),
-                mutableListOf()
-            )
+                mutableListOf(),
+            ),
         ) { index, acc, entry ->
             if (entry.y.isNaN()) {
                 acc.forEach { it.add(Entry(index.toFloat(), Float.NaN)) }
@@ -61,12 +61,14 @@ class EneIndex : MaIndex() {
             acc
         }.foldIndexed(mutableListOf()) { index, acc, mutableList ->
             acc.also {
-                it.add(LineDataSet(mutableList, args[index].third).apply {
-                    setDrawCircles(false)
-                    isHighlightEnabled = false
-                    color = args[index].second
-                    mode = LineDataSet.Mode.CUBIC_BEZIER
-                })
+                it.add(
+                    LineDataSet(mutableList, args[index].third).apply {
+                        setDrawCircles(false)
+                        isHighlightEnabled = false
+                        color = args[index].second
+                        mode = LineDataSet.Mode.CUBIC_BEZIER
+                    },
+                )
             }
         }
     }

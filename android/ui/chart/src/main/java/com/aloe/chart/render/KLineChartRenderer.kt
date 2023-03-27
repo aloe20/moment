@@ -28,7 +28,7 @@ import kotlin.math.max
 class KLineChartRenderer(
     chart: LineDataProvider,
     animator: ChartAnimator,
-    viewPortHandler: ViewPortHandler
+    viewPortHandler: ViewPortHandler,
 ) : LineChartRenderer(chart, animator, viewPortHandler) {
     /*override fun drawDataSet(c: Canvas, dataSet: ILineDataSet) {
         prevDrawDataSet(c, dataSet)
@@ -41,7 +41,7 @@ class KLineChartRenderer(
     private fun lastDrawDataSet(c: Canvas, dataSet: ILineDataSet): Unit = Unit*/
 
     override fun drawCubicBezier(dataSet: ILineDataSet) {
-        //super.drawCubicBezier(dataSet)
+        // super.drawCubicBezier(dataSet)
         val phaseY = mAnimator.phaseY
         val trans = mChart.getTransformer(dataSet.axisDependency)
         mXBounds.set(mChart, dataSet)
@@ -80,7 +80,7 @@ class KLineChartRenderer(
                             cur.x - curDx,
                             (cur.y - curDy) * phaseY,
                             cur.x,
-                            cur.y * phaseY
+                            cur.y * phaseY,
                         )
                     } else {
                         cubicPath.moveTo(prevPrev.x, prevPrev.y * phaseY)
@@ -102,7 +102,7 @@ class KLineChartRenderer(
     }
 
     override fun drawHorizontalBezier(dataSet: ILineDataSet) {
-        //super.drawHorizontalBezier(dataSet)
+        // super.drawHorizontalBezier(dataSet)
         val phaseY = mAnimator.phaseY
         val trans = mChart.getTransformer(dataSet.axisDependency)
         mXBounds.set(mChart, dataSet)

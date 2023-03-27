@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment.ui.theme
+package com.aloe.moment.page.react
 
 import android.animation.ArgbEvaluator
 import android.annotation.SuppressLint
@@ -64,7 +64,7 @@ class SwitchView : View {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
         context,
         attrs,
-        defStyle
+        defStyle,
     ) {
         init(attrs, defStyle)
     }
@@ -82,37 +82,45 @@ class SwitchView : View {
                 outline.setRoundRect(0, 0, width, height, height / 2F)
             }
         }
-        detector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-            private var start = 0F
-            override fun onDown(e: MotionEvent): Boolean {
-                hasScroll = false
-                start = point.x
-                return true
-            }
+        detector = GestureDetector(
+            context,
+            object : GestureDetector.SimpleOnGestureListener() {
+                private var start = 0F
+                override fun onDown(e: MotionEvent): Boolean {
+                    hasScroll = false
+                    start = point.x
+                    return true
+                }
 
-            override fun onSingleTapUp(e: MotionEvent): Boolean {
-                point.x = if (point.x == pair.first) pair.second else pair.first
-                changeState(true)
-                return true
-            }
+                override fun onSingleTapUp(e: MotionEvent): Boolean {
+                    point.x = if (point.x == pair.first) pair.second else pair.first
+                    changeState(true)
+                    return true
+                }
 
-            override fun onScroll(
-                e1: MotionEvent,
-                e2: MotionEvent,
-                distanceX: Float,
-                distanceY: Float
-            ): Boolean {
-                hasScroll = true
-                point.x = start + e2.x - e1.x
-                point.x = if (point.x > width / 2F) min(point.x, pair.second) else max(
-                    point.x,
-                    pair.first
-                )
-                updateBackground()
-                invalidate()
-                return true
-            }
-        }, handler)
+                override fun onScroll(
+                    e1: MotionEvent,
+                    e2: MotionEvent,
+                    distanceX: Float,
+                    distanceY: Float,
+                ): Boolean {
+                    hasScroll = true
+                    point.x = start + e2.x - e1.x
+                    point.x = if (point.x > width / 2F) {
+                        min(point.x, pair.second)
+                    } else {
+                        max(
+                            point.x,
+                            pair.first,
+                        )
+                    }
+                    updateBackground()
+                    invalidate()
+                    return true
+                }
+            },
+            handler,
+        )
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -143,8 +151,8 @@ class SwitchView : View {
             evaluator.evaluate(
                 (point.x - pair.first) / (pair.second - pair.first),
                 trackOffColor,
-                trackOnColor
-            ) as Int
+                trackOnColor,
+            ) as Int,
         )
     }
 

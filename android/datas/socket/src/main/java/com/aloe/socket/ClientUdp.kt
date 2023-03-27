@@ -31,6 +31,7 @@ internal class ClientUdp {
 //        private set
     private var context: ChannelHandlerContext? = null
     private var channel: Channel? = null
+
     //    private var job: Job? = null
     fun addUdpListener() {
         val size = Int.SIZE_BYTES + Short.SIZE_BYTES

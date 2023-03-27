@@ -30,12 +30,14 @@ abstract class BaseIndexLine : IndexLine {
     override fun getLineDataSet(entries: List<KlineEntry>): List<LineDataSet> {
         return args.fold(mutableListOf()) { acc, triple ->
             acc.apply {
-                add(LineDataSet(getEntry(triple.first, entries), triple.third).apply {
-                    color = triple.second
-                    setDrawCircles(false)
-                    isHighlightEnabled = false
-                    mode = LineDataSet.Mode.CUBIC_BEZIER
-                })
+                add(
+                    LineDataSet(getEntry(triple.first, entries), triple.third).apply {
+                        color = triple.second
+                        setDrawCircles(false)
+                        isHighlightEnabled = false
+                        mode = LineDataSet.Mode.CUBIC_BEZIER
+                    },
+                )
             }
         }
     }

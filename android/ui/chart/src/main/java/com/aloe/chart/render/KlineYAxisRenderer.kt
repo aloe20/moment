@@ -24,12 +24,14 @@ import com.github.mikephil.charting.utils.Utils
 import com.github.mikephil.charting.utils.ViewPortHandler
 
 class KlineYAxisRenderer(
-    viewPortHandler: ViewPortHandler, yAxis: YAxis, trans: Transformer
+    viewPortHandler: ViewPortHandler,
+    yAxis: YAxis,
+    trans: Transformer,
 ) : YAxisRenderer(viewPortHandler, yAxis, trans) {
     private val labelVerticalOffset = Utils.convertDpToPixel(5F)
 
     override fun drawYLabels(c: Canvas, fixedPosition: Float, positions: FloatArray, offset: Float) {
-        //super.drawYLabels(c, fixedPosition, positions, offset)
+        // super.drawYLabels(c, fixedPosition, positions, offset)
         val from = if (mYAxis.isDrawBottomYLabelEntryEnabled) 0 else 1
         val to = if (mYAxis.isDrawTopYLabelEntryEnabled) mYAxis.mEntryCount else mYAxis.mEntryCount - 1
         val medium = (from + to) / 2

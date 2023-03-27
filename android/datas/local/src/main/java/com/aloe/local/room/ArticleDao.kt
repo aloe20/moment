@@ -25,7 +25,8 @@ import com.aloe.bean.ArticleBean
 @Dao
 internal interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun putArticles(list:List<ArticleBean>)
+    suspend fun putArticles(list: List<ArticleBean>)
+
     @Query("SELECT * FROM article")
     suspend fun getArticles(): List<ArticleBean>
 }

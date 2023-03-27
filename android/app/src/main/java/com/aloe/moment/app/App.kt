@@ -30,16 +30,17 @@ import okhttp3.OkHttpClient
 import javax.inject.Inject
 
 @HiltAndroidApp
-class App:Application() {
+class App : Application() {
     @Inject
     lateinit var okHttpClient: OkHttpClient
     lateinit var imageLoader: ImageLoader
     override fun onCreate() {
         super.onCreate()
-        imageLoader = ImageLoader.Builder(this).okHttpClient((applicationContext as App).okHttpClient)
-            .diskCache(DiskCache.Builder().directory(externalCacheDir?:cacheDir).build())
-            .memoryCache(MemoryCache.Builder(this).build())
-            .build()
+        imageLoader =
+            ImageLoader.Builder(this).okHttpClient((applicationContext as App).okHttpClient)
+                .diskCache(DiskCache.Builder().directory(externalCacheDir ?: cacheDir).build())
+                .memoryCache(MemoryCache.Builder(this).build())
+                .build()
     }
 }
 

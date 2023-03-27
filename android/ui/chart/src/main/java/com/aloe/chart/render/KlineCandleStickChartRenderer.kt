@@ -35,7 +35,7 @@ import kotlin.math.min
 class KlineCandleStickChartRenderer(
     chart: CandleDataProvider,
     animator: ChartAnimator,
-    viewPortHandler: ViewPortHandler
+    viewPortHandler: ViewPortHandler,
 ) : CandleStickChartRenderer(chart, animator, viewPortHandler) {
     private val mShadowBuffers = FloatArray(4)
     private val mRangeBuffers = FloatArray(2)
@@ -48,7 +48,7 @@ class KlineCandleStickChartRenderer(
     }
 
     override fun drawHighlighted(c: Canvas, indices: Array<out Highlight>) {
-        //super.drawHighlighted(c, indices)
+        // super.drawHighlighted(c, indices)
         indices.forEach { high ->
             mChart.candleData.getDataSetByIndex(high.dataSetIndex)?.takeIf { it.isHighlightEnabled }?.also { set ->
                 set.getEntryForXValue(high.x, high.y).takeIf { isInBoundsX(it, set) }?.let {
@@ -62,7 +62,7 @@ class KlineCandleStickChartRenderer(
     }
 
     override fun drawHighlightLines(c: Canvas, x: Float, y: Float, set: ILineScatterCandleRadarDataSet<*>) {
-        //super.drawHighlightLines(c, x, y, set)
+        // super.drawHighlightLines(c, x, y, set)
         with(mHighlightPaint) {
             color = set.highLightColor
             strokeWidth = set.highlightLineWidth
@@ -113,7 +113,7 @@ class KlineCandleStickChartRenderer(
                             y - textHeight * 0.7F,
                             mViewPortHandler.contentRight(),
                             y + textHeight * 0.7F,
-                            mValuePaint
+                            mValuePaint,
                         )
                         mValuePaint.color = color
                         val textX = mViewPortHandler.contentRight() - textWidth / 2
@@ -127,7 +127,7 @@ class KlineCandleStickChartRenderer(
                             y - textHeight * 0.7F,
                             textWidth,
                             y + textHeight * 0.7F,
-                            mValuePaint
+                            mValuePaint,
                         )
                         mValuePaint.color = color
                         val textX = mViewPortHandler.contentLeft() + textWidth / 2

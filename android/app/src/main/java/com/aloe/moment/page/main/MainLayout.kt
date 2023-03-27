@@ -1,12 +1,12 @@
 /*
  * Copyright 2023 The Android Open Source Project
- *  
+ *
  *   Licensed under the Apache License, Version 2.0 (the "License");
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
- *  
+ *
  *       https://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
  *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,16 +14,18 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment.main
+package com.aloe.moment.page.main
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
@@ -37,10 +39,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.aloe.moment.R
 import com.aloe.moment.app.rememberAsyncPainter
-import com.aloe.moment.flu.FlutterLayout
-import com.aloe.moment.react.ReactLayout
-import com.aloe.moment.recommend.RecommendLayout
+import com.aloe.moment.page.flu.FlutterLayout
+import com.aloe.moment.page.react.ReactLayout
+import com.aloe.moment.page.recommend.RecommendLayout
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -53,7 +56,7 @@ fun MainLayout() {
         HorizontalPager(
             modifier = Modifier.weight(1F),
             pageCount = items.size,
-            state = pageState
+            state = pageState,
         ) {
             val width = LocalContext.current.resources.displayMetrics.widthPixels
             when (it) {
@@ -62,28 +65,36 @@ fun MainLayout() {
                 2 -> FlutterLayout()
                 3 -> Image(
                     painter = rememberAsyncPainter(
-                        model  = "https://picsum.photos/seed/1/$width/500",
+                        model = "https://picsum.photos/seed/1/$width/500",
                     ),
                     contentScale = ContentScale.Crop,
                     contentDescription = "",
-                    modifier = Modifier.fillMaxWidth().height(160.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(160.dp),
                 )
             }
         }
         Row {
             items.forEachIndexed { index, s ->
-                Column(modifier = Modifier.weight(1F)) {
+                Column(
+                    modifier = Modifier
+                        .height(56.dp)
+                        .weight(1F),
+                    verticalArrangement = Arrangement.Center,
+                ) {
                     Icon(
-                        painter = painterResource(id = android.R.drawable.ic_menu_add),
+                        painter = painterResource(id = R.drawable.ic_recommend),
                         contentDescription = "",
                         modifier = Modifier
+                            .size(24.dp)
                             .align(Alignment.CenterHorizontally)
                             .clickable {
                                 scope.launch {
                                     pageState.scrollToPage(index, 0F)
                                 }
                             },
-                        tint = if (index == pageState.currentPage) Color.Red else Color.Black
+                        tint = if (index == pageState.currentPage) Color.Red else Color.Black,
                     )
                     Text(
                         text = s,
@@ -94,7 +105,7 @@ fun MainLayout() {
                                     pageState.scrollToPage(index, 0F)
                                 }
                             },
-                        color = if (index == pageState.currentPage) Color.Red else Color.Black
+                        color = if (index == pageState.currentPage) Color.Red else Color.Black,
                     )
                 }
             }

@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment.recommend
+package com.aloe.moment.page.recommend
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -55,7 +55,12 @@ import kotlin.math.sign
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Banner(modifier: Modifier = Modifier,isVertical: Boolean = false, count: Int, content: @Composable BoxScope.(Int) -> Unit) {
+fun Banner(
+    modifier: Modifier = Modifier,
+    isVertical: Boolean = false,
+    count: Int,
+    content: @Composable BoxScope.(Int) -> Unit,
+) {
     Box(modifier = modifier) {
         val loopCount = Int.MAX_VALUE
         val startIndex = loopCount / 2
@@ -71,7 +76,7 @@ fun Banner(modifier: Modifier = Modifier,isVertical: Boolean = false, count: Int
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(4.dp),
-                pageIndexMapping = ::pageMapper
+                pageIndexMapping = ::pageMapper,
             )
         } else {
             HorizontalPager(pageCount = loopCount, state = pagerState) { content(pageMapper(it)) }
@@ -81,7 +86,7 @@ fun Banner(modifier: Modifier = Modifier,isVertical: Boolean = false, count: Int
                     .align(Alignment.BottomCenter)
                     .padding(4.dp),
                 pageCount = count,
-                pageIndexMapping = ::pageMapper
+                pageIndexMapping = ::pageMapper,
             )
         }
 
@@ -163,21 +168,24 @@ fun HorizontalPagerIndicator(
                             0f,
                             (pageCount - 1)
                                 .coerceAtLeast(0)
-                                .toFloat()
+                                .toFloat(),
                         )
                     IntOffset(
                         x = ((spacingPx + indicatorWidthPx) * scrollPosition).toInt(),
-                        y = 0
+                        y = 0,
                     )
                 }
                 .size(width = indicatorWidth, height = indicatorHeight)
                 .then(
-                    if (pageCount > 0) Modifier.background(
-                        color = activeColor,
-                        shape = indicatorShape,
-                    )
-                    else Modifier
-                )
+                    if (pageCount > 0) {
+                        Modifier.background(
+                            color = activeColor,
+                            shape = indicatorShape,
+                        )
+                    } else {
+                        Modifier
+                    },
+                ),
         )
     }
 }
@@ -200,7 +208,7 @@ fun VerticalPagerIndicator(
     val spacingPx = LocalDensity.current.run { spacing.roundToPx() }
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.TopCenter
+        contentAlignment = Alignment.TopCenter,
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(spacing),
@@ -224,7 +232,7 @@ fun VerticalPagerIndicator(
                             0f,
                             (pageCount - 1)
                                 .coerceAtLeast(0)
-                                .toFloat()
+                                .toFloat(),
                         )
                     IntOffset(
                         x = 0,
@@ -233,12 +241,15 @@ fun VerticalPagerIndicator(
                 }
                 .size(width = indicatorWidth, height = indicatorHeight)
                 .then(
-                    if (pageCount > 0) Modifier.background(
-                        color = activeColor,
-                        shape = indicatorShape,
-                    )
-                    else Modifier
-                )
+                    if (pageCount > 0) {
+                        Modifier.background(
+                            color = activeColor,
+                            shape = indicatorShape,
+                        )
+                    } else {
+                        Modifier
+                    },
+                ),
         )
     }
 }

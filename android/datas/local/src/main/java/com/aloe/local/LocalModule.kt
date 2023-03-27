@@ -32,13 +32,17 @@ import javax.inject.Singleton
 internal abstract class LocalModule {
     @Binds
     @Singleton
-    abstract fun getLocal(impl: LocalImplDataSource):LocalDataSource
+    abstract fun getLocal(impl: LocalImplDataSource): LocalDataSource
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal class RoomModule{
+internal class RoomModule {
     @Provides
     @Singleton
-    fun getRoomDb(@ApplicationContext ctx: Context):AppDatabase = Room.databaseBuilder(ctx, AppDatabase::class.java, "moment").build()
+    fun getRoomDb(@ApplicationContext ctx: Context): AppDatabase = Room.databaseBuilder(
+        ctx,
+        AppDatabase::class.java,
+        "moment",
+    ).build()
 }

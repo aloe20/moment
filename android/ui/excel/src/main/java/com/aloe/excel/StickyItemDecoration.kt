@@ -69,7 +69,8 @@ class StickyItemDecoration(private val stickyItem: Int) : RecyclerView.ItemDecor
                     stickyViewType = adapter.getItemViewType(index)
                 }
                 if (mapStickyViewHolder[stickyViewType] == null) {
-                    mapStickyViewHolder[stickyViewType] = adapter.onCreateViewHolder(parent, stickyViewType)
+                    mapStickyViewHolder[stickyViewType] =
+                        adapter.onCreateViewHolder(parent, stickyViewType)
                 }
                 val position = firstVisiblePosition + i
                 stickyIndexList.takeUnless { stickyIndexList.contains(position) }?.add(position)
@@ -81,7 +82,11 @@ class StickyItemDecoration(private val stickyItem: Int) : RecyclerView.ItemDecor
                     } else {
                         val indexOfCurrPosition = stickyIndexList.lastIndexOf(position)
                         takeIf { indexOfCurrPosition >= 1 }
-                            ?.bindDataForStickyView(adapter, stickyIndexList[indexOfCurrPosition - 1], parent.measuredWidth)
+                            ?.bindDataForStickyView(
+                                adapter,
+                                stickyIndexList[indexOfCurrPosition - 1],
+                                parent.measuredWidth,
+                            )
                     }
                 }
                 mapStickyViewHolder[stickyViewType]?.also {
@@ -102,16 +107,25 @@ class StickyItemDecoration(private val stickyItem: Int) : RecyclerView.ItemDecor
         if (!currUiFindStickyView) {
             stickyItemMarginTop = 0
             if (firstVisiblePosition + parent.childCount == adapter.itemCount && stickyIndexList.isNotEmpty()) {
-                bindDataForStickyView(adapter, stickyIndexList[stickyIndexList.size - 1], parent.measuredWidth)
+                bindDataForStickyView(
+                    adapter,
+                    stickyIndexList[stickyIndexList.size - 1],
+                    parent.measuredWidth,
+                )
             }
-            mapStickyViewHolder[stickyViewType].takeIf { shouldSticky }?.also { drawStickyItemView(it, c) }
+            mapStickyViewHolder[stickyViewType].takeIf { shouldSticky }
+                ?.also { drawStickyItemView(it, c) }
         }
     }
 
     private fun isStickyItem(adapter: RecyclerView.Adapter<*>, index: Int): Boolean =
         adapter.getItemViewType(index).and(stickyItem) != 0
 
-    fun bindDataForStickyView(adapter: RecyclerView.Adapter<in RecyclerView.ViewHolder>, index: Int, width: Int) {
+    fun bindDataForStickyView(
+        adapter: RecyclerView.Adapter<in RecyclerView.ViewHolder>,
+        index: Int,
+        width: Int,
+    ) {
         val viewHolder = mapStickyViewHolder[adapter.getItemViewType(index)] ?: return
         bindDataIndex = index
         adapter.onBindViewHolder(viewHolder, bindDataIndex)
@@ -119,16 +133,27 @@ class StickyItemDecoration(private val stickyItem: Int) : RecyclerView.ItemDecor
         val widthSpec = View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY)
         val layoutParams = viewHolder.itemView.layoutParams
         val heightSpec =
-            if (layoutParams.height > 0) View.MeasureSpec.makeMeasureSpec(layoutParams.height, View.MeasureSpec.EXACTLY)
-            else View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            if (layoutParams.height > 0) {
+                View.MeasureSpec.makeMeasureSpec(
+                    layoutParams.height,
+                    View.MeasureSpec.EXACTLY,
+                )
+            } else {
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
+            }
         viewHolder.itemView.measure(widthSpec, heightSpec)
-        viewHolder.itemView.layout(0, 0, viewHolder.itemView.measuredWidth, viewHolder.itemView.measuredHeight)
+        viewHolder.itemView.layout(
+            0,
+            0,
+            viewHolder.itemView.measuredWidth,
+            viewHolder.itemView.measuredHeight,
+        )
     }
 
     private fun getNextStickyView(
         adapter: RecyclerView.Adapter<*>,
         layoutManager: LinearLayoutManager,
-        recyclerView: RecyclerView
+        recyclerView: RecyclerView,
     ): View? {
         var index = 0
         var nextStickyView: View? = null
@@ -138,7 +163,9 @@ class StickyItemDecoration(private val stickyItem: Int) : RecyclerView.ItemDecor
                 nextStickyView = view
                 index++
             }
-            if (index == 2) break
+            if (index == 2) {
+                break
+            }
         }
         return if (index > 1) nextStickyView else null
     }

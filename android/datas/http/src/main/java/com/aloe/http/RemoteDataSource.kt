@@ -22,5 +22,5 @@ import kotlinx.coroutines.flow.Flow
 interface RemoteDataSource {
     suspend fun loadBanner(): Result<String>
     suspend fun loadTop(): Result<List<ArticleBean>?>
-    fun download(url: String, path:String?=null): Flow<Int>
+    fun download(url: String, path: String? = null): Flow<Int>
 }

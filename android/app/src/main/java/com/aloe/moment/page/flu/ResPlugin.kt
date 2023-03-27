@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment.flu
+package com.aloe.moment.page.flu
 
 import android.content.Context
 import androidx.core.content.ContextCompat
@@ -52,14 +52,11 @@ class ResPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
-
     }
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-
     }
 
     override fun onDetachedFromActivity() {
-
     }
 }

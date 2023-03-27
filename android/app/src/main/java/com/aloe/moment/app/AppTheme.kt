@@ -83,7 +83,7 @@ fun MomentTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        //darkTheme -> DarkColorScheme
+        // darkTheme -> DarkColorScheme
         else -> colorScheme(view.context)
     }
     if (!view.isInEditMode) {

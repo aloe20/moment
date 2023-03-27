@@ -21,6 +21,6 @@ import androidx.room.RoomDatabase
 import com.aloe.bean.ArticleBean
 
 @Database(entities = [ArticleBean::class], version = 1)
-internal abstract class AppDatabase: RoomDatabase()  {
-    abstract fun getArticleDao():ArticleDao
+internal abstract class AppDatabase : RoomDatabase() {
+    abstract fun getArticleDao(): ArticleDao
 }

@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment.recommend
+package com.aloe.moment.page.recommend
 
 import com.aloe.bean.ArticleBean
 import com.aloe.http.RemoteDataSource
@@ -29,7 +29,7 @@ import javax.inject.Inject
 @ViewModelScoped
 class RecommendRepository @Inject constructor(
     private val local: LocalDataSource,
-    private val remote: RemoteDataSource
+    private val remote: RemoteDataSource,
 ) {
     fun loadBanner(): Flow<MutableList<Banner>?> = local.getBanner().map {
         val list = mutableListOf<Banner>()
@@ -43,8 +43,10 @@ class RecommendRepository @Inject constructor(
                             val json = it.getJSONObject(i)
                             if (json.has("title")) newBuilder.title = json.getString("title")
                             if (json.has("desc")) newBuilder.desc = json.getString("desc")
-                            if (json.has("imagePath")) newBuilder.imagePath =
-                                json.getString("imagePath")
+                            if (json.has("imagePath")) {
+                                newBuilder.imagePath =
+                                    json.getString("imagePath")
+                            }
                             if (json.has("url")) newBuilder.url = json.getString("url")
                             list.add(newBuilder.build())
                         }
@@ -56,12 +58,12 @@ class RecommendRepository @Inject constructor(
         it ?: list
     }
 
-    suspend fun loadTop():List<ArticleBean> {
+    suspend fun loadTop(): List<ArticleBean> {
         var top = local.getTop()
         if (top.isEmpty()) {
             remote.loadTop().getOrNull()?.also {
-              local.putTop(it)
-                top=it
+                local.putTop(it)
+                top = it
             }
         }
         return top

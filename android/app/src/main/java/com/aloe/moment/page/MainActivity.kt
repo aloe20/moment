@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment
+package com.aloe.moment.page
 
 import android.content.res.Resources
 import android.os.Bundle
@@ -28,13 +28,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aloe.moment.app.SkinResources
-import com.aloe.moment.main.MainLayout
+import com.aloe.moment.page.main.MainLayout
+import com.aloe.moment.page.web.WebLayout
 import com.aloe.moment.ui.theme.MomentTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private lateinit var skinResources:SkinResources
+    private lateinit var skinResources: SkinResources
     override fun onCreate(savedInstanceState: Bundle?) {
         skinResources = SkinResources(super.getResources(), packageManager)
         super.onCreate(savedInstanceState)
@@ -42,11 +43,16 @@ class MainActivity : ComponentActivity() {
             MomentTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
-                    NavHost(navController = rememberNavController(), startDestination = "mainPage") {
+                    NavHost(
+                        navController = rememberNavController(),
+                        startDestination = "mainPage",
+                    ) {
                         composable("mainPage") { MainLayout() }
-
+                        composable("web") {
+                            WebLayout(url = "")
+                        }
                     }
                 }
             }

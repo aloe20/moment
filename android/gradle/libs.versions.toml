@@ -8,18 +8,18 @@ kotlin = "1.8.10"
 # https://github.com/google/ksp
 ksp = "1.8.10-1.0.9"
 androidGradlePlugin = "7.4.2"
-androidxActivity = "1.7.0-rc01"
+androidxActivity = "1.7.0"
 androidxAppcompat = "1.6.1"
 androidxArch = "2.2.0"
 androidxCollection = "1.2.0"
-androidxLifecycle = "2.6.0"
-androidxCompose = "1.4.0-rc01"
+androidxLifecycle = "2.6.1"
+androidxCompose = "1.4.0"
 androidxCore = "1.10.0-rc01"
-androidxFragment = "1.6.0-alpha07"
+androidxFragment = "1.5.+"
 androidxTracing = "1.1.0"
 datastore = "1.0.0"
 # https://github.com/google/accompanist
-accompanist = "0.29.2-rc"
+accompanist = "0.30.0"
 # https://github.com/diffplug/spotless
 spotless = "6.16.0"
 # https://github.com/pinterest/ktlint
@@ -47,8 +47,8 @@ compose-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", 
 compose-hilt = "androidx.hilt:hilt-navigation-compose:1.0.0"
 compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 compose-material = { group = "androidx.compose.material", name="material",version.ref = "androidxCompose" }
-compose-material3 = "androidx.compose.material3:material3:1.1.0-alpha08"
-compose-navigation = "androidx.navigation:navigation-compose:2.6.0-alpha07"
+compose-material3 = "androidx.compose.material3:material3:1.1.0-beta01"
+compose-navigation = "androidx.navigation:navigation-compose:2.6.0-alpha08"
 compose-paging = "androidx.paging:paging-compose:1.0.0-alpha18"
 junit = "junit:junit:4.13.2"
 # https://github.com/google/desugar_jdk_libs

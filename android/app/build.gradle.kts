@@ -45,12 +45,12 @@ android {
     }
 
     buildTypes {
-        debug {
+        getByName("debug") {
             isDebuggable = true
             isMinifyEnabled = false
             isShrinkResources = false
         }
-        release {
+        getByName("release") {
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
@@ -61,19 +61,13 @@ android {
         }
         create("profile") {
             initWith(getByName("debug"))
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.+"
+        kotlinCompilerExtensionVersion = "1.4.3"
     }
     packagingOptions {
         resources {
@@ -94,7 +88,6 @@ dependencies {
     implementation(libs.compose.lifecycle)
     implementation(libs.compose.paging)
     implementation(libs.androidx.startup)
-//    implementation(libs.accompanist.swiperefresh)
     implementation(libs.google.hilt.android)
     implementation(libs.coil)
     kapt(libs.google.hilt.compiler)

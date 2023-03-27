@@ -37,5 +37,5 @@ data class QuoteBean(
     val turnoverRate: Double = Double.NaN,
     val flowMainOut: Double = Double.NaN,
     val flowMainIn: Double = Double.NaN,
-    val flowMainNetIn: Double = Double.NaN
+    val flowMainNetIn: Double = Double.NaN,
 )

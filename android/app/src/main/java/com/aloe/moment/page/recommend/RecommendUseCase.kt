@@ -14,8 +14,10 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment.recommend
+package com.aloe.moment.page.recommend
 
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.aloe.bean.ArticleBean
 import com.aloe.moment.app.AppRepository
 import com.aloe.proto.Banner
@@ -27,6 +29,26 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class RecommendUseCase @Inject constructor(private val repo: AppRepository) {
+    val pagingSource: PagingSource<Int, ArticleBean> = object : PagingSource<Int, ArticleBean>() {
+        override fun getRefreshKey(state: PagingState<Int, ArticleBean>): Int? {
+            return state.anchorPosition?.let { anchorPosition ->
+                state.closestPageToPosition(anchorPosition)
+            }?.let { anchorPage ->
+                anchorPage.prevKey?.plus(1) ?: anchorPage.nextKey?.minus(1)
+            }
+        }
+
+        override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ArticleBean> {
+            return try {
+                val pageNumber = params.key ?: 0
+                val top = loadTop()
+                LoadResult.Page(top, null, if (pageNumber >= 10) null else pageNumber.plus(1))
+            } catch (e: Exception) {
+                LoadResult.Error(e)
+            }
+        }
+    }
+
     fun loadBanner(): Flow<MutableList<Banner>?> = repo.getBanner().map {
         val list = mutableListOf<Banner>()
         if (it.isNullOrEmpty()) {
@@ -39,8 +61,10 @@ class RecommendUseCase @Inject constructor(private val repo: AppRepository) {
                             val json = it.getJSONObject(i)
                             if (json.has("title")) newBuilder.title = json.getString("title")
                             if (json.has("desc")) newBuilder.desc = json.getString("desc")
-                            if (json.has("imagePath")) newBuilder.imagePath =
-                                json.getString("imagePath")
+                            if (json.has("imagePath")) {
+                                newBuilder.imagePath =
+                                    json.getString("imagePath")
+                            }
                             if (json.has("url")) newBuilder.url = json.getString("url")
                             list.add(newBuilder.build())
                         }

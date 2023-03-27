@@ -16,7 +16,6 @@
 
 package com.aloe.http.factory
 
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -25,33 +24,34 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import java.lang.reflect.Type
 
-class EnumConverterFactory: Converter.Factory() {
+class EnumConverterFactory : Converter.Factory() {
     override fun requestBodyConverter(
         type: Type,
         parameterAnnotations: Array<out Annotation>,
         methodAnnotations: Array<out Annotation>,
-        retrofit: Retrofit
+        retrofit: Retrofit,
     ): Converter<*, RequestBody>? {
-        return if ((type as? Class<*>)?.isEnum==true) EnumRequestConverter() else null
+        return if ((type as? Class<*>)?.isEnum == true) EnumRequestConverter() else null
     }
 
     override fun responseBodyConverter(
         type: Type,
         annotations: Array<out Annotation>,
-        retrofit: Retrofit
+        retrofit: Retrofit,
     ): Converter<ResponseBody, *>? {
-        return if (type==String::class.java) StringResponseConverter() else null
+        return if (type == String::class.java) StringResponseConverter() else null
     }
 
-    companion object{
+    companion object {
         fun create(): EnumConverterFactory = EnumConverterFactory()
-        private class EnumRequestConverter:Converter<Enum<*>,RequestBody>{
+        private class EnumRequestConverter : Converter<Enum<*>, RequestBody> {
             override fun convert(value: Enum<*>): RequestBody {
-                return value.toString().toRequestBody("application/json; charset=UTF-8".toMediaType())
+                return value.toString()
+                    .toRequestBody("application/json; charset=UTF-8".toMediaType())
             }
         }
 
-        private class StringResponseConverter:Converter<ResponseBody,String>{
+        private class StringResponseConverter : Converter<ResponseBody, String> {
             override fun convert(value: ResponseBody): String = value.use {
                 String(it.bytes())
             }

@@ -36,8 +36,11 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import javax.inject.Inject
 
-internal class LocalImplDataSource @Inject constructor(@ApplicationContext val ctx: Context,db:AppDatabase) : LocalDataSource {
-    private val articleDao:ArticleDao = db.getArticleDao()
+internal class LocalImplDataSource @Inject constructor(
+    @ApplicationContext val ctx: Context,
+    db: AppDatabase,
+) : LocalDataSource {
+    private val articleDao: ArticleDao = db.getArticleDao()
     private val settingsDataStore: DataStore<Preferences> =
         preferencesDataStore(name = "settings").getValue(ctx, Preferences::javaClass)
 

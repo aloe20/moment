@@ -27,6 +27,6 @@ interface LocalDataSource {
     suspend fun putBanner(banner: List<Banner>)
     fun getBanner(): Flow<MutableList<Banner>?>
 
-    suspend fun putTop(top:List<ArticleBean>)
-    suspend fun getTop():List<ArticleBean>
+    suspend fun putTop(top: List<ArticleBean>)
+    suspend fun getTop(): List<ArticleBean>
 }

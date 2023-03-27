@@ -18,8 +18,8 @@ package com.aloe.moment.app
 
 import android.content.Context
 import androidx.startup.Initializer
-import com.aloe.moment.flu.FluView
-import com.aloe.moment.react.ReactView
+import com.aloe.moment.page.flu.FluView
+import com.aloe.moment.page.react.ReactView
 
 class AppInitializer : Initializer<Unit> {
     override fun create(context: Context) {

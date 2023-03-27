@@ -42,4 +42,7 @@ internal object BannerSerializer : Serializer<BannerList?> {
     }
 }
 
-internal val Context.bannerDataStore: DataStore<BannerList?> by dataStore("banner.pb", BannerSerializer)
+internal val Context.bannerDataStore: DataStore<BannerList?> by dataStore(
+    "banner.pb",
+    BannerSerializer,
+)

@@ -22,10 +22,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 open class BaseVm : ViewModel() {
-    private val map = mutableMapOf<String,Job?>()
-    fun loadData(key:String, callback: suspend () -> Unit) {
+    private val map = mutableMapOf<String, Job?>()
+    fun loadData(key: String, callback: suspend () -> Unit) {
         map[key]?.cancel()
-        map[key]=viewModelScope.launch {
+        map[key] = viewModelScope.launch {
             callback.invoke()
         }
     }

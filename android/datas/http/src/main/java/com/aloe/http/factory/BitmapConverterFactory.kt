@@ -18,8 +18,6 @@ package com.aloe.http.factory
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
-import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -29,7 +27,7 @@ class BitmapConverterFactory : Converter.Factory() {
     override fun responseBodyConverter(
         type: Type,
         annotations: Array<out Annotation>,
-        retrofit: Retrofit
+        retrofit: Retrofit,
     ): Converter<ResponseBody, *>? = if (type == Bitmap::class.java) BitmapResponseBodyConverter() else null
 
     companion object {

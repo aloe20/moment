@@ -57,7 +57,6 @@ class ChartGestureListener(chart: KlineCombinedChart) : OnChartGestureListener {
     }
 
     override fun onChartDoubleTapped(me: MotionEvent) {
-
     }
 
     override fun onChartTranslate(me: MotionEvent, dX: Float, dY: Float) {

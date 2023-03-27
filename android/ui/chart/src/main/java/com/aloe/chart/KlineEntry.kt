@@ -26,7 +26,7 @@ class KlineEntry(
     open: Float,
     close: Float,
     icon: Drawable? = null,
-    data: Any? = null
+    data: Any? = null,
 ) : CandleEntry(x, shadowH, shadowL, open, close, icon, data) {
     fun medium() = if (high.isNaN() || low.isNaN() || close.isNaN()) Float.NaN else (high + low + close) / 3F
 }

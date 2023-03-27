@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment.react
+package com.aloe.moment.page.react
 
 import android.annotation.SuppressLint
 import android.app.Application
@@ -72,7 +72,7 @@ fun ReactLayout(url: String) {
 class ReactView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyle: Int = 0
+    defStyle: Int = 0,
 ) :
     ReactRootView(context, attrs, defStyle) {
     private var activity: ComponentActivity? = context as? ComponentActivity
@@ -90,7 +90,7 @@ class ReactView @JvmOverloads constructor(
                         when (event) {
                             Lifecycle.Event.ON_RESUME -> reactInstanceManager?.onHostResume(
                                 it,
-                                btnHandler
+                                btnHandler,
                             )
                             Lifecycle.Event.ON_PAUSE -> reactInstanceManager?.onHostPause(it)
                             Lifecycle.Event.ON_DESTROY -> {
@@ -180,7 +180,7 @@ class ReactView @JvmOverloads constructor(
 
             override fun getPackages(): MutableList<ReactPackage> = mutableListOf(
                 MainReactPackage(),
-                RnReactPackage()
+                RnReactPackage(),
             )
 
             override fun getJSMainModuleName(): String = "index"

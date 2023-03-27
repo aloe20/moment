@@ -14,16 +14,24 @@
  *   limitations under the License.
  */
 
-package com.aloe.lint
+package com.aloe.moment.page.web
 
-import com.android.tools.lint.client.api.IssueRegistry
-import com.android.tools.lint.detector.api.CURRENT_API
-import com.android.tools.lint.detector.api.Issue
+import android.annotation.SuppressLint
+import android.webkit.WebView
+import androidx.compose.foundation.layout.Box
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.viewinterop.AndroidView
 
-class AppIssueRegistry : IssueRegistry() {
-    override val issues: List<Issue>
-        get() = listOf(LogDetector.ISSUE)
-
-    override val api: Int
-        get() = CURRENT_API
+@SuppressLint("SetJavaScriptEnabled")
+@Composable
+fun WebLayout(url: String) {
+    Box(modifier = Modifier) {
+        AndroidView(factory = { WebView(it) }) {
+            with(it) {
+                settings.javaScriptEnabled = true
+            }
+            it.loadUrl("file:///android_asset/bridge.html")
+        }
+    }
 }

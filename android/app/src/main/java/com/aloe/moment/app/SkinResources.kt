@@ -38,14 +38,20 @@ class SkinResources(private val resources: Resources, private val pm: PackageMan
 
     override fun getDrawableForDensity(id: Int, density: Int, theme: Theme?): Drawable? {
         return getSkinId(id).let {
-            if (it == 0) super.getDrawableForDensity(id, density, theme)
-            else skinResources.getDrawableForDensity(it, density, theme)
+            if (it == 0) {
+                super.getDrawableForDensity(id, density, theme)
+            } else {
+                skinResources.getDrawableForDensity(it, density, theme)
+            }
         }
     }
 
     override fun getColorStateList(id: Int, theme: Theme?): ColorStateList = getSkinId(id).let {
-        if (it == 0) super.getColorStateList(id, theme)
-        else skinResources.getColorStateList(it, theme)
+        if (it == 0) {
+            super.getColorStateList(id, theme)
+        } else {
+            skinResources.getColorStateList(it, theme)
+        }
     }
 
     override fun getColor(id: Int, theme: Theme?): Int = getSkinId(id).let {
@@ -54,7 +60,11 @@ class SkinResources(private val resources: Resources, private val pm: PackageMan
 
     @SuppressLint("DiscouragedApi")
     private fun getSkinId(id: Int): Int =
-        skinResources.getIdentifier(resources.getResourceEntryName(id), resources.getResourceTypeName(id), "com.aloe.skin")
+        skinResources.getIdentifier(
+            resources.getResourceEntryName(id),
+            resources.getResourceTypeName(id),
+            "com.aloe.skin",
+        )
 
     fun addLifecycle(owner: LifecycleOwner, observer: Observer<String>) {
         liveData.observe(owner, observer)

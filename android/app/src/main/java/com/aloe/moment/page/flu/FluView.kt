@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment.flu
+package com.aloe.moment.page.flu
 
 import android.app.Activity
 import android.content.Context
@@ -53,21 +53,21 @@ class FluView : FlutterView, DefaultLifecycleObserver, ExclusiveAppComponent<Act
 
     constructor(context: Context, flutterSurfaceView: FlutterSurfaceView) : super(
         context,
-        flutterSurfaceView
+        flutterSurfaceView,
     ) {
         initEngine(context)
     }
 
     constructor(context: Context, flutterTextureView: FlutterTextureView) : super(
         context,
-        flutterTextureView
+        flutterTextureView,
     ) {
         initEngine(context)
     }
 
     constructor(context: Context, flutterImageView: FlutterImageView) : super(
         context,
-        flutterImageView
+        flutterImageView,
     ) {
         initEngine(context)
     }
@@ -80,7 +80,7 @@ class FluView : FlutterView, DefaultLifecycleObserver, ExclusiveAppComponent<Act
         flutterEngine = feGroup.createAndRunEngine(
             context.applicationContext,
             DartExecutor.DartEntrypoint.createDefault(),
-            "/"
+            "/",
         )
         flutterEngine.plugins.add(ResPlugin())
         ActivityCompat.setPermissionCompatDelegate(object :
@@ -88,7 +88,7 @@ class FluView : FlutterView, DefaultLifecycleObserver, ExclusiveAppComponent<Act
             override fun requestPermissions(
                 activity: Activity,
                 permissions: Array<out String>,
-                requestCode: Int
+                requestCode: Int,
             ): Boolean {
                 return false
             }
@@ -97,12 +97,12 @@ class FluView : FlutterView, DefaultLifecycleObserver, ExclusiveAppComponent<Act
                 activity: Activity,
                 requestCode: Int,
                 resultCode: Int,
-                data: Intent?
+                data: Intent?,
             ): Boolean {
                 return flutterEngine.activityControlSurface.onActivityResult(
                     requestCode,
                     resultCode,
-                    data
+                    data,
                 )
             }
         })

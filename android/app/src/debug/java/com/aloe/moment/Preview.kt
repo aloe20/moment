@@ -18,9 +18,10 @@ package com.aloe.moment
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.aloe.moment.main.MainLayout
+import com.aloe.moment.page.main.MainLayout
+
 @Preview
 @Composable
-fun MainLayoutPreview(){
+fun MainLayoutPreview() {
     MainLayout()
 }

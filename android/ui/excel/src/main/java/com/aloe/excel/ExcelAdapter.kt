@@ -29,7 +29,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import kotlin.math.floor
 
-abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) : RecyclerView.Adapter<VH>() {
+abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) :
+    RecyclerView.Adapter<VH>() {
     private var width = 0
     protected val data = mutableListOf<B>()
     protected val topData = mutableListOf<T>()
@@ -50,8 +51,13 @@ abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) 
         recyclerView.layoutManager = layoutManager
         recyclerView.addItemDecoration(itemDecoration)
         recyclerView.post { width = recyclerView.measuredWidth }
-        recyclerView.takeUnless { excelClickListener == null }?.addOnItemTouchListener(TouchListener())
-        scrollListener.setListener { takeUnless { recyclerView.isComputingLayout }?.notifyItemChanged(0) }
+        recyclerView.takeUnless { excelClickListener == null }
+            ?.addOnItemTouchListener(TouchListener())
+        scrollListener.setListener {
+            takeUnless { recyclerView.isComputingLayout }?.notifyItemChanged(
+                0,
+            )
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -59,10 +65,15 @@ abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) 
         linearLayout.isClickable = true
         val viewHolder = createHolder(linearLayout)
         if (viewType == ITEM_TYPE_TOP) {
-            linearLayout.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, size.top)
-            linearLayout.addView(createView(linearLayout, ViewType.START_TOP), LinearLayout.LayoutParams(size.left, size.top))
+            linearLayout.layoutParams =
+                RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, size.top)
+            linearLayout.addView(
+                createView(linearLayout, ViewType.START_TOP),
+                LinearLayout.LayoutParams(size.left, size.top),
+            )
             val recyclerView = RecyclerView(parent.context)
-            val layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.HORIZONTAL, false)
+            val layoutManager =
+                LinearLayoutManager(parent.context, LinearLayoutManager.HORIZONTAL, false)
             recyclerView.layoutManager = layoutManager
             recyclerView.overScrollMode = View.OVER_SCROLL_NEVER
             (recyclerView.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
@@ -78,9 +89,13 @@ abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) 
             recyclerView.setRecycledViewPool(pool)
             recyclerView.overScrollMode = View.OVER_SCROLL_NEVER
             (recyclerView.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
-            recyclerView.layoutManager = LinearLayoutManager(parent.context, LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.layoutManager =
+                LinearLayoutManager(parent.context, LinearLayoutManager.HORIZONTAL, false)
             recyclerView.adapter = BottomAdapter()
-            params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, size.bottom - size.top)
+            params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                size.bottom - size.top,
+            )
             linearLayout.addView(recyclerView, params)
             scrollListener.addView(recyclerView)
         }
@@ -128,7 +143,11 @@ abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) 
 
     @Suppress("UNCHECKED_CAST")
     fun updateSticky() {
-        itemDecoration.bindDataForStickyView(this as RecyclerView.Adapter<RecyclerView.ViewHolder>, 0, width)
+        itemDecoration.bindDataForStickyView(
+            this as RecyclerView.Adapter<RecyclerView.ViewHolder>,
+            0,
+            width,
+        )
     }
 
     fun addData(data: List<B>?, clear: Boolean = true) {
@@ -150,11 +169,17 @@ abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) 
     private inner class TopAdapter<T> : RecyclerView.Adapter<VH>() {
         private val data = mutableListOf<T>()
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH =
-            createHolder(createView(parent, ViewType.END_TOP).apply {
-                layoutParams = RecyclerView.LayoutParams(size.right - size.left, size.top)
-            })
+            createHolder(
+                createView(parent, ViewType.END_TOP).apply {
+                    layoutParams = RecyclerView.LayoutParams(size.right - size.left, size.top)
+                },
+            )
 
-        override fun onBindViewHolder(holder: VH, position: Int) = convertItem(holder, RecyclerView.NO_POSITION, position)
+        override fun onBindViewHolder(holder: VH, position: Int) = convertItem(
+            holder,
+            RecyclerView.NO_POSITION,
+            position,
+        )
 
         override fun getItemCount(): Int = data.size
 
@@ -170,12 +195,16 @@ abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) 
     private inner class BottomAdapter : RecyclerView.Adapter<VH>() {
         private var indexRow = RecyclerView.NO_POSITION
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH =
-            createHolder(createView(parent, ViewType.END_BOTTOM).apply {
-                layoutParams = RecyclerView.LayoutParams(size.right - size.left, size.bottom - size.top)
-            })
+            createHolder(
+                createView(parent, ViewType.END_BOTTOM).apply {
+                    layoutParams =
+                        RecyclerView.LayoutParams(size.right - size.left, size.bottom - size.top)
+                },
+            )
 
         override fun onBindViewHolder(holder: VH, position: Int) {
-            this@ExcelAdapter.takeUnless { indexRow == RecyclerView.NO_POSITION }?.convertItem(holder, indexRow, position)
+            this@ExcelAdapter.takeUnless { indexRow == RecyclerView.NO_POSITION }
+                ?.convertItem(holder, indexRow, position)
         }
 
         override fun getItemCount(): Int = topData.size
@@ -187,32 +216,54 @@ abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) 
 
     private inner class TouchListener : RecyclerView.SimpleOnItemTouchListener() {
         private var detector: GestureDetectorCompat? = null
-        override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean = false.apply {
+        override fun onInterceptTouchEvent(
+            rv: RecyclerView,
+            e: MotionEvent,
+        ): Boolean = false.apply {
             if (detector == null) {
-                detector = GestureDetectorCompat(rv.context, object : GestureDetector.SimpleOnGestureListener() {
-                    override fun onSingleTapUp(e: MotionEvent): Boolean = false.apply {
-                        rv.findChildViewUnder(e.x, e.y)?.also { v ->
-                            val column = floor((scrollListener.scrollx + e.x - size.left) / (size.right - size.left)).toInt()
-                            when {
-                                e.y > size.top -> rv.getChildViewHolder(v).absoluteAdapterPosition.also { index ->
-                                    excelClickListener?.takeUnless { index == RecyclerView.NO_POSITION }
-                                        ?.invoke(v, index - (if (topData.isEmpty()) 0 else 1), column)
+                detector = GestureDetectorCompat(
+                    rv.context,
+                    object : GestureDetector.SimpleOnGestureListener() {
+                        override fun onSingleTapUp(e: MotionEvent): Boolean = false.apply {
+                            rv.findChildViewUnder(e.x, e.y)?.also { v ->
+                                val column =
+                                    floor((scrollListener.scrollx + e.x - size.left) / (size.right - size.left)).toInt()
+                                when {
+                                    e.y > size.top -> rv.getChildViewHolder(v).absoluteAdapterPosition.also { index ->
+                                        excelClickListener?.takeUnless { index == RecyclerView.NO_POSITION }
+                                            ?.invoke(
+                                                v,
+                                                index - (if (topData.isEmpty()) 0 else 1),
+                                                column,
+                                            )
+                                    }
+                                    e.x > size.left -> excelClickListener?.invoke(
+                                        v,
+                                        RecyclerView.NO_POSITION,
+                                        column,
+                                    )
+                                    else -> excelClickListener?.invoke(
+                                        v,
+                                        RecyclerView.NO_POSITION,
+                                        RecyclerView.NO_POSITION,
+                                    )
                                 }
-                                e.x > size.left -> excelClickListener?.invoke(v, RecyclerView.NO_POSITION, column)
-                                else -> excelClickListener?.invoke(v, RecyclerView.NO_POSITION, RecyclerView.NO_POSITION)
                             }
                         }
-                    }
 
-                    override fun onDoubleTap(e: MotionEvent): Boolean = true
+                        override fun onDoubleTap(e: MotionEvent): Boolean = true
 
-                    override fun onDoubleTapEvent(e: MotionEvent): Boolean = true
-                })
+                        override fun onDoubleTapEvent(e: MotionEvent): Boolean = true
+                    },
+                )
             }
             detector?.onTouchEvent(e)
         }
 
-        override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) = Unit.apply { detector?.onTouchEvent(e) }
+        override fun onTouchEvent(
+            rv: RecyclerView,
+            e: MotionEvent,
+        ) = Unit.apply { detector?.onTouchEvent(e) }
     }
 
     enum class ViewType {
