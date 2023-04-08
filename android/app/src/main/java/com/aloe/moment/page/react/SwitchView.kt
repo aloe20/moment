@@ -35,6 +35,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 class SwitchView : View {
+    private val defaultMargin = 8F
     var onCheckedChangeListener: Consumer<Boolean>? = null
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private lateinit var detector: GestureDetector
@@ -71,7 +72,7 @@ class SwitchView : View {
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         val a = context.obtainStyledAttributes(attrs, R.styleable.SwitchView, defStyle, 0)
-        thumbMargin = a.getDimension(R.styleable.SwitchView_thumb, 8F)
+        thumbMargin = a.getDimension(R.styleable.SwitchView_thumb, defaultMargin)
         trackOffColor = a.getColor(R.styleable.SwitchView_trackOff, Color.LTGRAY)
         trackOnColor = a.getColor(R.styleable.SwitchView_trackOn, Color.RED)
         paint.color = a.getColor(R.styleable.SwitchView_thumb, Color.WHITE)

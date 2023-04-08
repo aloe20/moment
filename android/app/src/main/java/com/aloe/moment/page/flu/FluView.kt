@@ -83,29 +83,30 @@ class FluView : FlutterView, DefaultLifecycleObserver, ExclusiveAppComponent<Act
             "/",
         )
         flutterEngine.plugins.add(ResPlugin())
-        ActivityCompat.setPermissionCompatDelegate(object :
-            ActivityCompat.PermissionCompatDelegate {
-            override fun requestPermissions(
-                activity: Activity,
-                permissions: Array<out String>,
-                requestCode: Int,
-            ): Boolean {
-                return false
-            }
+        ActivityCompat.setPermissionCompatDelegate(
+            object : ActivityCompat.PermissionCompatDelegate {
+                override fun requestPermissions(
+                    activity: Activity,
+                    permissions: Array<out String>,
+                    requestCode: Int,
+                ): Boolean {
+                    return false
+                }
 
-            override fun onActivityResult(
-                activity: Activity,
-                requestCode: Int,
-                resultCode: Int,
-                data: Intent?,
-            ): Boolean {
-                return flutterEngine.activityControlSurface.onActivityResult(
-                    requestCode,
-                    resultCode,
-                    data,
-                )
-            }
-        })
+                override fun onActivityResult(
+                    activity: Activity,
+                    requestCode: Int,
+                    resultCode: Int,
+                    data: Intent?,
+                ): Boolean {
+                    return flutterEngine.activityControlSurface.onActivityResult(
+                        requestCode,
+                        resultCode,
+                        data,
+                    )
+                }
+            },
+        )
     }
 
     override fun onAttachedToWindow() {

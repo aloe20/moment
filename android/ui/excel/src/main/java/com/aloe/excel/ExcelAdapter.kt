@@ -18,16 +18,12 @@ package com.aloe.excel
 
 import android.graphics.Color
 import android.graphics.Rect
-import android.view.GestureDetector
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.view.GestureDetectorCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import kotlin.math.floor
 
 abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) :
     RecyclerView.Adapter<VH>() {
@@ -52,11 +48,9 @@ abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) 
         recyclerView.addItemDecoration(itemDecoration)
         recyclerView.post { width = recyclerView.measuredWidth }
         recyclerView.takeUnless { excelClickListener == null }
-            ?.addOnItemTouchListener(TouchListener())
+            ?.addOnItemTouchListener(TouchListener(size, topData, scrollListener, excelClickListener))
         scrollListener.setListener {
-            takeUnless { recyclerView.isComputingLayout }?.notifyItemChanged(
-                0,
-            )
+            takeUnless { recyclerView.isComputingLayout }?.notifyItemChanged(0)
         }
     }
 
@@ -212,62 +206,6 @@ abstract class ExcelAdapter<T, B, VH : RecyclerView.ViewHolder>(val size: Rect) 
         fun setIndex(row: Int) {
             indexRow = row
         }
-    }
-
-    private inner class TouchListener : RecyclerView.SimpleOnItemTouchListener() {
-        private var detector: GestureDetectorCompat? = null
-        override fun onInterceptTouchEvent(
-            rv: RecyclerView,
-            e: MotionEvent,
-        ): Boolean = false.apply {
-            if (detector == null) {
-                detector = GestureDetectorCompat(
-                    rv.context,
-                    object : GestureDetector.SimpleOnGestureListener() {
-                        override fun onSingleTapUp(e: MotionEvent): Boolean = false.apply {
-                            rv.findChildViewUnder(e.x, e.y)?.also { v ->
-                                val column =
-                                    floor((scrollListener.scrollx + e.x - size.left) / (size.right - size.left)).toInt()
-                                when {
-                                    e.y > size.top -> rv.getChildViewHolder(v).absoluteAdapterPosition.also { index ->
-                                        excelClickListener?.takeUnless { index == RecyclerView.NO_POSITION }
-                                            ?.invoke(
-                                                v,
-                                                index - (if (topData.isEmpty()) 0 else 1),
-                                                column,
-                                            )
-                                    }
-                                    e.x > size.left -> excelClickListener?.invoke(
-                                        v,
-                                        RecyclerView.NO_POSITION,
-                                        column,
-                                    )
-                                    else -> excelClickListener?.invoke(
-                                        v,
-                                        RecyclerView.NO_POSITION,
-                                        RecyclerView.NO_POSITION,
-                                    )
-                                }
-                            }
-                        }
-
-                        override fun onDoubleTap(e: MotionEvent): Boolean = true
-
-                        override fun onDoubleTapEvent(e: MotionEvent): Boolean = true
-                    },
-                )
-            }
-            detector?.onTouchEvent(e)
-        }
-
-        override fun onTouchEvent(
-            rv: RecyclerView,
-            e: MotionEvent,
-        ) = Unit.apply { detector?.onTouchEvent(e) }
-    }
-
-    enum class ViewType {
-        START_TOP, END_TOP, START_BOTTOM, END_BOTTOM
     }
 
     companion object {

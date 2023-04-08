@@ -138,7 +138,7 @@ class ReactView @JvmOverloads constructor(
                         }
 
                         override fun onResponse(call: Call, response: Response) {
-                            if (response.isSuccessful && response.code == 200) {
+                            if (response.isSuccessful && response.code == HTTP_OK) {
                                 if (!file.exists()) {
                                     file.createNewFile()
                                 }
@@ -171,7 +171,7 @@ class ReactView @JvmOverloads constructor(
     fun setBackBtnHandler(callback: () -> Unit) = apply { backCallback = callback }
 
     companion object {
-        @Volatile
+        private const val HTTP_OK = 200
         private var isInitialized = false
 
         private class ReactHost(app: Application, private val jsBundle: Uri) :

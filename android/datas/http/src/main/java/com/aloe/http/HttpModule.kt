@@ -19,7 +19,7 @@ package com.aloe.http
 import android.content.Context
 import com.aloe.http.factory.BitmapConverterFactory
 import com.aloe.http.factory.EnumConverterFactory
-import com.squareup.moshi.Moshi
+import com.aloe.http.factory.JsonConverterFactory
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -31,7 +31,6 @@ import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.ExecutorService
@@ -44,18 +43,22 @@ import kotlin.math.min
 @Module
 @InstallIn(SingletonComponent::class)
 internal class HttpModule {
-    private val moshi: Moshi = Moshi.Builder().build()
+    private val cacheSize = 102_400_000L
+    private val coreMinSize = 2
+    private val coreMaxSize = 4
+    private val outTime = 30L
+    private val queueSize = 10
 
     @Provides
     @Singleton
     fun getExecutor(): ExecutorService {
         val count = Runtime.getRuntime().availableProcessors()
         return ThreadPoolExecutor(
-            max(2, min(4, count - 1)),
+            max(coreMinSize, min(coreMaxSize, count - 1)),
             count.shl(1) + 1,
-            30,
+            outTime,
             TimeUnit.SECONDS,
-            ArrayBlockingQueue(10),
+            ArrayBlockingQueue(queueSize),
         )
     }
 
@@ -66,7 +69,9 @@ internal class HttpModule {
         executor: ExecutorService,
     ): OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-        .dispatcher(Dispatcher(executor)).cache(Cache(ctx.cacheDir, 1024_1000_100)).build()
+        .dispatcher(Dispatcher(executor))
+        .cache(Cache(ctx.cacheDir, cacheSize))
+        .build()
 
     @Provides
     @Singleton
@@ -75,15 +80,17 @@ internal class HttpModule {
         .baseUrl("http://192.168.1.6:8000/")
         .addConverterFactory(BitmapConverterFactory.create())
         .addConverterFactory(EnumConverterFactory.create())
-        .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
-        .client(client).build().create()
+        .addConverterFactory(JsonConverterFactory.create())
+        .client(client)
+        .build()
+        .create()
 }
 
 @Module(includes = [HttpModule::class])
 @InstallIn(SingletonComponent::class)
-internal abstract class AbsHttpModule {
+internal interface AbsHttpModule {
 
     @Binds
     @Singleton
-    abstract fun getHttp(impl: RemoteImplDataSource): RemoteDataSource
+    fun getHttp(impl: RemoteImplDataSource): RemoteDataSource
 }

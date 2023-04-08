@@ -16,6 +16,7 @@
 
 package com.aloe.server
 
+import com.aloe.server.module.BannerBean
 import com.aloe.server.module.HttpResult
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.http.ContentType
@@ -64,9 +65,7 @@ fun Application.configureSerialization() {
 
 fun Application.configureRouting() {
     routing {
-        static("/static") {
-            resources("public")
-        }
+        static("/static") { resources("public") }
         get("/") {
             call.respondText(
                 text = "Hello World!",
@@ -74,15 +73,53 @@ fun Application.configureRouting() {
                 status = HttpStatusCode.OK,
             )
         }
-        get("/banner/json") {
+        get("/text") {
             call.respondText(
-                text = "{\"data\":[{\"desc\":\"我们支持订阅啦~\",\"id\":30,\"imagePath\":\"https://www.wanandroid.com/blogimgs/42da12d8-de56-4439-b40c-eab66c227a4b.png\",\"isVisible\":1,\"order\":2,\"title\":\"我们支持订阅啦~\",\"type\":0,\"url\":\"https://www.wanandroid.com/blog/show/3352\"},{\"desc\":\"\",\"id\":6,\"imagePath\":\"https://www.wanandroid.com/blogimgs/62c1bd68-b5f3-4a3c-a649-7ca8c7dfabe6.png\",\"isVisible\":1,\"order\":1,\"title\":\"我们新增了一个常用导航Tab~\",\"type\":1,\"url\":\"https://www.wanandroid.com/navi\"},{\"desc\":\"一起来做个App吧\",\"id\":10,\"imagePath\":\"https://www.wanandroid.com/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png\",\"isVisible\":1,\"order\":1,\"title\":\"一起来做个App吧\",\"type\":1,\"url\":\"https://www.wanandroid.com/blog/show/2\"}],\"errorCode\":0,\"errorMsg\":\"\"}",
+                text = "aaaaaaaa",
                 contentType = ContentType.Text.Plain,
                 status = HttpStatusCode.OK,
             )
         }
-        get("/bean") {
+        get("/banner/json") {
+            call.respond(status = HttpStatusCode.OK, HttpResult(data = getList()))
+        }
+        get("/data") {
             call.respond(status = HttpStatusCode.OK, HttpResult(data = "aloe"))
         }
     }
+}
+
+private fun getList() = "https://www.wanandroid.com".let {
+    listOf(
+        BannerBean(
+            "30",
+            0,
+            1,
+            2,
+            "我们支持订阅啦~",
+            "我们支持订阅啦~",
+            "$it/blogimgs/42da12d8-de56-4439-b40c-eab66c227a4b.png",
+            "$it/blog/show/3352",
+        ),
+        BannerBean(
+            "6",
+            1,
+            1,
+            1,
+            "我们新增了一个常用导航Tab~",
+            "",
+            "$it/blogimgs/62c1bd68-b5f3-4a3c-a649-7ca8c7dfabe6.png",
+            "$it/navi",
+        ),
+        BannerBean(
+            "10",
+            1,
+            1,
+            1,
+            "一起来做个App吧",
+            "一起来做个App吧",
+            "$it/blogimgs/50c115c2-cf6c-4802-aa7b-a4334de444cd.png",
+            "$it/blog/show/2",
+        )
+    )
 }

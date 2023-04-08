@@ -52,21 +52,16 @@ fun MainLayout() {
     val pageState = rememberPagerState()
     val items = mutableListOf("推荐", "项目", "公众号", "我的")
     val scope = rememberCoroutineScope()
+
     Column(modifier = Modifier.background(Color.White)) {
-        HorizontalPager(
-            modifier = Modifier.weight(1F),
-            pageCount = items.size,
-            state = pageState,
-        ) {
+        HorizontalPager(modifier = Modifier.weight(1F), pageCount = items.size, state = pageState) {
             val width = LocalContext.current.resources.displayMetrics.widthPixels
             when (it) {
                 0 -> RecommendLayout()
                 1 -> ReactLayout(url = "assets://index.android.bundle")
                 2 -> FlutterLayout()
-                3 -> Image(
-                    painter = rememberAsyncPainter(
-                        model = "https://picsum.photos/seed/1/$width/500",
-                    ),
+                items.lastIndex -> Image(
+                    painter = rememberAsyncPainter(model = "https://picsum.photos/seed/1/$width/500"),
                     contentScale = ContentScale.Crop,
                     contentDescription = "",
                     modifier = Modifier

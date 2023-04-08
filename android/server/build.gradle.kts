@@ -17,7 +17,7 @@
 plugins {
     id("java-library")
     id("org.jetbrains.kotlin.jvm")
-    id ("org.jetbrains.kotlin.plugin.serialization")
+    id ("kotlinx-serialization")
 }
 
 java {
@@ -32,4 +32,5 @@ dependencies {
     implementation(libs.ktor.content)
     implementation(libs.ktor.json)
     implementation(libs.ktor.log)
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.5.0")
 }

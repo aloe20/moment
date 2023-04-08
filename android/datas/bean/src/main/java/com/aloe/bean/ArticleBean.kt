@@ -19,10 +19,10 @@ package com.aloe.bean
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
 @Entity(tableName = "article")
-@JsonClass(generateAdapter = true)
+@Serializable
 data class ArticleBean(
     @PrimaryKey val id: Int = 0,
     @ColumnInfo(name = "course_id") val courseId: Int = 0,

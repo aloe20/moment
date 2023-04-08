@@ -34,7 +34,7 @@ internal class ClientUdp {
 
     //    private var job: Job? = null
     fun addUdpListener() {
-        val size = Int.SIZE_BYTES + Short.SIZE_BYTES
+        // val size = Int.SIZE_BYTES + Short.SIZE_BYTES
         /*sendFlow.collect {
             if (it.size >= size) {
                 val host = it.slice(0 until Int.SIZE_BYTES).joinToString(".") { byte -> byte.toUByte().toString() }
@@ -74,7 +74,7 @@ internal class ClientUdp {
                     }
 
                     override fun channelRead0(ctx: ChannelHandlerContext?, msg: DatagramPacket) {
-                        var content = ""
+                        // var content = ""
                         /*receiveFlow.value = msg.sender().run {
                             sendData(hostName, port, "aloe".toByteArray())
                             content += "$hostName:$port"

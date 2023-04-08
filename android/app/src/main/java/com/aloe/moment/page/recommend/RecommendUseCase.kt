@@ -39,12 +39,16 @@ class RecommendUseCase @Inject constructor(private val repo: AppRepository) {
         }
 
         override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ArticleBean> {
-            return try {
-                val pageNumber = params.key ?: 0
-                val top = loadTop()
-                LoadResult.Page(top, null, if (pageNumber >= 10) null else pageNumber.plus(1))
-            } catch (e: Exception) {
-                LoadResult.Error(e)
+            val pageNumber = params.key ?: 0
+            val result = runCatching { loadTop() }
+            return if (result.isSuccess) {
+                LoadResult.Page(
+                    result.getOrThrow(),
+                    null,
+                    if (pageNumber >= 10) null else pageNumber.plus(1),
+                )
+            } else {
+                LoadResult.Error(result.exceptionOrNull()!!)
             }
         }
     }

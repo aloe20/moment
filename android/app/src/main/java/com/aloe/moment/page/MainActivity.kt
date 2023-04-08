@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.aloe.moment.app.SkinResources
 import com.aloe.moment.page.main.MainHost
-import com.aloe.moment.ui.theme.MomentTheme
+import com.aloe.moment.app.MomentTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

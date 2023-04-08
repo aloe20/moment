@@ -29,10 +29,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class LocalModule {
+internal interface LocalModule {
     @Binds
     @Singleton
-    abstract fun getLocal(impl: LocalImplDataSource): LocalDataSource
+    fun getLocal(impl: LocalImplDataSource): LocalDataSource
 }
 
 @Module

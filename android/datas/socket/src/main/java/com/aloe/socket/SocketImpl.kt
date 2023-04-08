@@ -24,9 +24,7 @@ internal class SocketImpl constructor(private val ctx: Context, private val udp:
         // SocketWorker.initSocket(ctx)
     }
 
-    override fun getUdpReceive(): ByteArray {
-        TODO("Not yet implemented")
-    }
+    override fun getUdpReceive(): ByteArray = byteArrayOf()
 
     // override fun getUdpReceive(): StateFlow<ByteArray> = udp.receiveFlow
 

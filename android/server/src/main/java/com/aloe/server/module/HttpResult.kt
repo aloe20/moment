@@ -19,4 +19,4 @@ package com.aloe.server.module
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HttpResult<T>(val code: Int = 0, val msg: String = "", val data: T? = null)
+data class HttpResult<T>(val errorCode: Int = 0, val errorMsg: String = "", val data: T? = null)

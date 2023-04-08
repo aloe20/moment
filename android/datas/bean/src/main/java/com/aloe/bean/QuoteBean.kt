@@ -16,9 +16,9 @@
 
 package com.aloe.bean
 
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 data class QuoteBean(
     val market: String = "",
     val code: String = "",

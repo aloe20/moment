@@ -81,19 +81,7 @@ fun RecommendLayout(vm: RecommendVm = hiltViewModel(), nav: NavHostController = 
         LazyColumn(Modifier.fillMaxSize()) {
             if (uiState.banner.isNotEmpty()) {
                 item {
-                    Banner(modifier = Modifier.height(180.dp), count = uiState.banner.size) {
-                        Image(
-                            painter = rememberAsyncPainter(model = uiState.banner[it].imagePath),
-                            contentScale = ContentScale.Crop,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clickable {
-                                    nav.navigate("web?url=${uiState.banner[it].url}")
-                                },
-                            alignment = Alignment.Center,
-                        )
-                    }
+                    RecommendBanner(uiState = uiState)
                 }
             }
             if (uiState.top.isNotEmpty()) {
@@ -140,5 +128,22 @@ fun RecommendLayout(vm: RecommendVm = hiltViewModel(), nav: NavHostController = 
             }
         }
         PullRefreshIndicator(refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
+    }
+}
+
+@Composable
+fun RecommendBanner(uiState:RecommendUiState, nav: NavHostController = LocalNav.current) {
+    Banner(modifier = Modifier.height(180.dp), count = uiState.banner.size) {
+        Image(
+            painter = rememberAsyncPainter(model = uiState.banner[it].imagePath),
+            contentScale = ContentScale.Crop,
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable {
+                    nav.navigate("web?url=${uiState.banner[it].url}")
+                },
+            alignment = Alignment.Center,
+        )
     }
 }

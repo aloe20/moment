@@ -14,7 +14,7 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment.ui.theme
+package com.aloe.moment.app
 
 import android.app.Activity
 import android.content.Context

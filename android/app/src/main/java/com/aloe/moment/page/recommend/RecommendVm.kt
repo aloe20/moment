@@ -38,6 +38,7 @@ class RecommendVm @Inject constructor(private val useCase: RecommendUseCase) : B
 
     @Suppress("UNCHECKED_CAST")
     fun <T> sendEvent(event: Event): T {
+        val result: T
         when (event) {
             is RefreshEvent -> {
                 isRefreshing.value = true
@@ -49,12 +50,13 @@ class RecommendVm @Inject constructor(private val useCase: RecommendUseCase) : B
                         }
                     }
                 }
+                result = Unit as T
             }
-            is UiStateEvent -> return _uiState.asStateFlow() as T
-            is RefreshStateEvent -> return isRefreshing as T
-            is PagingSourceEvent -> return useCase.pagingSource as T
+            is UiStateEvent -> result = _uiState.asStateFlow() as T
+            is RefreshStateEvent -> result = isRefreshing as T
+            is PagingSourceEvent -> result = useCase.pagingSource as T
         }
-        return Unit as T
+        return result
     }
 }
 

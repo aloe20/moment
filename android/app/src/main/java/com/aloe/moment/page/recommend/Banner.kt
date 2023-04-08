@@ -53,6 +53,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlin.math.absoluteValue
 import kotlin.math.sign
 
+private const val TIME = 2000L
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Banner(
@@ -61,13 +63,71 @@ fun Banner(
     count: Int,
     content: @Composable BoxScope.(Int) -> Unit,
 ) {
-    Box(modifier = modifier) {
-        val loopCount = Int.MAX_VALUE
-        val startIndex = loopCount / 2
-        val pagerState = rememberPagerState(initialPage = startIndex)
-        fun pageMapper(index: Int): Int = (index - startIndex).let {
-            if (count == 0) it else it - it.floorDiv(count) * count
+    val loopCount = Int.MAX_VALUE
+    val startIndex = loopCount / 2
+    val pagerState = rememberPagerState(initialPage = startIndex)
+    fun pageMapper(index: Int): Int = (index - startIndex).let {
+        if (count == 0) it else it - it.floorDiv(count) * count
+    }
+    Banner(
+        modifier = modifier,
+        isVertical = isVertical,
+        loopCount = loopCount,
+        pagerState = pagerState,
+        count = count,
+        pageMapper = ::pageMapper,
+        content = content,
+    )
+    var underDragging by remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = Unit) {
+        pagerState.interactionSource.interactions.collectLatest { interaction ->
+            when (interaction) {
+                is PressInteraction.Press -> underDragging = true
+                is PressInteraction.Release -> underDragging = false
+                is PressInteraction.Cancel -> underDragging = false
+                is DragInteraction.Start -> underDragging = true
+                is DragInteraction.Stop -> underDragging = false
+                is DragInteraction.Cancel -> underDragging = false
+            }
         }
+    }
+    if (underDragging.not()) {
+        LaunchedEffect(key1 = underDragging) {
+            try {
+                while (true) {
+                    delay(TIME)
+                    val current = pagerState.currentPage
+                    val currentPos = pageMapper(current)
+                    val nextPage = current + 1
+                    if (underDragging.not()) {
+                        val toPage = nextPage.takeIf { nextPage < loopCount }
+                            ?: (currentPos + startIndex + 1)
+                        if (toPage > current) {
+                            pagerState.animateScrollToPage(toPage)
+                        } else {
+                            pagerState.scrollToPage(toPage)
+                        }
+                    }
+                }
+            } catch (e: CancellationException) {
+                e.printStackTrace()
+            }
+        }
+    }
+}
+
+@Composable
+@OptIn(ExperimentalFoundationApi::class)
+private fun Banner(
+    modifier: Modifier = Modifier,
+    isVertical: Boolean = false,
+    loopCount: Int,
+    pagerState: PagerState,
+    count: Int,
+    pageMapper: (Int) -> Int = { it },
+    content: @Composable BoxScope.(Int) -> Unit,
+) {
+    Box(modifier = modifier) {
         if (isVertical) {
             VerticalPager(pageCount = loopCount, state = pagerState) { content(pageMapper(it)) }
             VerticalPagerIndicator(
@@ -76,7 +136,7 @@ fun Banner(
                 modifier = Modifier
                     .align(Alignment.CenterStart)
                     .padding(4.dp),
-                pageIndexMapping = ::pageMapper,
+                pageIndexMapping = pageMapper,
             )
         } else {
             HorizontalPager(pageCount = loopCount, state = pagerState) { content(pageMapper(it)) }
@@ -86,45 +146,8 @@ fun Banner(
                     .align(Alignment.BottomCenter)
                     .padding(4.dp),
                 pageCount = count,
-                pageIndexMapping = ::pageMapper,
+                pageIndexMapping = pageMapper,
             )
-        }
-
-        var underDragging by remember { mutableStateOf(false) }
-        LaunchedEffect(key1 = Unit) {
-            pagerState.interactionSource.interactions.collectLatest { interaction ->
-                when (interaction) {
-                    is PressInteraction.Press -> underDragging = true
-                    is PressInteraction.Release -> underDragging = false
-                    is PressInteraction.Cancel -> underDragging = false
-                    is DragInteraction.Start -> underDragging = true
-                    is DragInteraction.Stop -> underDragging = false
-                    is DragInteraction.Cancel -> underDragging = false
-                }
-            }
-        }
-        if (underDragging.not()) {
-            LaunchedEffect(key1 = underDragging) {
-                try {
-                    while (true) {
-                        delay(2000L)
-                        val current = pagerState.currentPage
-                        val currentPos = pageMapper(current)
-                        val nextPage = current + 1
-                        if (underDragging.not()) {
-                            val toPage = nextPage.takeIf { nextPage < loopCount }
-                                ?: (currentPos + startIndex + 1)
-                            if (toPage > current) {
-                                pagerState.animateScrollToPage(toPage)
-                            } else {
-                                pagerState.scrollToPage(toPage)
-                            }
-                        }
-                    }
-                } catch (e: CancellationException) {
-                    e.printStackTrace()
-                }
-            }
         }
     }
 }

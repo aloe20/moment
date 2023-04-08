@@ -51,12 +51,9 @@ class ResPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
         ctx = binding.activity
     }
 
-    override fun onDetachedFromActivityForConfigChanges() {
-    }
+    override fun onDetachedFromActivityForConfigChanges() = Unit
 
-    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-    }
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) = Unit
 
-    override fun onDetachedFromActivity() {
-    }
+    override fun onDetachedFromActivity() = Unit
 }

@@ -36,7 +36,7 @@ android {
 
 dependencies {
     api(project(":datas:bean"))
-    api(libs.squareup.retrofit.moshi)
+    api(libs.squareup.retrofit)
     api(libs.squareup.okhttp.logger)
     implementation(libs.google.hilt.android)
     kapt(libs.google.hilt.compiler)

@@ -20,6 +20,6 @@ import com.aloe.http.RemoteDataSource
 import com.aloe.local.LocalDataSource
 import javax.inject.Inject
 
-abstract class LocalRepository(local: LocalDataSource) : LocalDataSource by local
+sealed class LocalRepository(local: LocalDataSource) : LocalDataSource by local
 class AppRepository @Inject constructor(local: LocalDataSource, remote: RemoteDataSource) :
     LocalRepository(local), RemoteDataSource by remote

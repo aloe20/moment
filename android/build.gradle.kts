@@ -26,14 +26,16 @@ plugins {
     alias(libs.plugins.android.application).apply(false)
     alias(libs.plugins.android.library).apply(false)
     alias(libs.plugins.kotlin.android).apply(false)
-    alias(libs.plugins.kotlin.jvm).apply(false)
-    alias(libs.plugins.kotlin.serialization).apply(false)
+    kotlin("jvm").version(libs.versions.kotlin)
+    kotlin("plugin.serialization").version(libs.versions.kotlin)
     alias(libs.plugins.spotless).apply(false)
     alias(libs.plugins.hilt).apply(false)
     alias(libs.plugins.ksp).apply(false)
+    id("io.gitlab.arturbosch.detekt").version(libs.versions.detekt)
 }
 subprojects {
     apply<com.diffplug.gradle.spotless.SpotlessPlugin>()
+    apply(plugin = "io.gitlab.arturbosch.detekt")
     extensions.configure<com.diffplug.gradle.spotless.SpotlessExtension> {
         kotlin {
             target("**/*.kt")
@@ -51,6 +53,33 @@ subprojects {
             targetExclude("**/build/**/*.xml")
             licenseHeaderFile(rootProject.file("spotless/copyright.xml"), "(<[^!?])")
         }
+    }
+    detekt {
+        buildUponDefaultConfig = true
+        allRules = false
+        config = files("$rootDir/config/detekt.yml")
+        baseline = file("$rootDir/config/baseline.xml")
+    }
+
+    tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+        reports {
+            html.required.set(true)
+            xml.required.set(true)
+            txt.required.set(true)
+            sarif.required.set(true)
+            md.required.set(true)
+        }
+    }
+    tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+        jvmTarget = "11"
+    }
+    tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
+        jvmTarget = "11"
+    }
+    dependencies {
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-rules-libraries:1.22.0")
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-rules-ruleauthors:1.22.0")
     }
     configurations.all {
         resolutionStrategy.eachDependency {

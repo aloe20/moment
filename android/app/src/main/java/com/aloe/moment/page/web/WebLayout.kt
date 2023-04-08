@@ -33,7 +33,8 @@ fun WebLayout(url: String) {
         AndroidView(factory = { WebView(it) }, modifier = Modifier.fillMaxSize()) {
             with(it) {
                 settings.javaScriptEnabled = true
-                settings.userAgentString = "Mozilla/5.0 (Linux; Android ${Build.VERSION.RELEASE}; ${Build.BRAND} Build/${Build.BOARD})"
+                settings.userAgentString = "Mozilla/5.0 (Linux; Android ${Build.VERSION.RELEASE};" +
+                    " ${Build.BRAND} Build/${Build.BOARD})"
             }
             Log.i("aloe", url)
             it.loadUrl(url)

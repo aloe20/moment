@@ -64,46 +64,48 @@ class RecyclerViewProxy(mainRecycler: RecyclerView, subRecycler: RecyclerView? =
     }
 
     private fun addChangeListener(mainRecycler: RecyclerView) {
-        mainRecycler.addOnChildAttachStateChangeListener(object :
-            RecyclerView.OnChildAttachStateChangeListener {
+        mainRecycler.addOnChildAttachStateChangeListener(
+            object : RecyclerView.OnChildAttachStateChangeListener {
 
-            override fun onChildViewAttachedToWindow(view: View) {
-                if (!hasScroll) {
-                    val position = mainRecycler.getChildAdapterPosition(view)
-                    if (!subscribe.contains(position) && position != RecyclerView.NO_POSITION) {
-                        (mainRecycler.layoutManager as? LinearLayoutManager)?.apply {
-                            val lastIndex = findLastVisibleItemPosition()
-                            if (lastPosition == lastIndex || position > lastIndex + 1) {
-                                return
+                override fun onChildViewAttachedToWindow(view: View) {
+                    if (!hasScroll) {
+                        val position = mainRecycler.getChildAdapterPosition(view)
+                        if (!subscribe.contains(position) && position != RecyclerView.NO_POSITION) {
+                            (mainRecycler.layoutManager as? LinearLayoutManager)?.apply {
+                                val lastIndex = findLastVisibleItemPosition()
+                                if (lastPosition == lastIndex || position > lastIndex + 1) {
+                                    return
+                                }
+                                lastPosition = lastIndex
                             }
-                            lastPosition = lastIndex
+                            subscribe.add(position)
+                            callbackData.clear()
+                            callbackData.add(position)
+                            callback?.invoke(callbackData, null)
                         }
-                        subscribe.add(position)
-                        callbackData.clear()
-                        callbackData.add(position)
-                        callback?.invoke(callbackData, null)
                     }
                 }
-            }
 
-            override fun onChildViewDetachedFromWindow(view: View) {
-                val position = mainRecycler.getChildAdapterPosition(view)
-                if (subscribe.contains(position)) {
-                    subscribe.remove(position)
-                    callbackData.clear()
-                    callbackData.add(position)
-                    callback?.invoke(null, callbackData)
+                override fun onChildViewDetachedFromWindow(view: View) {
+                    val position = mainRecycler.getChildAdapterPosition(view)
+                    if (subscribe.contains(position)) {
+                        subscribe.remove(position)
+                        callbackData.clear()
+                        callbackData.add(position)
+                        callback?.invoke(null, callbackData)
+                    }
                 }
-            }
-        })
+            },
+        )
     }
 
     private fun getScrollListener(): RecyclerView.OnScrollListener {
         return object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 hasScroll = true
-                if (newState != RecyclerView.SCROLL_STATE_SETTLING) {
-                    (recyclerView.layoutManager as? LinearLayoutManager)?.apply {
+                (recyclerView.layoutManager as? LinearLayoutManager)
+                    ?.takeUnless { newState == RecyclerView.SCROLL_STATE_SETTLING }
+                    ?.apply {
                         val first = findFirstVisibleItemPosition()
                         val last = findLastVisibleItemPosition()
                         callbackData.clear()
@@ -118,7 +120,6 @@ class RecyclerViewProxy(mainRecycler: RecyclerView, subRecycler: RecyclerView? =
                             callback?.invoke(callbackData, null)
                         }
                     }
-                }
             }
         }
     }

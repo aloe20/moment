@@ -27,11 +27,11 @@ import androidx.lifecycle.Observer
 
 class SkinResources(private val resources: Resources, private val pm: PackageManager) :
     Resources(resources.assets, resources.displayMetrics, resources.configuration) {
-    private var skinResources: Resources = resources
+    private var skinRes: Resources = resources
     private val liveData = MutableLiveData<String>()
     fun setSkinPath(path: String) = apply {
         pm.getPackageArchiveInfo(path, PackageManager.GET_ACTIVITIES)?.applicationInfo?.also {
-            skinResources = pm.getResourcesForApplication(it)
+            skinRes = pm.getResourcesForApplication(it)
             liveData.postValue("")
         }
     }
@@ -41,7 +41,7 @@ class SkinResources(private val resources: Resources, private val pm: PackageMan
             if (it == 0) {
                 super.getDrawableForDensity(id, density, theme)
             } else {
-                skinResources.getDrawableForDensity(it, density, theme)
+                skinRes.getDrawableForDensity(it, density, theme)
             }
         }
     }
@@ -50,17 +50,17 @@ class SkinResources(private val resources: Resources, private val pm: PackageMan
         if (it == 0) {
             super.getColorStateList(id, theme)
         } else {
-            skinResources.getColorStateList(it, theme)
+            skinRes.getColorStateList(it, theme)
         }
     }
 
     override fun getColor(id: Int, theme: Theme?): Int = getSkinId(id).let {
-        if (it == 0) super.getColor(id, theme) else skinResources.getColor(it, theme)
+        if (it == 0) super.getColor(id, theme) else skinRes.getColor(it, theme)
     }
 
     @SuppressLint("DiscouragedApi")
     private fun getSkinId(id: Int): Int =
-        skinResources.getIdentifier(
+        skinRes.getIdentifier(
             resources.getResourceEntryName(id),
             resources.getResourceTypeName(id),
             "com.aloe.skin",
