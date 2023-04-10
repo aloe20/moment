@@ -132,7 +132,7 @@ fun RecommendLayout(vm: RecommendVm = hiltViewModel(), nav: NavHostController = 
 }
 
 @Composable
-fun RecommendBanner(uiState:RecommendUiState, nav: NavHostController = LocalNav.current) {
+fun RecommendBanner(uiState: RecommendUiState, nav: NavHostController = LocalNav.current) {
     Banner(modifier = Modifier.height(180.dp), count = uiState.banner.size) {
         Image(
             painter = rememberAsyncPainter(model = uiState.banner[it].imagePath),

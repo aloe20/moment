@@ -15,15 +15,15 @@ androidxAppcompat = "1.6.1"
 androidxArch = "2.2.0"
 androidxCollection = "1.2.0"
 androidxLifecycle = "2.6.1"
-androidxCompose = "1.4.0"
-androidxCore = "1.10.0-rc01"
+androidxCompose = "1.4.1"
+androidxCore = "1.10.0"
 androidxFragment = "1.5.6"
 androidxTracing = "1.1.0"
 datastore = "1.0.0"
 # https://github.com/google/accompanist
 accompanist = "0.30.0"
 # https://github.com/diffplug/spotless
-spotless = "6.17.0"
+spotless = "6.18.0"
 # https://github.com/detekt/detekt
 detekt = "1.22.0"
 # https://github.com/pinterest/ktlint
@@ -48,8 +48,8 @@ compose-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", 
 compose-hilt = "androidx.hilt:hilt-navigation-compose:1.0.0"
 compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 compose-material = { group = "androidx.compose.material", name="material",version.ref = "androidxCompose" }
-compose-material3 = "androidx.compose.material3:material3:1.1.0-beta01"
-compose-navigation = "androidx.navigation:navigation-compose:2.6.0-alpha08"
+compose-material3 = "androidx.compose.material3:material3:1.1.0-beta02"
+compose-navigation = "androidx.navigation:navigation-compose:2.6.0-alpha09"
 compose-paging = "androidx.paging:paging-compose:1.0.0-alpha18"
 junit = "junit:junit:4.13.2"
 # https://github.com/google/desugar_jdk_libs
@@ -57,6 +57,7 @@ android-desugarJdkLibs = "com.android.tools:desugar_jdk_libs:2.0.2"
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 androidx-store-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-startup = "androidx.startup:startup-runtime:1.1.1"
+androidx-webkit = "androidx.webkit:webkit:1.6.1"
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 kotlin-json = {module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "json"}

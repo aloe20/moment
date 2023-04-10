@@ -25,6 +25,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.view.postDelayed
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewFeature
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -35,10 +38,31 @@ fun WebLayout(url: String) {
                 settings.javaScriptEnabled = true
                 settings.userAgentString = "Mozilla/5.0 (Linux; Android ${Build.VERSION.RELEASE};" +
                     " ${Build.BRAND} Build/${Build.BOARD})"
+                if ("file:///android_asset/bridge.html" == url) {
+                    if (WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) {
+                        // 接收H5消息并回调结果给H5
+                        WebViewCompat.addWebMessageListener(
+                            this,
+                            "android",
+                            mutableSetOf("file://")
+                        ) { _, message, _, _, replyProxy ->
+                            Log.d("aloe", "收到H5发送的消息：${message.data}")
+                            replyProxy.postMessage("I`m Android")
+                        }
+                    }
+                    if (WebViewFeature.isFeatureSupported(WebViewFeature.POST_WEB_MESSAGE)) {
+                        postDelayed(1000L) {
+                            val params = "12345"
+                            // 发送消息给H5并接收H5回调结果
+                            evaluateJavascript("javascript:receiveAndroidCallback($params)") { value ->
+                                Log.d("aloe", "收到H5回调：$value")
+                            }
+                        }
+                    }
+                }
             }
             Log.i("aloe", url)
             it.loadUrl(url)
-            // it.loadUrl("file:///android_asset/bridge.html")
         }
     }
 }

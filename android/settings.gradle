@@ -18,7 +18,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "android"
 includeBuild("../lib")
-include(":app", ":skin:dark", ":lint", ":server", ":datas:bean", ":datas:http", ":datas:local", ":datas:socket", ":ui:excel", ":ui:chart", ":ui:web")
+include(":app", ":skin:dark", ":lint", ":server", ":datas:bean", ":datas:http", ":datas:local", ":datas:socket", ":ui:excel", ":ui:chart")
 gradle.ext.useAar = false
 if (!gradle.ext.useAar) {
     setBinding(new Binding([gradle: this]))

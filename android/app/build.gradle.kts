@@ -67,7 +67,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.4.4"
     }
     packagingOptions {
         resources {
@@ -105,6 +105,7 @@ dependencies {
     implementation(project(":datas:local"))
     implementation(project(":datas:http"))
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.webkit)
     debugImplementation(libs.compose.preview)
     implementation(libs.compose.material)
     implementation(libs.compose.material3)

@@ -22,21 +22,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script>
-        aloe.onmessage=function(event){
-            console.log("3--->"+event.data);
+        function sendMsgToAndroid() {
+            sendAndroidCallback("I`m ready!", function (event) {
+                console.log("收到Android回调的消息：" + event.data);
+            });
         }
-        function aaa() {
-            console.log("1--->");
-            aloe.postMessage("I`m ready!");
+
+        function sendAndroidCallback(data, callback) {
+            android.postMessage(data);
+            android.onmessage = callback;
         }
-        function bbb(data) {
-            console.log("1--->"+data);
-            return "ccccccc";
+
+        function receiveAndroidCallback(data) {
+            console.log("收到Android发送的消息：" + data);
+            return "H5回调内容";
         }
     </script>
 </head>
 <body>
-<h1>hello world</h1>
-<button onclick="aaa()">click</button>
+<h1>H5与Android通讯</h1>
+<button onclick="sendMsgToAndroid()">向Android发消息</button>
 </body>
 </html>
