@@ -3,11 +3,19 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "web-dev": "vite web --host",
+    "web-build": "vite build web",
+    "web-preview": "vite preview web",
     "start": "yarn react-native start rn/index.js",
     "rn-bundle": "npx react-native bundle --platform android --dev false --entry-file rn/index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/"
   },
   "dependencies": {
+    "vue": "^3.2.47",
     "react": "18.2.0",
     "react-native": "^0.71.6"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.1.0",
+    "vite": "^4.2.1"
   }
 }

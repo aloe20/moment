@@ -22,7 +22,6 @@ plugins {
 
 android {
     namespace = "com.aloe.http"
-
     buildTypes {
         release {
             isMinifyEnabled = false

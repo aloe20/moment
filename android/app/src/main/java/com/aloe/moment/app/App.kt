@@ -33,15 +33,12 @@ import javax.inject.Inject
 class App : Application() {
     @Inject
     lateinit var okHttpClient: OkHttpClient
-    lateinit var imageLoader: ImageLoader
-    override fun onCreate() {
-        super.onCreate()
-        imageLoader =
-            ImageLoader.Builder(this).okHttpClient((applicationContext as App).okHttpClient)
-                .diskCache(DiskCache.Builder().directory(externalCacheDir ?: cacheDir).build())
-                .memoryCache(MemoryCache.Builder(this).build())
-                .build()
-    }
+     val imageLoader: ImageLoader by lazy {
+         ImageLoader.Builder(this).okHttpClient((applicationContext as App).okHttpClient)
+             .diskCache(DiskCache.Builder().directory(externalCacheDir ?: cacheDir).build())
+             .memoryCache(MemoryCache.Builder(this).build())
+             .build()
+     }
 }
 
 val Context.imageLoader: ImageLoader

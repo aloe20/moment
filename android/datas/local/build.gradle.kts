@@ -24,7 +24,6 @@ plugins {
 
 android {
     namespace = "com.aloe.local"
-
     buildTypes {
         release {
             isMinifyEnabled = false

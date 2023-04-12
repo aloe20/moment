@@ -31,3 +31,4 @@ apply from: file("../node_modules/@react-native-community/cli-platform-android/n
 
 include ':flu'
 project(':flu').projectDir = new File('../flu/flu')
+include ':basic'

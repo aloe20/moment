@@ -102,9 +102,13 @@ android {
 }
 
 dependencies {
+    implementation(project(":basic"))
     implementation(project(":datas:local"))
     implementation(project(":datas:http"))
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.lifecycle.process)
     implementation(libs.androidx.webkit)
     debugImplementation(libs.compose.preview)
     implementation(libs.compose.material)
@@ -115,6 +119,7 @@ dependencies {
     implementation(libs.compose.paging)
     implementation(libs.androidx.startup)
     implementation(libs.google.hilt.android)
+    implementation(libs.google.zxing)
     implementation(libs.coil)
     kapt(libs.google.hilt.compiler)
     implementation("com.facebook.react:react-android")

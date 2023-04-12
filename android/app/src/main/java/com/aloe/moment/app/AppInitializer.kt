@@ -17,7 +17,11 @@
 package com.aloe.moment.app
 
 import android.content.Context
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.startup.Initializer
+import com.aloe.basic.log
 import com.aloe.moment.page.flu.FluView
 import com.aloe.moment.page.react.ReactView
 
@@ -25,6 +29,15 @@ class AppInitializer : Initializer<Unit> {
     override fun create(context: Context) {
         FluView.initEngineGroup(context)
         ReactView.initRn(context)
+        ProcessLifecycleOwner.get().lifecycle.addObserver(object :DefaultLifecycleObserver{
+            override fun onStart(owner: LifecycleOwner) {
+                "app on start".log()
+            }
+
+            override fun onStop(owner: LifecycleOwner) {
+                "app on stop".log()
+            }
+        })
     }
 
     override fun dependencies(): MutableList<Class<out Initializer<*>>> = mutableListOf()

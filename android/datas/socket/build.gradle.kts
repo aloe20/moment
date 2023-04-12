@@ -20,7 +20,6 @@ plugins {
 
 android {
     namespace = "com.aloe.socket"
-
     buildTypes {
         release {
             isMinifyEnabled = false

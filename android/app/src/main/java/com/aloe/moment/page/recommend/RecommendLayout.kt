@@ -142,6 +142,7 @@ fun RecommendBanner(uiState: RecommendUiState, nav: NavHostController = LocalNav
                 .fillMaxSize()
                 .clickable {
                     nav.navigate("web?url=${uiState.banner[it].url}")
+                    // nav.navigate("web?url=http://192.168.137.1:5173")
                 },
             alignment = Alignment.Center,
         )

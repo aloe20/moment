@@ -29,14 +29,10 @@
         }
 
         function sendAndroidCallback(data, callback) {
-            android.postMessage(data);
-            android.onmessage = callback;
+            window.android.postMessage(data);
+            window.android.onmessage = callback;
         }
 
-        function receiveAndroidCallback(data) {
-            console.log("收到Android发送的消息：" + data);
-            return "H5回调内容";
-        }
     </script>
 </head>
 <body>

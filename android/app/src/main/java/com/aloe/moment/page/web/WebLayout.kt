@@ -19,7 +19,11 @@ package com.aloe.moment.page.web
 import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -28,6 +32,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.postDelayed
 import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
+import com.aloe.basic.log
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -38,13 +43,13 @@ fun WebLayout(url: String) {
                 settings.javaScriptEnabled = true
                 settings.userAgentString = "Mozilla/5.0 (Linux; Android ${Build.VERSION.RELEASE};" +
                     " ${Build.BRAND} Build/${Build.BOARD})"
-                if ("file:///android_asset/bridge.html" == url) {
+                if ("http://192.168.137.1:5173" == url) {
                     if (WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) {
                         // 接收H5消息并回调结果给H5
                         WebViewCompat.addWebMessageListener(
                             this,
                             "android",
-                            mutableSetOf("file://")
+                            mutableSetOf("file://", "http://192.168.137.1:5173")
                         ) { _, message, _, _, replyProxy ->
                             Log.d("aloe", "收到H5发送的消息：${message.data}")
                             replyProxy.postMessage("I`m Android")
@@ -61,7 +66,7 @@ fun WebLayout(url: String) {
                     }
                 }
             }
-            Log.i("aloe", url)
+            url.log()
             it.loadUrl(url)
         }
     }

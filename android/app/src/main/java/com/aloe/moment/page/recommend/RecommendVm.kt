@@ -17,8 +17,8 @@
 package com.aloe.moment.page.recommend
 
 import androidx.compose.runtime.mutableStateOf
+import com.aloe.basic.BasicVm
 import com.aloe.bean.ArticleBean
-import com.aloe.moment.BaseVm
 import com.aloe.proto.Banner
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class RecommendVm @Inject constructor(private val useCase: RecommendUseCase) : BaseVm() {
+class RecommendVm @Inject constructor(private val useCase: RecommendUseCase) : BasicVm() {
     private val _uiState = MutableStateFlow(RecommendUiState())
     private val isRefreshing = mutableStateOf(false)
 

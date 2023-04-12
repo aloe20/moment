@@ -14,26 +14,21 @@
  *   limitations under the License.
  */
 
-package com.aloe.moment
+package com.aloe.basic
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import android.util.Log
 
-open class BaseVm : ViewModel() {
-    private val map = mutableMapOf<String, Job?>()
-    fun loadData(key: String, callback: suspend () -> Unit) {
-        map[key]?.cancel()
-        map[key] = viewModelScope.launch {
-            callback.invoke()
+var logDebug = true
+private const val stackTraceLen = 4
+fun String?.log(type: Int = Log.DEBUG, tag: String = "aloe", tr:Throwable?=null) {
+    takeIf { logDebug }?.let {
+        with(Thread.currentThread().stackTrace[stackTraceLen]) { "$methodName($fileName:$lineNumber) $it" }
+    }?.also {
+        when (type) {
+            Log.DEBUG -> Log.d(tag, it, tr)
+            Log.INFO -> Log.i(tag, it, tr)
+            Log.WARN -> Log.w(tag, it, tr)
+            Log.ERROR -> Log.e(tag, it, tr)
         }
-    }
-
-    override fun onCleared() {
-        map.forEach {
-            it.value?.cancel()
-        }
-        map.clear()
     }
 }
