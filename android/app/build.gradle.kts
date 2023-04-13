@@ -74,30 +74,33 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    lintOptions {
-        // Turns off checks for the issue IDs you specify.
-        disable("TypographyFractions")
-        disable("TypographyQuotes")
-        // Turns on checks for the issue IDs you specify. These checks are in
-        // addition to the default lint checks.
-        enable("RtlHardcoded")
-        enable("RtlCompat")
-        enable("RtlEnabled")
-        // To enable checks for only a subset of issue IDs and ignore all others,
-        // list the issue IDs with the 'check' property instead. This property overrides
-        // any issue IDs you enable or disable using the properties above.
-        checkOnly("NewApi", "InlinedApi")
-        // If set to true, turns off analysis progress reporting by lint.
-        // quiet = true
-        // If set to true (default), stops the build if errors are found.
-        // abortOnError = false
-        // If true, only report errors.
-        // ignoreWarnings = true
-        // If true, lint also checks all dependencies as part of its analysis. Recommended for
-        // projects consisting of an app with library dependencies.
-        isCheckDependencies = true
-        // checkOnly("NewApi", "HandlerLeak")
-        baseline(file("lint-baseline.xml"))
+    lint {
+        quiet = true
+        abortOnError = true
+        ignoreWarnings = false
+        checkAllWarnings = true
+        warningsAsErrors = true
+        showAll = true
+        lintConfig = file("default-lint.xml")
+        textReport = true
+        // textOutput = file("text_report.txt")
+        xmlReport = true
+        // xmlOutput = file("xml_report.xml")
+        htmlReport=true
+        // htmlOutput = file("html_report.html")
+//        checkReleaseBuilds = true
+//        fatal.add("NewApi")
+//        error.add("NewApi")
+//        warning.add("NewApi")
+        disable+="TypographyFractions"
+        disable+="TypographyQuotes"
+        enable+="RtlHardcoded"
+        enable+="RtlCompat"
+        enable+="RtlEnabled"
+        checkOnly+="NewApi"
+        checkOnly+="InlinedApi"
+        checkDependencies=true
+        baseline = file("lint-baseline.xml")
     }
 }
 
@@ -124,8 +127,9 @@ dependencies {
     kapt(libs.google.hilt.compiler)
     implementation("com.facebook.react:react-android")
     implementation("com.facebook.react:hermes-android")
+    lintChecks(project(path=":lint"))
     testImplementation(libs.junit)
-    if ((gradle as ExtensionAware).extra["useAar"]==true) {
+    if ((gradle as ExtensionAware).extra["useAar"] == true) {
         debugImplementation("com.aloe.flu:flutter_debug:1.0")
         //profileImplementation("com.aloe.flu:flutter_profile:1.0")
         releaseImplementation("com.aloe.flu:flutter_release:1.0")

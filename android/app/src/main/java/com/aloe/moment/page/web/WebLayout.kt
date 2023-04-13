@@ -19,11 +19,7 @@ package com.aloe.moment.page.web
 import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -43,29 +39,28 @@ fun WebLayout(url: String) {
                 settings.javaScriptEnabled = true
                 settings.userAgentString = "Mozilla/5.0 (Linux; Android ${Build.VERSION.RELEASE};" +
                     " ${Build.BRAND} Build/${Build.BOARD})"
-                if ("http://192.168.137.1:5173" == url) {
-                    if (WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) {
-                        // 接收H5消息并回调结果给H5
-                        WebViewCompat.addWebMessageListener(
-                            this,
-                            "android",
-                            mutableSetOf("file://", "http://192.168.137.1:5173")
-                        ) { _, message, _, _, replyProxy ->
-                            Log.d("aloe", "收到H5发送的消息：${message.data}")
-                            replyProxy.postMessage("I`m Android")
-                        }
+                if (WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)) {
+                    // 接收H5消息并回调结果给H5
+                    WebViewCompat.addWebMessageListener(
+                        this,
+                        "bridge",
+                        mutableSetOf("file://", "http://192.168.137.1:5173")
+                    ) { _, message, _, _, replyProxy ->
+                        Log.d("aloe", "收到H5发送的消息：${message.data}")
+                        replyProxy.postMessage("I`m Android")
                     }
-                    if (WebViewFeature.isFeatureSupported(WebViewFeature.POST_WEB_MESSAGE)) {
-                        postDelayed(1000L) {
-                            val params = "12345"
-                            // 发送消息给H5并接收H5回调结果
-                            evaluateJavascript("javascript:receiveAndroidCallback($params)") { value ->
-                                Log.d("aloe", "收到H5回调：$value")
-                            }
+                }
+                if (WebViewFeature.isFeatureSupported(WebViewFeature.POST_WEB_MESSAGE)&&"http://192.168.137.1:5173" == url) {
+                    postDelayed(1000L) {
+                        val params = "12345"
+                        // 发送消息给H5并接收H5回调结果
+                        evaluateJavascript("javascript:receiveAndroidCallback($params)") { value ->
+                            Log.d("aloe", "收到H5回调：$value")
                         }
                     }
                 }
             }
+            Log.e("aloe", "ffff")
             url.log()
             it.loadUrl(url)
         }

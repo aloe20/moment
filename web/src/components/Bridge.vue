@@ -21,8 +21,8 @@ export default {
             });
         },
         sendAndroidCallback(data, callback) {
-            window.android.onmessage = callback;
-            window.android.postMessage(data)
+            window.bridge.onmessage = callback;
+            window.bridge.postMessage(data)
         }
     }
 }
