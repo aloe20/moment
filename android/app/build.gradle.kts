@@ -67,7 +67,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.4"
+        kotlinCompilerExtensionVersion = "1.4.5"
     }
     packagingOptions {
         resources {
@@ -108,6 +108,7 @@ dependencies {
     implementation(project(":basic"))
     implementation(project(":datas:local"))
     implementation(project(":datas:http"))
+    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)

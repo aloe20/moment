@@ -4,11 +4,11 @@ sdk-compile = "33"
 sdk-target = "33"
 sdk-tool = "33.0.2"
 # https://github.com/JetBrains/kotlin
-kotlin = "1.8.10"
+kotlin = "1.8.20"
 # https://github.com/Kotlin/kotlinx.serialization
 json = "1.5.0"
 # https://github.com/google/ksp
-ksp = "1.8.10-1.0.9"
+ksp = "1.8.20-1.0.10"
 androidGradlePlugin = "7.4.2"
 androidxActivity = "1.7.0"
 androidxAppcompat = "1.6.1"
@@ -16,7 +16,7 @@ androidxArch = "2.2.0"
 androidxCamera = "1.2.2"
 androidxCollection = "1.2.0"
 androidxLifecycle = "2.6.1"
-androidxCompose = "1.4.1"
+androidxComposeBom = "2023.04.00"
 androidxCore = "1.10.0"
 androidxFragment = "1.5.6"
 androidxTracing = "1.1.0"
@@ -30,7 +30,7 @@ detekt = "1.22.0"
 # https://github.com/pinterest/ktlint
 ktlint = "0.48.2"
 # https://ktor.io
-ktor="2.2.4"
+ktor = "2.2.4"
 # https://github.com/google/dagger
 dagger = "2.45"
 # https://github.com/square/okhttp
@@ -38,7 +38,7 @@ okhttp = "4.10.0"
 # https://github.com/square/okio
 okio = "3.3.0"
 # https://github.com/protocolbuffers/protobuf
-protobuf = "3.21.12"
+protobuf = "3.22.3"
 # https://github.com/google/protobuf-gradle-plugin
 protobufPlugin = "0.9.1"
 
@@ -53,11 +53,12 @@ androidx-lifecycle-process = { module = "androidx.lifecycle:lifecycle-process", 
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
 androidx-startup = "androidx.startup:startup-runtime:1.1.1"
 androidx-webkit = "androidx.webkit:webkit:1.6.1"
-compose-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "androidxCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+compose-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-hilt = "androidx.hilt:hilt-navigation-compose:1.0.0"
 compose-lifecycle = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
-compose-material = { group = "androidx.compose.material", name="material",version.ref = "androidxCompose" }
-compose-material3 = "androidx.compose.material3:material3:1.1.0-beta02"
+compose-material = { group = "androidx.compose.material", name = "material" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 compose-navigation = "androidx.navigation:navigation-compose:2.6.0-alpha09"
 compose-paging = "androidx.paging:paging-compose:1.0.0-alpha18"
 junit = "junit:junit:4.13.2"
@@ -65,9 +66,9 @@ junit = "junit:junit:4.13.2"
 android-desugarJdkLibs = "com.android.tools:desugar_jdk_libs:2.0.2"
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
-kotlin-json = {module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "json"}
+kotlin-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "json" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-accompanist-swiperefresh = {group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanist"}
+accompanist-swiperefresh = { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanist" }
 google-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 google-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "dagger" }
 google-protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
@@ -76,7 +77,7 @@ google-protobuf-protoc = { group = "com.google.protobuf", name = "protoc", versi
 google-zxing = "com.google.zxing:core:3.5.1"
 # https://github.com/square/retrofit
 squareup-retrofit = "com.squareup.retrofit2:retrofit:2.9.0"
-squareup-okhttp-logger = {module="com.squareup.okhttp3:logging-interceptor",version.ref="okhttp"}
+squareup-okhttp-logger = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 # https://github.com/netty/netty
 netty = "io.netty:netty-transport:4.1.91.Final"
 # https://github.com/coil-kt/coil
@@ -84,11 +85,11 @@ coil = "io.coil-kt:coil-compose-base:2.3.0"
 # https://github.com/PhilJay/MPAndroidChart
 mpchart = "com.github.PhilJay:MPAndroidChart:3.1.0"
 
-ktor-core = {group="io.ktor", name="ktor-server-core", version.ref="ktor"}
-ktor-netty = {group="io.ktor", name="ktor-server-netty", version.ref="ktor"}
-ktor-freemarker = {group="io.ktor", name="ktor-server-freemarker", version.ref="ktor"}
-ktor-content = {group="io.ktor", name="ktor-server-content-negotiation", version.ref="ktor"}
-ktor-json = {group="io.ktor", name="ktor-serialization-kotlinx-json", version.ref="ktor"}
+ktor-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
+ktor-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
+ktor-freemarker = { group = "io.ktor", name = "ktor-server-freemarker", version.ref = "ktor" }
+ktor-content = { group = "io.ktor", name = "ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 # https://github.com/qos-ch/logback
 ktor-log = "ch.qos.logback:logback-classic:1.4.6"
 
