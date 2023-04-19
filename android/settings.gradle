@@ -29,6 +29,6 @@ if (!gradle.ext.useAar) {
 includeBuild("../node_modules/react-native-gradle-plugin")
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 
-include ':flu'
-project(':flu').projectDir = new File('../flu/flu')
-include ':basic'
+include ":flu"
+project(":flu").projectDir = file("../flu/flu")
+include (":basic")
