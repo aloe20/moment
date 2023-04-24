@@ -18,7 +18,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "android"
 includeBuild("../lib")
-include(":app", ":skin:dark", ":lint", ":server", ":datas:bean", ":datas:http", ":datas:local", ":datas:socket", ":ui:excel", ":ui:chart")
+include(":app", ":basic", ":skin:dark", ":lint", ":server", ":datas:bean", ":datas:http", ":datas:local", ":datas:socket", ":ui:excel", ":ui:chart")
 gradle.ext.useAar = false
 if (!gradle.ext.useAar) {
     setBinding(new Binding([gradle: this]))
@@ -29,6 +29,5 @@ if (!gradle.ext.useAar) {
 includeBuild("../node_modules/react-native-gradle-plugin")
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 
-include ":flu"
-project(":flu").projectDir = file("../flu/flu")
-include (":basic")
+include ':flu'
+project(':flu').projectDir = new File('../flu/flu')
